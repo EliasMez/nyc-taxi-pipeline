@@ -23,7 +23,7 @@ def setup_data_warehouse():
         cur.execute("CREATE SCHEMA IF NOT EXISTS RAW")
         cur.execute("CREATE SCHEMA IF NOT EXISTS STAGING")
         cur.execute("CREATE SCHEMA IF NOT EXISTS FINAL")
-        
+        cur.execute("USE SCHEMA RAW")
         cur.execute("CREATE OR REPLACE STAGE raw_parquet_stage")
         cur.execute("CREATE OR REPLACE FILE FORMAT parquet_format TYPE = 'PARQUET'")
         
@@ -49,7 +49,7 @@ def create_table_dynamically(conn):
         for col_name, col_type in schema:
             columns.append(f"{col_name} {col_type}")
         columns.append("filename VARCHAR(255)")
-        columns.append("load_timestamp TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP()")
+        columns.append("load_timestamp TIMESTAMP_NTZ DEFAULT CONVERT_TIMEZONE('Europe/Paris', CURRENT_TIMESTAMP())")
         
         create_sql = f"CREATE OR REPLACE TABLE yellow_taxi_trips_raw ({', '.join(columns)})"
         cur.execute(create_sql)
@@ -80,7 +80,7 @@ def upload_and_load_parquet(conn, file_urls):
                 month NUMBER,
                 rows_loaded NUMBER,
                 load_status VARCHAR(50),
-                load_timestamp TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP()
+                load_timestamp TIMESTAMP_NTZ DEFAULT CONVERT_TIMEZONE('Europe/Paris', CURRENT_TIMESTAMP())
             )
         """)
         
@@ -133,11 +133,6 @@ def upload_and_load_parquet(conn, file_urls):
                 """, (file_url, filename, year, month, rows_loaded))
                 
                 print(f"✅ {rows_loaded} lignes chargées")
-
-                # supression table temporaire
-                if os.path.exists("temp_files"):
-                    shutil.rmtree("temp_files")
-                    print("📁 Dossier temp_files supprimé")
                 
             except Exception as e:
                 print(f"❌ Erreur: {e}")
@@ -149,6 +144,10 @@ def upload_and_load_parquet(conn, file_urls):
                     """, (file_url, filename, year, month, 0))
                 except:
                     pass
+        # supression table temporaire
+        if os.path.exists("temp_files"):
+            shutil.rmtree("temp_files")
+            print("📁 Dossier temp_files supprimé")
 
 def verify_data_loaded(conn):
     with conn.cursor() as cur:
