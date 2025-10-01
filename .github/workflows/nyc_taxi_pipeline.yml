@@ -1,0 +1,33 @@
+name: NYC Taxi Data Pipeline
+
+on:
+  schedule:
+    # Tous les 10 du mois à 2h du matin
+    - cron: '0 2 10 * *'
+  workflow_dispatch:  # Permet de lancer manuellement
+
+jobs:
+  load-taxi-data:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        
+    - name: Run NYC Taxi Pipeline
+      env:
+        SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+        SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
+        SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+      run: |
+        python nyc_taxi_etl_pipeline.py
