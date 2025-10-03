@@ -29,5 +29,8 @@ jobs:
         SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
         SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
         SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+        WH_NAME: ${{ secrets.WH_NAME }}
+        DW_NAME: ${{ secrets.DW_NAME }}
+        RAW_SCHEMA_NAME: ${{ secrets.RAW_SCHEMA_NAME }}
       run: |
         python snowflake_ingestion/snowflake_pipeline.py
