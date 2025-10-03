@@ -30,4 +30,4 @@ jobs:
         SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
         SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
       run: |
-        python snowflake_ingestion/nyc_taxi_pipeline.py
+        python snowflake_ingestion/snowflake_ingestion.py
