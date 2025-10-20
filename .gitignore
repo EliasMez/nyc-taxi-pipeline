@@ -1,5 +1,15 @@
 .env
 temp_files/
-snowflake_env/
+dbt_snow_env/
 __pycache__/
 *.pyc
+dbt.log
+
+# Fichiers de configuration sensibles
+profiles.yml
+.user.yml
+
+# Dossiers générés par dbt
+target/
+dbt_packages/
+logs/

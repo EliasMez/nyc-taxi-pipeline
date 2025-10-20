@@ -1,0 +1,34 @@
+import snowflake.connector
+import os
+
+
+ACCOUNT = os.getenv('SNOWFLAKE_ACCOUNT')
+USER = os.getenv('SNOWFLAKE_USER')
+PASSWORD = os.getenv('SNOWFLAKE_PASSWORD')
+
+WH_NAME = os.getenv('WH_NAME')
+DW_NAME = os.getenv('DW_NAME')
+RAW_SCHEMA = os.getenv('RAW_SCHEMA')
+STAGING_SCHEMA = os.getenv('STAGING_SCHEMA')
+FINAL_SCHEMA = os.getenv('FINAL_SCHEMA')
+
+ROLE_TRANSFORMER = os.getenv('ROLE_TRANSFORMER')
+USER_DEV = os.getenv('USER_DEV')
+PASSWORD_DEV = os.getenv('PASSWORD_DEV')
+
+
+def connect_with_role(user, password, account, role):
+    """Crée une connexion Snowflake avec le rôle spécifié."""
+    return snowflake.connector.connect(
+        user=user,
+        password=password,
+        account=account,
+        role=role,
+        autocommit=True
+    )
+
+
+def use_context(cur, WH_NAME, DW_NAME, SCHEMA_NAME):
+    cur.execute(f"USE WAREHOUSE {WH_NAME}")
+    cur.execute(f"USE DATABASE {DW_NAME}")
+    cur.execute(f"USE SCHEMA {SCHEMA_NAME}")
