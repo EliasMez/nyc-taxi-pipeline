@@ -2,13 +2,24 @@ name: NYC Taxi Data Pipeline
 
 on:
   schedule:
-    # Tous les 10 du mois à 2h du matin
-    - cron: '0 2 10 * *'
-  workflow_dispatch:  # Permet de lancer manuellement
+    - cron: '0 10 1 * *'
+  workflow_dispatch:
 
 jobs:
   load-taxi-data:
     runs-on: ubuntu-latest
+    env:
+      SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+      SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
+      SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+      WH_NAME: ${{ secrets.WH_NAME }}
+      DW_NAME: ${{ secrets.DW_NAME }}
+      RAW_SCHEMA: ${{ secrets.RAW_SCHEMA }}
+      STAGING_SCHEMA: ${{ secrets.STAGING_SCHEMA }}
+      FINAL_SCHEMA: ${{ secrets.FINAL_SCHEMA }}
+      ROLE_TRANSFORMER: ${{ secrets.ROLE_TRANSFORMER }}
+      USER_DEV: ${{ secrets.USER_DEV }}
+      PASSWORD_DEV: ${{ secrets.PASSWORD_DEV }}
     
     steps:
     - name: Checkout code
@@ -23,14 +34,20 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r snowflake_ingestion/requirements.txt
-        
-    - name: Run NYC Taxi Pipeline
-      env:
-        SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
-        SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
-        SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
-        WH_NAME: ${{ secrets.WH_NAME }}
-        DW_NAME: ${{ secrets.DW_NAME }}
-        RAW_SCHEMA_NAME: ${{ secrets.RAW_SCHEMA_NAME }}
+
+    # Exécution séquentielle des 4 scripts
+    - name: Run 01 - Data Warehouse Init
       run: |
-        python snowflake_ingestion/snowflake_pipeline.py
+        python snowflake_ingestion/01_init_data_warehouse.py
+
+    - name: Run 02 - Scrape Links
+      run: |
+        python snowflake_ingestion/02_scrape_links.py
+
+    - name: Run 03 - Upload to Stage
+      run: |
+        python snowflake_ingestion/03_upload_stage.py
+
+    - name: Run 04 - Load to Table
+      run: |
+        python snowflake_ingestion/04_load_to_table.py
