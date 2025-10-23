@@ -28,7 +28,7 @@ def connect_with_role(user, password, account, role):
     )
 
 
-def use_context(cur, WH_NAME, DW_NAME, SCHEMA_NAME):
+def use_context(cur, WH_NAME, DW_NAME, RAW_SCHEMA):
     cur.execute(f"USE WAREHOUSE {WH_NAME}")
     cur.execute(f"USE DATABASE {DW_NAME}")
-    cur.execute(f"USE SCHEMA {SCHEMA_NAME}")
+    cur.execute(f"USE SCHEMA {RAW_SCHEMA}")
