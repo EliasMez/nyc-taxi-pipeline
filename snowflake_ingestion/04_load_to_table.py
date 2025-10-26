@@ -1,11 +1,11 @@
 from functions import connect_with_role, use_context
 from functions import ACCOUNT
-from functions import WH_NAME, DW_NAME, RAW_SCHEMA
+from functions import WH_NAME, DW_NAME, RAW_SCHEMA, PARQUET_FORMAT
 from functions import ROLE_TRANSFORMER, USER_DEV, PASSWORD_DEV
 
 
 def create_table(cur):    
-    cur.execute("SELECT column_name, type FROM TABLE(INFER_SCHEMA(LOCATION=>'@~/',FILE_FORMAT=>'parquet_format'))")
+    cur.execute(f"SELECT column_name, type FROM TABLE(INFER_SCHEMA(LOCATION=>'@~/',FILE_FORMAT=>'{PARQUET_FORMAT}'))")
     schema = cur.fetchall()
     columns = [f"{col_name} {col_type}" for col_name, col_type in schema]
     
@@ -23,7 +23,7 @@ def copy_file_to_table_and_count(cur, filename):
     cur.execute(f"""
         COPY INTO yellow_taxi_trips_raw 
         FROM '@~/{filename}'
-        FILE_FORMAT=(FORMAT_NAME='parquet_format')
+        FILE_FORMAT=(FORMAT_NAME='{PARQUET_FORMAT}')
         MATCH_BY_COLUMN_NAME=CASE_INSENSITIVE
     """)
 
