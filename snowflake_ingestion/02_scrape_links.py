@@ -59,8 +59,9 @@ def main():
 
     conn.close()
     if not new_file_detected:
+        print(f"new_file_detected={new_file_detected}")
         print("❌ Aucun nouveau fichier à charger, arrêt du workflow.")
-        sys.exit(0)
+    
     print("✅ Scraping terminé")
 
 if __name__ == "__main__":
