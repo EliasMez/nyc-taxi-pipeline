@@ -1,6 +1,6 @@
 from functions import connect_with_role
 from functions import ACCOUNT, USER, PASSWORD
-from functions import WH_NAME, DW_NAME, RAW_SCHEMA, STAGING_SCHEMA, FINAL_SCHEMA
+from functions import WH_NAME, DW_NAME, RAW_SCHEMA, STAGING_SCHEMA, FINAL_SCHEMA, PARQUET_FORMAT
 from functions import ROLE_TRANSFORMER, USER_DEV, PASSWORD_DEV
 
 
@@ -25,7 +25,7 @@ def setup_data_warehouse():
         cur.execute(f"CREATE SCHEMA IF NOT EXISTS {DW_NAME}.{FINAL_SCHEMA}")
 
         # Création du format Parquet dans RAW
-        cur.execute(f"CREATE FILE FORMAT IF NOT EXISTS {DW_NAME}.{RAW_SCHEMA}.parquet_format TYPE='PARQUET'")
+        cur.execute(f"CREATE FILE FORMAT IF NOT EXISTS {DW_NAME}.{RAW_SCHEMA}.{PARQUET_FORMAT} TYPE='PARQUET'")
 
         print("✅ Warehouse, DB et schémas créés avec succès")
     conn.close()
@@ -85,6 +85,9 @@ def grant_privileges():
         # Droits sur toutes les tables existantes et futures du schéma RAW
         cur.execute(f"GRANT ALL ON ALL TABLES IN SCHEMA {DW_NAME}.{RAW_SCHEMA} TO ROLE {ROLE_TRANSFORMER}")
         cur.execute(f"GRANT ALL ON FUTURE TABLES IN SCHEMA {DW_NAME}.{RAW_SCHEMA} TO ROLE {ROLE_TRANSFORMER}")
+
+        # Droits sur le file format existant du schéma RAW
+        cur.execute(f"GRANT USAGE ON FILE FORMAT {DW_NAME}.{RAW_SCHEMA}.{PARQUET_FORMAT} TO ROLE {ROLE_TRANSFORMER}")
 
         print("✅ Privilèges attribués avec succès")
     conn.close()
