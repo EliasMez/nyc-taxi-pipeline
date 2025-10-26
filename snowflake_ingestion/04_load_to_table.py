@@ -4,9 +4,7 @@ from functions import WH_NAME, DW_NAME, RAW_SCHEMA
 from functions import ROLE_TRANSFORMER, USER_DEV, PASSWORD_DEV
 
 
-def create_table(cur):
-    cur.execute("CREATE FILE FORMAT IF NOT EXISTS parquet_format TYPE = 'PARQUET'")
-    
+def create_table(cur):    
     cur.execute("SELECT column_name, type FROM TABLE(INFER_SCHEMA(LOCATION=>'@~/',FILE_FORMAT=>'parquet_format'))")
     schema = cur.fetchall()
     columns = [f"{col_name} {col_type}" for col_name, col_type in schema]

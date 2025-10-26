@@ -25,7 +25,7 @@ def setup_data_warehouse():
         cur.execute(f"CREATE SCHEMA IF NOT EXISTS {DW_NAME}.{FINAL_SCHEMA}")
 
         # Création du format Parquet dans RAW
-        cur.execute(f"CREATE OR REPLACE FILE FORMAT {DW_NAME}.{RAW_SCHEMA}.parquet_format TYPE='PARQUET'")
+        cur.execute(f"CREATE FILE FORMAT IF NOT EXISTS {DW_NAME}.{RAW_SCHEMA}.parquet_format TYPE='PARQUET'")
 
         print("✅ Warehouse, DB et schémas créés avec succès")
     conn.close()
