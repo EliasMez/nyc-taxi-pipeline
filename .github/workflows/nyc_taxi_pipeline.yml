@@ -56,3 +56,9 @@ jobs:
       if: ${{ steps.scrape.outputs.new_file_detected == 'True' }}
       run: |
         python snowflake_ingestion/04_load_to_table.py
+
+    - name: Run dbt transformations
+      if: ${{ steps.scrape.outputs.new_file_detected == 'True' }}
+      run: |
+        dbt run --project-dir dbt_transformations/NYC_Taxi_dbt/ --profiles-dir dbt_transformations/
+      # dbt test --project-dir dbt_transformations/NYC_Taxi_dbt/ --profiles-dir dbt_transformations/

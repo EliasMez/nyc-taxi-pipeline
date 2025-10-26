@@ -12,4 +12,5 @@ profiles.yml
 # Dossiers générés par dbt
 target/
 dbt_packages/
+dbt_transformations/logs/
 logs/

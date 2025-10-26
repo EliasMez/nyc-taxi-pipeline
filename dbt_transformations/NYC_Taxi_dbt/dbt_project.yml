@@ -1,0 +1,31 @@
+name: 'NYC_Taxi_dbt'
+version: '1.0.0'
+
+profile: 'NYC_Taxi_dbt'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+# directories to be removed by `dbt clean`
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  NYC_Taxi_dbt:
+    staging:
+      +materialized: table
+      +schema: STAGING
+      # +schema: "{{ env_var('STAGING_SCHEMA') }}"
+    final:
+      +materialized: table
+      +schema: FINAL
+      # +schema: "{{ env_var('FINAL_SCHEMA') }}"
+    marts:
+      +materialized: view
+      +schema: FINAL
+      # +schema: "{{ env_var('FINAL_SCHEMA') }}"
