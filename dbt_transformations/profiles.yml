@@ -2,7 +2,7 @@ NYC_Taxi_dbt:
   outputs:
     dev:
       type: snowflake
-      account: "{{ env_var('ACCOUNT') }}"
+      account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
       warehouse: "{{ env_var('WH_NAME') }}"
       database: "{{ env_var('DW_NAME') }}"
       schema: SCHEMA
