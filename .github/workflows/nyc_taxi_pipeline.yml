@@ -42,13 +42,17 @@ jobs:
         python snowflake_ingestion/01_init_data_warehouse.py
 
     - name: Run 02 - Scrape Links
+      id: scrape
       run: |
-        python snowflake_ingestion/02_scrape_links.py
+        output=$(python snowflake_ingestion/02_scrape_links.py | grep new_file_detected | cut -d '=' -f2)
+        echo "new_file_detected=$output" >> $GITHUB_OUTPUT
 
     - name: Run 03 - Upload to Stage
+      if: ${{ steps.scrape.outputs.new_file_detected == 'True' }}
       run: |
         python snowflake_ingestion/03_upload_stage.py
 
     - name: Run 04 - Load to Table
+      if: ${{ steps.scrape.outputs.new_file_detected == 'True' }}
       run: |
         python snowflake_ingestion/04_load_to_table.py
