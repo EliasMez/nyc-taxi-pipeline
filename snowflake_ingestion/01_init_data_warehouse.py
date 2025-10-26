@@ -39,11 +39,11 @@ def create_roles_and_user():
         cur.execute(f"USE ROLE SECURITYADMIN")
 
         # Création du rôle
-        cur.execute(f"CREATE OR REPLACE ROLE {ROLE_TRANSFORMER}")
+        cur.execute(f"CREATE ROLE {ROLE_TRANSFORMER} IF NOT EXISTS")
 
         # Création de l'utilisateur DBT
         cur.execute(f"""
-            CREATE OR REPLACE USER {USER_DEV}
+            CREATE USER {USER_DEV} IF NOT EXISTS
             PASSWORD='{PASSWORD_DEV}'
             LOGIN_NAME='{USER_DEV}'
             MUST_CHANGE_PASSWORD=FALSE

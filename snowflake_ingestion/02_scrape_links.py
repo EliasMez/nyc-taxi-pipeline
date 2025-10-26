@@ -38,7 +38,7 @@ def main():
         print(f"📎 {len(links)} liens trouvés")
         new_file_detected = False
 
-        for url in links:
+        for url in links[:1]:
             filename = url.split('/')[-1]
             cur.execute("SELECT 1 FROM file_loading_metadata WHERE file_name = %s", (filename,))
             if not cur.fetchone():
