@@ -47,12 +47,6 @@ jobs:
         output=$(python snowflake_ingestion/02_scrape_links.py | grep new_file_detected | cut -d '=' -f2)
         echo "new_file_detected=$output" >> $GITHUB_OUTPUT
 
-    - name: debug
-      run: |
-        echo "--------"
-        cat $GITHUB_OUTPUT
-        echo "--------"
-
     - name: Run 03 - Upload to Stage
       if: ${{ steps.scrape.outputs.new_file_detected == 'True' }}
       run: |
