@@ -5,7 +5,7 @@ from functions import ROLE_TRANSFORMER, USER_DEV, PASSWORD_DEV
 
 
 def create_table(cur):    
-    cur.execute(f"SELECT column_name, type FROM TABLE(INFER_SCHEMA(LOCATION=>'@~/',FILE_FORMAT=>'{PARQUET_FORMAT}'))")
+    cur.execute(f"SELECT column_name, type FROM TABLE(INFER_SCHEMA(LOCATION=>'@~/',FILE_FORMAT=>'{DW_NAME}.{RAW_SCHEMA}.{PARQUET_FORMAT}'))")
     schema = cur.fetchall()
     columns = [f"{col_name} {col_type}" for col_name, col_type in schema]
     
@@ -23,7 +23,7 @@ def copy_file_to_table_and_count(cur, filename):
     cur.execute(f"""
         COPY INTO yellow_taxi_trips_raw 
         FROM '@~/{filename}'
-        FILE_FORMAT=(FORMAT_NAME='{PARQUET_FORMAT}')
+        FILE_FORMAT=(FORMAT_NAME='{DW_NAME}.{RAW_SCHEMA}.{PARQUET_FORMAT}')
         MATCH_BY_COLUMN_NAME=CASE_INSENSITIVE
     """)
 
