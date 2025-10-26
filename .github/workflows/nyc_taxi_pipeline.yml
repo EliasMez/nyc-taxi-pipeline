@@ -16,6 +16,7 @@ jobs:
       DW_NAME: ${{ secrets.DW_NAME }}
       RAW_SCHEMA: ${{ secrets.RAW_SCHEMA }}
       STAGING_SCHEMA: ${{ secrets.STAGING_SCHEMA }}
+      PARQUET_FORMAT: ${{ secrets.PARQUET_FORMAT }}
       FINAL_SCHEMA: ${{ secrets.FINAL_SCHEMA }}
       ROLE_TRANSFORMER: ${{ secrets.ROLE_TRANSFORMER }}
       USER_DEV: ${{ secrets.USER_DEV }}
