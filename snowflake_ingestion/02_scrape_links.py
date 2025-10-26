@@ -1,4 +1,5 @@
 import requests
+import sys
 from lxml import html
 from functions import connect_with_role, use_context
 from functions import ACCOUNT
@@ -35,12 +36,14 @@ def main():
 
         links = get_parquet_links()
         print(f"📎 {len(links)} liens trouvés")
+        new_file_detected = False
 
         for url in links:
             filename = url.split('/')[-1]
             cur.execute("SELECT 1 FROM file_loading_metadata WHERE file_name = %s", (filename,))
             if not cur.fetchone():
                 print(f"➕ Nouveau fichier détecté : {filename}")
+                new_file_detected = True
                 
                 # Extraire année et mois depuis le filename
                 parts = filename.replace('yellow_tripdata_', '').replace('.parquet', '').split('-')
@@ -55,6 +58,9 @@ def main():
                 print(f"⏭️ {filename} déjà référencé")
 
     conn.close()
+    if not new_file_detected:
+        print("❌ Aucun nouveau fichier à charger, arrêt du workflow.")
+        sys.exit(0)
     print("✅ Scraping terminé")
 
 if __name__ == "__main__":
