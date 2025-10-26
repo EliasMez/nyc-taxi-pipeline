@@ -56,10 +56,17 @@ def main():
                 """, (url, filename, year, month))
             else:
                 print(f"⏭️ {filename} déjà référencé")
+            
+            # Vérifie s'il reste des fichiers en statut SCRAPED ou STAGED à traiter
+            if not new_file_detected:
+                cur.execute("SELECT COUNT(*) FROM file_loading_metadata WHERE load_status IN ('SCRAPED', 'STAGED')")
+                if cur.fetchone()[0] > 0:
+                    new_file_detected = True
 
     conn.close()
+
+    print(f"new_file_detected={new_file_detected}")
     if not new_file_detected:
-        print(f"new_file_detected={new_file_detected}")
         print("❌ Aucun nouveau fichier à charger, arrêt du workflow.")
     
     print("✅ Scraping terminé")
