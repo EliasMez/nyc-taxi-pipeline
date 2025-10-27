@@ -11,7 +11,8 @@ jobs:
       - name: Checkout du code
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0 # Obligatoire pour que Semantic Release analyse tout l'historique des commits.
+          fetch-depth: 0
+          token: ${{ secrets.GH_TOKEN }}
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
@@ -20,6 +21,5 @@ jobs:
         run: npm ci
       - name: Exécuter Semantic Release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # NPM_TOKEN: ${{ secrets.NPM_TOKEN }} # Décommente si tu publies sur NPM
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: npx semantic-release
