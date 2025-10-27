@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "NYC Taxi pipeline with Snowflake and dbt"
 
 [tool.semantic_release]
-branch = "test"
+branch = "main"
 version_variable = [
     "pyproject.toml:project.version"
 ]
