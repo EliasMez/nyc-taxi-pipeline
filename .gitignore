@@ -5,6 +5,9 @@ __pycache__/
 *.pyc
 dbt.log
 
+# fichier release
+package-lock.json
+
 # Dossiers générés par dbt
 target/
 dbt_packages/

@@ -2,7 +2,7 @@ name: Release
 on:
   push:
     branches:
-      - dev
+      - feat/semantic-release-node
 jobs:
   release:
     name: Release
