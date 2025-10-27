@@ -1,0 +1,20 @@
+[project]
+name = "nyc-taxi-pipeline"
+version = "0.1.0"
+description = "NYC Taxi pipeline with Snowflake and dbt"
+
+[tool.semantic_release]
+branch = "main"
+version_variable = [
+    "pyproject.toml:project.version"
+]
+upload_to_pypi = false
+upload_to_release = true
+
+[tool.semantic_release.changelog]
+exclude_commit_patterns = [
+    "chore:*",
+    "ci:*",
+    "docs:*",
+    "test:*"
+]
