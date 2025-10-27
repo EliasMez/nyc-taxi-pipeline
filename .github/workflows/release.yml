@@ -1,0 +1,25 @@
+name: Release
+on:
+  push:
+    branches:
+      - dev
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Obligatoire pour que Semantic Release analyse tout l'historique des commits.
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+      - name: Installer les dépendances
+        run: npm ci
+      - name: Exécuter Semantic Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # NPM_TOKEN: ${{ secrets.NPM_TOKEN }} # Décommente si tu publies sur NPM
+        run: npx semantic-release
