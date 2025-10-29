@@ -1,6 +1,7 @@
 import snowflake.connector
 import os
 from dotenv import load_dotenv
+import logging
 load_dotenv()
 
 
@@ -19,6 +20,8 @@ PARQUET_FORMAT = os.getenv('PARQUET_FORMAT')
 ROLE_TRANSFORMER = os.getenv('ROLE_TRANSFORMER')
 USER_DEV = os.getenv('USER_DEV')
 
+LOGGER_LEVEL = getattr(logging, os.getenv('LOGGER_LEVEL'))
+
 
 
 def connect_with_role(user, password, account, role):
@@ -36,3 +39,11 @@ def use_context(cur, WH_NAME, DW_NAME, RAW_SCHEMA):
     cur.execute(f"USE WAREHOUSE {WH_NAME}")
     cur.execute(f"USE DATABASE {DW_NAME}")
     cur.execute(f"USE SCHEMA {RAW_SCHEMA}")
+
+
+def config_logger():
+    logging.basicConfig(
+        level=LOGGER_LEVEL,
+        format='%(asctime)s - %(levelname)s - %(message)s',
+        datefmt='%Y-%m-%d %H:%M:%S'
+    )
