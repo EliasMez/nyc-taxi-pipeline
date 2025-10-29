@@ -1,10 +1,14 @@
 import requests
-import sys
 from lxml import html
 from functions import connect_with_role, use_context
 from functions import ACCOUNT
 from functions import WH_NAME, DW_NAME, RAW_SCHEMA, METADATA_TABLE
 from functions import ROLE_TRANSFORMER, USER_DEV, PASSWORD_DEV
+from functions import config_logger
+import logging
+
+config_logger()
+logger = logging.getLogger(__name__)
 
 def get_parquet_links():
     url = "https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page"
@@ -35,14 +39,14 @@ def main():
         setup_meta_table(cur)
 
         links = get_parquet_links()
-        print(f"📎 {len(links)} liens trouvés")
+        logger.info(f"📎 {len(links)} liens trouvés")
         new_file_detected = False
 
         for url in links:
             filename = url.split('/')[-1]
             cur.execute(f"SELECT 1 FROM {METADATA_TABLE} WHERE file_name = %s", (filename,))
             if not cur.fetchone():
-                print(f"➕ Nouveau fichier détecté : {filename}")
+                logger.info(f"➕ Nouveau fichier détecté : {filename}")
                 new_file_detected = True
                 
                 # Extraire année et mois depuis le filename
@@ -55,7 +59,7 @@ def main():
                     VALUES (%s, %s, %s, %s, 0, 'SCRAPED')
                 """, (url, filename, year, month))
             else:
-                print(f"⏭️ {filename} déjà référencé")
+                logger.info(f"⏭️ {filename} déjà référencé")
             
             # Vérifie s'il reste des fichiers en statut SCRAPED ou STAGED à traiter
             if not new_file_detected:
@@ -67,9 +71,9 @@ def main():
 
     print(f"new_file_detected={new_file_detected}")
     if not new_file_detected:
-        print("❌ Aucun nouveau fichier à charger, arrêt du workflow.")
+        logger.error("❌ Aucun nouveau fichier à charger, arrêt du workflow.")
     
-    print("✅ Scraping terminé")
+    logger.info("✅ Scraping terminé")
 
 if __name__ == "__main__":
     main()

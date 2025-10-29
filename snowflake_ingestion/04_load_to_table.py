@@ -2,6 +2,11 @@ from functions import connect_with_role, use_context
 from functions import ACCOUNT
 from functions import WH_NAME, DW_NAME, RAW_SCHEMA, RAW_TABLE, METADATA_TABLE, PARQUET_FORMAT
 from functions import ROLE_TRANSFORMER, USER_DEV, PASSWORD_DEV
+from functions import config_logger
+import logging
+
+config_logger()
+logger = logging.getLogger(__name__)
 
 
 def create_table(cur):    
@@ -12,10 +17,10 @@ def create_table(cur):
         create_sql = f"CREATE TABLE IF NOT EXISTS {RAW_TABLE} ({', '.join(columns)})"
         cur.execute(create_sql)
         cur.execute(f"ALTER TABLE {RAW_TABLE} ADD COLUMN IF NOT EXISTS filename VARCHAR(255)")
-        print("✓ Table créée dynamiquement")
+        logger.info("✓ Table créée dynamiquement")
 
 def copy_file_to_table_and_count(cur, filename):
-    print(f"🚀 Chargement de {filename}...")
+    logger.info(f"🚀 Chargement de {filename}...")
 
     cur.execute(f"SELECT COUNT(*) FROM {RAW_TABLE}")
     before = cur.fetchone()[0]
@@ -39,14 +44,14 @@ def update_metadata(cur, filename, rows_loaded):
         SET rows_loaded = %s, load_status = 'SUCCESS' 
         WHERE file_name = %s
     """, (rows_loaded, filename))
-    print(f"✅ {filename} chargé ({rows_loaded} lignes)")
+    logger.info(f"✅ {filename} chargé ({rows_loaded} lignes)")
 
 def cleanup_stage_file(cur, filename):
     cur.execute(f"REMOVE @~/{filename}")
-    print(f"✅ {filename} supprimé du stage")
+    logger.info(f"✅ {filename} supprimé du stage")
 
 def handle_loading_error(cur, filename, error):
-    print(f"❌ Erreur de chargement {filename}: {error}")
+    logger.error(f"❌ Erreur de chargement {filename}: {error}")
     cur.execute(f"UPDATE {METADATA_TABLE} SET load_status='FAILED_LOAD' WHERE file_name=%s", (filename,))
 
 def main():

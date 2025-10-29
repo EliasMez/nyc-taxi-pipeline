@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 # 1️⃣ Étape 1 : Création du warehouse, DB et schémas (SYSADMIN)
 # -------------------------------------------------------
 def setup_data_warehouse():
-    # logger.info("🏗️ Création du warehouse, base et schémas...")
+    logger.info("🏗️ Création du warehouse, base et schémas...")
     conn = connect_with_role(USER, PASSWORD, ACCOUNT, 'SYSADMIN')
     with conn.cursor() as cur:
 
@@ -29,7 +29,7 @@ def setup_data_warehouse():
         # Création du format Parquet dans RAW
         cur.execute(f"CREATE FILE FORMAT IF NOT EXISTS {DW_NAME}.{RAW_SCHEMA}.{PARQUET_FORMAT} TYPE='PARQUET'")
 
-        # logger.info("✅ Warehouse, DB et schémas créés avec succès")
+        logger.info("✅ Warehouse, DB et schémas créés avec succès")
     conn.close()
 
 
@@ -37,7 +37,7 @@ def setup_data_warehouse():
 # 2️⃣ Étape 2 : Création du rôle et de l’utilisateur DBT (SECURITYADMIN)
 # -------------------------------------------------------
 def create_roles_and_user():
-    # logger.info("🔐 Création du rôle et de l'utilisateur DBT...")
+    logger.info("🔐 Création du rôle et de l'utilisateur DBT...")
     conn = connect_with_role(USER, PASSWORD, ACCOUNT, 'SECURITYADMIN')
     with conn.cursor() as cur:
         cur.execute(f"USE ROLE SECURITYADMIN")
@@ -61,7 +61,7 @@ def create_roles_and_user():
         cur.execute(f"GRANT ROLE {ROLE_TRANSFORMER} TO USER {USER_DEV}")
         cur.execute(f"GRANT ROLE {ROLE_TRANSFORMER} TO ROLE SYSADMIN")
 
-        # logger.info("✅ Rôle et utilisateur DBT créés avec succès")
+        logger.info("✅ Rôle et utilisateur DBT créés avec succès")
     conn.close()
 
 
@@ -69,7 +69,7 @@ def create_roles_and_user():
 # 3️⃣ Étape 3 : Attribution des privilèges au rôle TRANSFORMER (SYSADMIN)
 # -------------------------------------------------------
 def grant_privileges():
-    # logger.info("🔑 Attribution des privilèges au rôle TRANSFORMER...")
+    logger.info("🔑 Attribution des privilèges au rôle TRANSFORMER...")
     conn = connect_with_role(USER, PASSWORD, ACCOUNT, 'SYSADMIN')
     with conn.cursor() as cur:
         cur.execute(f"USE ROLE SYSADMIN")
@@ -91,7 +91,7 @@ def grant_privileges():
         # Droits sur le file format existant du schéma RAW
         cur.execute(f"GRANT USAGE ON FILE FORMAT {DW_NAME}.{RAW_SCHEMA}.{PARQUET_FORMAT} TO ROLE {ROLE_TRANSFORMER}")
 
-        # logger.info("✅ Privilèges attribués avec succès")
+        logger.info("✅ Privilèges attribués avec succès")
     conn.close()
 
 
@@ -103,7 +103,7 @@ def main():
         setup_data_warehouse()
         create_roles_and_user()
         grant_privileges()
-        # logger.info("🎯 Initialisation complète terminée avec succès !")
+        logger.info("🎯 Initialisation complète terminée avec succès !")
     except Exception as e:
         logger.error(f"❌ Erreur : {e}")
 
