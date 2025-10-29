@@ -12,15 +12,19 @@ jobs:
       SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
       SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
       SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
-      WH_NAME: ${{ secrets.WH_NAME }}
-      DW_NAME: ${{ secrets.DW_NAME }}
-      RAW_SCHEMA: ${{ secrets.RAW_SCHEMA }}
-      STAGING_SCHEMA: ${{ secrets.STAGING_SCHEMA }}
-      PARQUET_FORMAT: ${{ secrets.PARQUET_FORMAT }}
-      FINAL_SCHEMA: ${{ secrets.FINAL_SCHEMA }}
-      ROLE_TRANSFORMER: ${{ secrets.ROLE_TRANSFORMER }}
-      USER_DEV: ${{ secrets.USER_DEV }}
       PASSWORD_DEV: ${{ secrets.PASSWORD_DEV }}
+      WH_NAME: NYC_WH
+      DW_NAME: NYC_TAXI_DW
+      RAW_SCHEMA: SCHEMA_RAW
+      STAGING_SCHEMA: STAGING
+      FINAL_SCHEMA: FINAL
+      PARQUET_FORMAT: PARQUET_FORMAT
+      ROLE_TRANSFORMER: TRANSFORMER
+      USER_DEV: USER_DEV
+      METADATA_TABLE: FILE_LOADING_METADATA
+      RAW_TABLE: YELLOW_TAXI_TRIPS_RAW
+      STAGING_TABLE: YELLOW_TAXI_TRIPS_STG
+      
     
     steps:
     - name: Checkout code
@@ -36,7 +40,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    # Exécution séquentielle des 4 scripts
     - name: Run 01 - Data Warehouse Init
       run: |
         python snowflake_ingestion/01_init_data_warehouse.py

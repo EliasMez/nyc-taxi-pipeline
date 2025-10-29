@@ -3,7 +3,7 @@ import requests
 import shutil
 from functions import connect_with_role, use_context
 from functions import ACCOUNT
-from functions import WH_NAME, DW_NAME, RAW_SCHEMA
+from functions import WH_NAME, DW_NAME, RAW_SCHEMA, METADATA_TABLE
 from functions import ROLE_TRANSFORMER, USER_DEV, PASSWORD_DEV
 
 
@@ -25,18 +25,18 @@ def main():
 
     with conn.cursor() as cur:
         use_context(cur, WH_NAME, DW_NAME, RAW_SCHEMA)
-        cur.execute("SELECT file_url, file_name FROM file_loading_metadata WHERE load_status='SCRAPED'")
+        cur.execute(f"SELECT file_url, file_name FROM {METADATA_TABLE} WHERE load_status='SCRAPED'")
         scraped_files = cur.fetchall()
         print(f"📦 {len(scraped_files)} fichiers à uploader")
 
         for file_url, filename in scraped_files:
             try:
                 tmp_path = download_and_upload_file(cur, file_url, filename)
-                cur.execute("UPDATE file_loading_metadata SET load_status='STAGED' WHERE file_name=%s", (filename,))
+                cur.execute(f"UPDATE {METADATA_TABLE} SET load_status='STAGED' WHERE file_name=%s", (filename,))
                 print(f"✅ {filename} uploadé")
             except Exception as e:
                 print(f"❌ Erreur upload {filename}: {e}")
-                cur.execute("UPDATE file_loading_metadata SET load_status='FAILED_STAGE' WHERE file_name=%s", (filename,))
+                cur.execute(f"UPDATE {METADATA_TABLE} SET load_status='FAILED_STAGE' WHERE file_name=%s", (filename,))
             finally:
                 if os.path.exists(tmp_path):
                     os.unlink(tmp_path)

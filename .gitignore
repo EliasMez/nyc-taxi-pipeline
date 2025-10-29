@@ -4,6 +4,7 @@ dbt_snow_env/
 __pycache__/
 *.pyc
 dbt.log
+memo.txt
 
 # Dossiers générés par dbt
 target/
@@ -11,3 +12,6 @@ dbt_packages/
 dbt_transformations/logs/
 logs/
 .user.yml
+
+# dossier généré par github action (après pull)
+node_modules
