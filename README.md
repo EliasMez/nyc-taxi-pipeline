@@ -23,7 +23,7 @@ Ce workflow GitHub Actions automatise le pipeline de données de bout en bout, d
 ## 📁 Structure du Projet
 ```bash
 nyc-taxi-pipeline/
-├── .github/workflows/nyc_taxi_pipeline.yml # Définition du pipeline CI/CD
+├── .github/workflows/nyc_taxi_pipeline.yml
 │
 ├── snowflake_ingestion/
 │ ├── 01_init_data_warehouse.py
@@ -32,11 +32,11 @@ nyc-taxi-pipeline/
 │ └── 04_load_to_table.py
 │
 └── dbt_transformations/
-└── NYC_Taxi_dbt/
-└── models/
-├── staging/
-├── final/
-└── marts/
+  └── NYC_Taxi_dbt/
+    └── models/
+      ├── staging/
+      ├── final/
+      └── marts/
 ```
 <br>
 
@@ -72,7 +72,7 @@ Nettoyage et préparation des données (RAW_SCHEMA → STAGING_SCHEMA), puis mod
 
 
 ## 🚀 Exécution Automatique (GitHub Actions)
-Le pipeline s'exécute automatiquement **tous les 10 du mois à 2h**. <br>
+Le pipeline s'exécute automatiquement **tous les 1 du mois à 10h**. <br>
 Le pipeline peut aussi être déclenché manuellement. <br>
 <br>
 
@@ -89,14 +89,6 @@ Le pipeline peut aussi être déclenché manuellement. <br>
 | `SNOWFLAKE_USER`     | Nom d’utilisateur pour se connecter à Snowflake. |
 | `SNOWFLAKE_PASSWORD` | Mot de passe associé à l’utilisateur Snowflake.  |
 | `SNOWFLAKE_ACCOUNT`  | Identifiant du compte Snowflake.                 |
-| `WH_NAME`            | Nom de l’entrepôt (warehouse) Snowflake.          |
-| `DW_NAME`           | Nom de la base de données Snowflake.              |
-| `RAW_SCHEMA`        | Nom du schéma contenant les données brutes.       |
-| `STAGING_SCHEMA`    | Nom du schéma pour les données en transformation.|
-| `FINAL_SCHEMA`      | Nom du schéma contenant les données finales.     |
-| `PARQUET_FORMAT`    | Nom du format de fichier Parquet.                |
-| `ROLE_TRANSFORMER`  | Rôle pour transformer les données.               |
-| `USER_DEV`          | Nom d’utilisateur de développement.               |
 | `PASSWORD_DEV`      | Mot de passe de l’utilisateur de développement.   |
 <br>
 
