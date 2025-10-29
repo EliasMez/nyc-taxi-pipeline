@@ -1,7 +1,7 @@
 version: 2
 
 sources:
-  - name: RAW
+  - name: raw
     database: NYC_TAXI_DW
     schema: "{{ env_var('RAW_SCHEMA') }}"
     tables:

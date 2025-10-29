@@ -19,7 +19,7 @@ SELECT
     CONGESTION_SURCHARGE,
     AIRPORT_FEE,
     CBD_CONGESTION_FEE
-FROM {{ source('RAW', 'YELLOW_TAXI_TRIPS_RAW') }}
+FROM {{ source('raw', 'YELLOW_TAXI_TRIPS_RAW') }}
 WHERE trip_distance >= 0
 AND total_amount > 0
 AND fare_amount > 0

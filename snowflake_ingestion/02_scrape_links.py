@@ -3,7 +3,7 @@ import sys
 from lxml import html
 from functions import connect_with_role, use_context
 from functions import ACCOUNT
-from functions import WH_NAME, DW_NAME, RAW_SCHEMA
+from functions import WH_NAME, DW_NAME, RAW_SCHEMA, METADATA_TABLE
 from functions import ROLE_TRANSFORMER, USER_DEV, PASSWORD_DEV
 
 def get_parquet_links():
@@ -16,8 +16,8 @@ def get_parquet_links():
 
 
 def setup_meta_table(cur):
-    cur.execute("""
-        CREATE TABLE IF NOT EXISTS file_loading_metadata (
+    cur.execute(f"""
+        CREATE TABLE IF NOT EXISTS {METADATA_TABLE} (
             file_url VARCHAR(500),
             file_name VARCHAR(255),
             year NUMBER,
@@ -40,7 +40,7 @@ def main():
 
         for url in links:
             filename = url.split('/')[-1]
-            cur.execute("SELECT 1 FROM file_loading_metadata WHERE file_name = %s", (filename,))
+            cur.execute(f"SELECT 1 FROM {METADATA_TABLE} WHERE file_name = %s", (filename,))
             if not cur.fetchone():
                 print(f"➕ Nouveau fichier détecté : {filename}")
                 new_file_detected = True
@@ -50,8 +50,8 @@ def main():
                 year = int(parts[0]) if len(parts) > 0 else None
                 month = int(parts[1]) if len(parts) > 1 else None
                 
-                cur.execute("""
-                    INSERT INTO file_loading_metadata (file_url, file_name, year, month, rows_loaded, load_status)
+                cur.execute(f"""
+                    INSERT INTO {METADATA_TABLE} (file_url, file_name, year, month, rows_loaded, load_status)
                     VALUES (%s, %s, %s, %s, 0, 'SCRAPED')
                 """, (url, filename, year, month))
             else:
@@ -59,7 +59,7 @@ def main():
             
             # Vérifie s'il reste des fichiers en statut SCRAPED ou STAGED à traiter
             if not new_file_detected:
-                cur.execute("SELECT COUNT(*) FROM file_loading_metadata WHERE load_status IN ('SCRAPED', 'STAGED')")
+                cur.execute(f"SELECT COUNT(*) FROM {METADATA_TABLE} WHERE load_status IN ('SCRAPED', 'STAGED')")
                 if cur.fetchone()[0] > 0:
                     new_file_detected = True
 
