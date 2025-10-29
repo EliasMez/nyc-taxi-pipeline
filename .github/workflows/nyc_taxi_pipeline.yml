@@ -13,6 +13,7 @@ jobs:
       SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
       SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
       PASSWORD_DEV: ${{ secrets.PASSWORD_DEV }}
+      LOGGER_LEVEL: ${{ secrets.LOGGER_LEVEL }}
       WH_NAME: NYC_WH
       DW_NAME: NYC_TAXI_DW
       RAW_SCHEMA: SCHEMA_RAW
@@ -24,6 +25,7 @@ jobs:
       METADATA_TABLE: FILE_LOADING_METADATA
       RAW_TABLE: YELLOW_TAXI_TRIPS_RAW
       STAGING_TABLE: YELLOW_TAXI_TRIPS_STG
+      AWS_EC2_METADATA_DISABLED: true
       
     
     steps:
@@ -39,6 +41,9 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+
+    - name: Set environment variable LOGGER_LEVEL
+      run: echo "LOGGER_LEVEL=${{ var.LOGGER_LEVEL || 'INFO' }}" >> $GITHUB_ENV
 
     - name: Run 01 - Data Warehouse Init
       run: |
