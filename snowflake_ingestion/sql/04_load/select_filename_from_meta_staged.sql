@@ -1,0 +1,1 @@
+SELECT file_name FROM { METADATA_TABLE } WHERE load_status='STAGED'

@@ -1,28 +1,30 @@
-from functions import connect_with_role, use_context
-from functions import ACCOUNT
-from functions import WH_NAME, DW_NAME, RAW_SCHEMA, RAW_TABLE, METADATA_TABLE, PARQUET_FORMAT
-from functions import ROLE_TRANSFORMER, USER_DEV, PASSWORD_DEV
-from functions import config_logger
-import logging
+from functions import *
 
 config_logger()
 logger = logging.getLogger(__name__)
 
+SQL_DIR = SQL_BASE_DIR / "04_load"
 
-def create_table(cur):    
-    cur.execute(f"SELECT column_name, type FROM TABLE(INFER_SCHEMA(LOCATION=>'@~/',FILE_FORMAT=>'{DW_NAME}.{RAW_SCHEMA}.{PARQUET_FORMAT}'))")
+
+def create_table(cur):
+    logger.info(f"📋 Vérification/Création dynamique de la table {RAW_TABLE}")
+    run_sql_file(cur, SQL_DIR / "detect_file_schema_stage.sql")
     schema = cur.fetchall()
     columns = [f"{col_name} {col_type}" for col_name, col_type in schema]
     if len(columns)!=0 :
         create_sql = f"CREATE TABLE IF NOT EXISTS {RAW_TABLE} ({', '.join(columns)})"
         cur.execute(create_sql)
-        cur.execute(f"ALTER TABLE {RAW_TABLE} ADD COLUMN IF NOT EXISTS filename VARCHAR(255)")
-        logger.info("✓ Table créée dynamiquement")
+        run_sql_file(cur, SQL_DIR / "add_filename_to_raw_table.sql")
+        logger.info(f"✅ Table {RAW_TABLE} prête")
+    else :
+        logger.warning(f"⚠️ Aucune donnée dans le STAGE")
+
+
 
 def copy_file_to_table_and_count(cur, filename):
-    logger.info(f"🚀 Chargement de {filename}...")
+    logger.info(f"🚀 Chargement de {filename} dans {RAW_TABLE}...")
 
-    cur.execute(f"SELECT COUNT(*) FROM {RAW_TABLE}")
+    run_sql_file(cur, SQL_DIR / "count_rows_from_raw_table.sql")
     before = cur.fetchone()[0]
 
     cur.execute(f"""
@@ -32,11 +34,14 @@ def copy_file_to_table_and_count(cur, filename):
         MATCH_BY_COLUMN_NAME=CASE_INSENSITIVE
     """)
 
-    cur.execute(f"SELECT COUNT(*) FROM {RAW_TABLE}")
+    run_sql_file(cur, SQL_DIR / "count_rows_from_raw_table.sql")
     after = cur.fetchone()[0]
 
     rows_loaded = after - before
+    logger.info(f"✅ {filename} chargé ({rows_loaded} lignes)")
     return rows_loaded
+
+
 
 def update_metadata(cur, filename, rows_loaded):  
     cur.execute(f"""
@@ -44,15 +49,22 @@ def update_metadata(cur, filename, rows_loaded):
         SET rows_loaded = %s, load_status = 'SUCCESS' 
         WHERE file_name = %s
     """, (rows_loaded, filename))
-    logger.info(f"✅ {filename} chargé ({rows_loaded} lignes)")
+    logger.debug(f"🚀 Chargement de {METADATA_TABLE}")
+
+
 
 def cleanup_stage_file(cur, filename):
     cur.execute(f"REMOVE @~/{filename}")
     logger.info(f"✅ {filename} supprimé du stage")
 
+
+
 def handle_loading_error(cur, filename, error):
     logger.error(f"❌ Erreur de chargement {filename}: {error}")
+    logger.debug(f"🚀 Chargement de {METADATA_TABLE}")
     cur.execute(f"UPDATE {METADATA_TABLE} SET load_status='FAILED_LOAD' WHERE file_name=%s", (filename,))
+
+
 
 def main():
     conn = connect_with_role(USER_DEV, PASSWORD_DEV, ACCOUNT, ROLE_TRANSFORMER)
@@ -60,7 +72,8 @@ def main():
         use_context(cur, WH_NAME, DW_NAME, RAW_SCHEMA)
         create_table(cur)
         
-        cur.execute(f"SELECT file_name FROM {METADATA_TABLE} WHERE load_status='STAGED'")
+        logger.info("🔍 Analyse des fichiers dans le STAGE")
+        run_sql_file(cur, SQL_DIR / "select_filename_from_meta_staged.sql")
         staged_files = cur.fetchall()
 
         for (filename,) in staged_files:

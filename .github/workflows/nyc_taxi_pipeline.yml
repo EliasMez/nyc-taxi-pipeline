@@ -47,9 +47,9 @@ jobs:
     - name: Set environment variable LOGGER_LEVEL
       run: echo "LOGGER_LEVEL=${{ vars.LOGGER_LEVEL || 'INFO' }}" >> $GITHUB_ENV
 
-    - name: Run 01 - Data Warehouse Init
+    - name: Run 01 - Snowflake Infra Init
       run: |
-        python snowflake_ingestion/01_init_data_warehouse.py
+        python snowflake_ingestion/01_init_infra_snowflake.py
 
     - name: Run 02 - Scrape Links
       id: scrape

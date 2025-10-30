@@ -1,16 +1,15 @@
 import requests
 from lxml import html
-from functions import connect_with_role, use_context
-from functions import ACCOUNT
-from functions import WH_NAME, DW_NAME, RAW_SCHEMA, METADATA_TABLE
-from functions import ROLE_TRANSFORMER, USER_DEV, PASSWORD_DEV
-from functions import config_logger
-import logging
+from functions import *
 
 config_logger()
 logger = logging.getLogger(__name__)
 
+SQL_DIR = SQL_BASE_DIR / "02_scraping"
+
+
 def get_parquet_links():
+    logger.info("🌐 Début du scraping des données NYC Taxi")
     url = "https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page"
     response = requests.get(url)
     tree = html.fromstring(response.content)
@@ -20,17 +19,10 @@ def get_parquet_links():
 
 
 def setup_meta_table(cur):
-    cur.execute(f"""
-        CREATE TABLE IF NOT EXISTS {METADATA_TABLE} (
-            file_url VARCHAR(500),
-            file_name VARCHAR(255),
-            year NUMBER,
-            month NUMBER,
-            rows_loaded NUMBER,
-            load_status VARCHAR(50),
-            load_timestamp TIMESTAMP_TZ DEFAULT CONVERT_TIMEZONE('Europe/Paris', CURRENT_TIMESTAMP())
-        )
-    """)
+    logger.info("📋 Vérification/Création de la table de metadata")
+    sql_file = SQL_DIR / "setup_meta_table.sql"
+    run_sql_file(cur, sql_file)
+    logger.info("✅ Table de metadata prête")
 
 def main():
     conn = connect_with_role(USER_DEV, PASSWORD_DEV, ACCOUNT, ROLE_TRANSFORMER)
@@ -54,6 +46,7 @@ def main():
                 year = int(parts[0]) if len(parts) > 0 else None
                 month = int(parts[1]) if len(parts) > 1 else None
                 
+                logger.debug(f"🚀 Chargement de {METADATA_TABLE}")
                 cur.execute(f"""
                     INSERT INTO {METADATA_TABLE} (file_url, file_name, year, month, rows_loaded, load_status)
                     VALUES (%s, %s, %s, %s, 0, 'SCRAPED')
@@ -61,9 +54,9 @@ def main():
             else:
                 logger.info(f"⏭️ {filename} déjà référencé")
             
-            # Vérifie s'il reste des fichiers en statut SCRAPED ou STAGED à traiter
             if not new_file_detected:
-                cur.execute(f"SELECT COUNT(*) FROM {METADATA_TABLE} WHERE load_status IN ('SCRAPED', 'STAGED')")
+                logger.debug("🔍 Analyse des fichiers dans le STAGE et scrapés")
+                run_sql_file(cur, SQL_DIR / "count_new_files.sql")
                 if cur.fetchone()[0] > 0:
                     new_file_detected = True
 
