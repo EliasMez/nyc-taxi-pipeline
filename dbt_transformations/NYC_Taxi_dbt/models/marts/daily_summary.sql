@@ -1,8 +1,6 @@
 select
-    pulocationid,
+    to_date(tpep_pickup_datetime) as pickup_date,
     count(*) as trip_count,
-    avg(total_amount) as avg_revenue,
+    round(avg(trip_distance),2) as avg_distance,
     sum(total_amount) as total_revenue
-from {{ ref('int_trip_metrics') }}
-group by pulocationid
-order by trip_count desc
+from {{ ref('int_trip_metrics') }} group by pickup_date order by pickup_date
