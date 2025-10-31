@@ -15,18 +15,18 @@ jobs:
       SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
       SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
       PASSWORD_DEV: ${{ secrets.PASSWORD_DEV }}
-      LOGGER_LEVEL: ${{ vars.LOGGER_LEVEL || 'INFO' }}"
-      WH_NAME: ${{ vars.WH_NAME || 'NYC_WH' }}"
-      DW_NAME: ${{ vars.DW_NAME || 'NYC_TAXI_DW' }}"
-      RAW_SCHEMA: ${{ vars.RAW_SCHEMA || 'SCHEMA_RAW' }}"
-      STAGING_SCHEMA: ${{ vars.STAGING_SCHEMA || 'STAGING' }}"
-      FINAL_SCHEMA: ${{ vars.FINAL_SCHEMA || 'FINAL' }}"
-      PARQUET_FORMAT: ${{ vars.PARQUET_FORMAT || 'PARQUET_FORMAT' }}"
-      ROLE_TRANSFORMER: ${{ vars.ROLE_TRANSFORMER || 'TRANSFORMER' }}"
-      USER_DEV: ${{ vars.USER_DEV || 'USER_DEV' }}"
-      METADATA_TABLE: ${{ vars.METADATA_TABLE || 'FILE_LOADING_METADATA' }}"
-      RAW_TABLE: ${{ vars.RAW_TABLE || 'YELLOW_TAXI_TRIPS_RAW' }}"
-      STAGING_TABLE: ${{ vars.STAGING_TABLE || 'YELLOW_TAXI_TRIPS_STG' }}"
+      LOGGER_LEVEL: ${{ vars.LOGGER_LEVEL || 'INFO' }}
+      WH_NAME: ${{ vars.WH_NAME || 'NYC_WH' }}
+      DW_NAME: ${{ vars.DW_NAME || 'NYC_TAXI_DW' }}
+      RAW_SCHEMA: ${{ vars.RAW_SCHEMA || 'SCHEMA_RAW' }}
+      STAGING_SCHEMA: ${{ vars.STAGING_SCHEMA || 'STAGING' }}
+      FINAL_SCHEMA: ${{ vars.FINAL_SCHEMA || 'FINAL' }}
+      PARQUET_FORMAT: ${{ vars.PARQUET_FORMAT || 'PARQUET_FORMAT' }}
+      ROLE_TRANSFORMER: ${{ vars.ROLE_TRANSFORMER || 'TRANSFORMER' }}
+      USER_DEV: ${{ vars.USER_DEV || 'USER_DEV' }}
+      METADATA_TABLE: ${{ vars.METADATA_TABLE || 'FILE_LOADING_METADATA' }}
+      RAW_TABLE: ${{ vars.RAW_TABLE || 'YELLOW_TAXI_TRIPS_RAW' }}
+      STAGING_TABLE: ${{ vars.STAGING_TABLE || 'YELLOW_TAXI_TRIPS_STG' }}
       AWS_EC2_METADATA_DISABLED: true
       
     
