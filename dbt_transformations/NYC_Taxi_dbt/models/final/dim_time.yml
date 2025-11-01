@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: dim_time
+    description: "Dimension date dérivée des timestamps de la table staging."
+    columns:
+      - name: time_key
+        tests:
+          - unique
+          - not_null
+      - name: time
+        tests:
+          - unique
+          - not_null

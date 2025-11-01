@@ -6,12 +6,13 @@ __pycache__/
 dbt.log
 memo.txt
 
-# Dossiers générés par dbt
+# fichiers générés par dbt
 target/
 dbt_packages/
 dbt_transformations/logs/
 logs/
 .user.yml
+package-lock.yml
 
 # dossier généré par github action (après pull)
 node_modules

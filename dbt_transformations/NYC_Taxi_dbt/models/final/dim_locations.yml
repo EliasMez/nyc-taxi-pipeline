@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: dim_locations
+    description: "Dimension des lieux de prise et de dépose des taxis."
+    columns:
+      - name: location_key
+        tests:
+          - unique
+          - not_null
+      - name: location_id
+        tests:
+          - unique
+          - not_null

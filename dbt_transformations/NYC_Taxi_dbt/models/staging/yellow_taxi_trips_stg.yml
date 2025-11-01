@@ -1,0 +1,54 @@
+version: 2
+
+models:
+  - name: yellow_taxi_trips_stg
+    description: "Table de staging nettoyée des trajets de taxis jaunes NYC."
+    tests:
+    - dbt_expectations.expect_column_pair_values_A_to_be_greater_than_B:
+        arguments:
+          column_A: tpep_dropoff_datetime
+          column_B: tpep_pickup_datetime
+          or_equal: False
+
+    columns:
+      - name: vendorid
+        tests:
+          - not_null
+      - name: tpep_pickup_datetime
+        tests:
+          - not_null
+          - valid_datetime
+      - name: tpep_dropoff_datetime
+        tests:
+          - not_null
+          - valid_datetime
+      - name: passenger_count
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                column_name: passenger_count
+                min_value: 0
+      - name: trip_distance
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                column_name: trip_distance
+                min_value: 0
+      - name: fare_amount
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                column_name: fare_amount
+                min_value: 0
+      - name: total_amount
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                column_name: total_amount
+                min_value: 0
+      - name: pulocationid
+        tests:
+          - not_null
+      - name: dolocationid
+        tests:
+          - not_null
