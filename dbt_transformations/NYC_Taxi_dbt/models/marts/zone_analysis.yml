@@ -1,0 +1,38 @@
+version: 2
+
+models:
+  - name: zone_analysis
+    description: "Agrégation des trajets et revenus par lieu de prise en charge (PULocationID)."
+    columns:
+      - name: pulocationid
+        description: "Identifiant du lieu de départ du trajet."
+        tests:
+          - not_null
+          - unique
+
+      - name: trip_count
+        description: "Nombre total de trajets par lieu."
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                column_name: trip_count
+                min_value: 0
+
+      - name: avg_revenue
+        description: "Revenu moyen par trajet pour ce lieu."
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                column_name: avg_revenue
+                min_value: 0
+
+      - name: total_revenue
+        description: "Revenu total généré par les trajets depuis ce lieu."
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                column_name: total_revenue
+                min_value: 0
