@@ -28,6 +28,7 @@ jobs:
       RAW_TABLE: ${{ vars.RAW_TABLE || 'YELLOW_TAXI_TRIPS_RAW' }}
       STAGING_TABLE: ${{ vars.STAGING_TABLE || 'YELLOW_TAXI_TRIPS_STG' }}
       AWS_EC2_METADATA_DISABLED: true
+      DBT_CMD: "dbt --project-dir dbt_transformations/NYC_Taxi_dbt --profiles-dir dbt_transformations"
       
     
     steps:
@@ -67,5 +68,19 @@ jobs:
     - name: Run dbt transformations
       if: ${{ steps.scrape.outputs.new_file_detected == 'True' }}
       run: |
-        dbt run --project-dir dbt_transformations/NYC_Taxi_dbt/ --profiles-dir dbt_transformations/
-      # dbt test --project-dir dbt_transformations/NYC_Taxi_dbt/ --profiles-dir dbt_transformations/
+<<<<<<< HEAD
+        dbt run --project-dir dbt_transformations/NYC_Taxi_dbt --profiles-dir dbt_transformations
+=======
+        $DBT_CMD run
+>>>>>>> 4a72d20 (feat(dbt): ajout des tests dbt)
+
+    - name: tests dbt
+      if: ${{ steps.scrape.outputs.new_file_detected == 'True' }}
+      run: |
+<<<<<<< HEAD
+        dbt deps --project-dir dbt_transformations/NYC_Taxi_dbt --profiles-dir dbt_transformations
+        dbt test --project-dir dbt_transformations/NYC_Taxi_dbt --profiles-dir dbt_transformations
+=======
+        $DBT_CMD deps
+        $DBT_CMD test
+>>>>>>> 4a72d20 (feat(dbt): ajout des tests dbt)
