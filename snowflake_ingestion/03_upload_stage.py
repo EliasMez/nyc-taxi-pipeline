@@ -30,7 +30,11 @@ def main():
         logger.debug("📥 Récupération des URLs et noms des fichiers scrappés")
         run_sql_file(cur, SQL_DIR / "select_file_url_name_from_meta_scraped.sql")
         scraped_files = cur.fetchall()
-        logger.info(f"📦 {len(scraped_files)} fichiers à uploader")
+        scraped_files_count = len(scraped_files)
+        if scraped_files_count == 0:
+            logger.warning(f"⚠️  Aucun fichier à uploader")
+        else :
+            logger.info(f"📦 {scraped_files_count} fichiers à uploader")
 
         for file_url, filename in scraped_files:
             try:
