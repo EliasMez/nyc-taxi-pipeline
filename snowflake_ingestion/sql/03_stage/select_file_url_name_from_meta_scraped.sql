@@ -1,1 +1,1 @@
-SELECT file_url, file_name FROM { METADATA_TABLE } WHERE load_status='SCRAPED'
+SELECT file_url, file_name FROM { METADATA_TABLE } WHERE load_status='SCRAPED' OR load_status='FAILED_STAGE'

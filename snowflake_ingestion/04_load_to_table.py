@@ -17,7 +17,7 @@ def create_table(cur):
         run_sql_file(cur, SQL_DIR / "add_filename_to_raw_table.sql")
         logger.info(f"✅ Table {RAW_TABLE} prête")
     else :
-        logger.warning(f"⚠️ Aucune donnée dans le STAGE")
+        logger.warning(f"⚠️  Aucune donnée dans le STAGE")
 
 
 
