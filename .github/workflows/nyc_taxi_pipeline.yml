@@ -50,32 +50,25 @@ jobs:
         python snowflake_ingestion/01_init_infra_snowflake.py
 
     - name: Run 02 - Scrape Links
-      id: scrape
       run: |
-        output=$(python snowflake_ingestion/02_scrape_links.py | grep new_file_detected | cut -d '=' -f2)
-        echo "new_file_detected=$output" >> $GITHUB_OUTPUT
+        python snowflake_ingestion/02_scrape_links.py
 
     - name: Run 03 - Upload to Stage
-      if: ${{ steps.scrape.outputs.new_file_detected == 'True' }}
       run: |
         python snowflake_ingestion/03_upload_stage.py
 
     - name: Run 04 - Load to Table
-      if: ${{ steps.scrape.outputs.new_file_detected == 'True' }}
       run: |
         python snowflake_ingestion/04_load_to_table.py
 
     - name: Install dbt dependencies
-      if: ${{ steps.scrape.outputs.new_file_detected == 'True' }}
       run: |
         dbt deps --project-dir dbt_transformations/NYC_Taxi_dbt --profiles-dir dbt_transformations
 
     - name: Run dbt transformations
-      if: ${{ steps.scrape.outputs.new_file_detected == 'True' }}
       run: |
         dbt run --project-dir dbt_transformations/NYC_Taxi_dbt --profiles-dir dbt_transformations
 
     - name: Run dbt tests
-      if: ${{ steps.scrape.outputs.new_file_detected == 'True' }}
       run: |
         dbt test --project-dir dbt_transformations/NYC_Taxi_dbt --profiles-dir dbt_transformations
