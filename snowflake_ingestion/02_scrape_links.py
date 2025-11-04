@@ -62,9 +62,8 @@ def main():
 
     conn.close()
 
-    print(f"new_file_detected={new_file_detected}")
     if not new_file_detected:
-        logger.warning("❌ Aucun nouveau fichier à charger, arrêt du workflow.")
+        logger.warning("⚠️  Aucun nouveau fichier à charger.")
     
     logger.info("✅ Scraping terminé")
 
