@@ -10,7 +10,6 @@ seed-paths: ["seeds"]
 macro-paths: ["macros"]
 snapshot-paths: ["snapshots"]
 
-# directories to be removed by `dbt clean`
 clean-targets:
   - "target"
   - "dbt_packages"
@@ -22,11 +21,21 @@ models:
         +materialized: view
         +schema: "{{ env_var('STAGING_SCHEMA') }}"
       yellow_taxi_trips_stg:
-        +materialized: table  
+        +materialized: incremental  
         +schema: "{{ env_var('STAGING_SCHEMA') }}"
     final:
-      +materialized: table
-      +schema: "{{ env_var('FINAL_SCHEMA') }}"
+      fact_trips:
+        +materialized: incremental
+        +schema: "{{ env_var('FINAL_SCHEMA') }}"
+      dim_locations:
+        +materialized: table
+        +schema: "{{ env_var('FINAL_SCHEMA') }}"
+      dim_time:
+        +materialized: table
+        +schema: "{{ env_var('FINAL_SCHEMA') }}"
+      dim_date:
+        +materialized: table
+        +schema: "{{ env_var('FINAL_SCHEMA') }}"
     marts:
       +materialized: view
       +schema: "{{ env_var('FINAL_SCHEMA') }}"
