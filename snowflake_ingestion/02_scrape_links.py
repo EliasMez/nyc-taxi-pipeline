@@ -52,10 +52,10 @@ def main():
                     VALUES (%s, %s, %s, %s, 0, 'SCRAPED')
                 """, (url, filename, year, month))
             else:
-                logger.info(f"⏭️ {filename} déjà référencé")
+                logger.info(f"⏭️  {filename} déjà référencé")
             
             if not new_file_detected:
-                logger.debug("🔍 Analyse des fichiers dans le STAGE et scrapés")
+                logger.debug("🔍 Analyse des fichiers SCRAPED")
                 run_sql_file(cur, SQL_DIR / "count_new_files.sql")
                 if cur.fetchone()[0] > 0:
                     new_file_detected = True
@@ -64,7 +64,7 @@ def main():
 
     print(f"new_file_detected={new_file_detected}")
     if not new_file_detected:
-        logger.error("❌ Aucun nouveau fichier à charger, arrêt du workflow.")
+        logger.warning("❌ Aucun nouveau fichier à charger, arrêt du workflow.")
     
     logger.info("✅ Scraping terminé")
 
