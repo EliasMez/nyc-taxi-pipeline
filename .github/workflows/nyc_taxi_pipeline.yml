@@ -62,13 +62,6 @@ jobs:
         python snowflake_ingestion/04_load_to_table.py
 
     - name: Install dbt dependencies
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-      if: ${{ steps.scrape.outputs.new_file_detected == 'True' }}
->>>>>>> 3e8891f (fix(workflow): installation des dependances avant run)
-=======
->>>>>>> 65332af (fix(workflow): remove workflow conditions and add failed stage/load reprocessing)
       run: |
         dbt deps --project-dir dbt_transformations/NYC_Taxi_dbt --profiles-dir dbt_transformations
 
@@ -77,14 +70,5 @@ jobs:
         dbt run --project-dir dbt_transformations/NYC_Taxi_dbt --profiles-dir dbt_transformations
 
     - name: Run dbt tests
-<<<<<<< HEAD
-<<<<<<< HEAD
       run: |
         dbt test --project-dir dbt_transformations/NYC_Taxi_dbt --profiles-dir dbt_transformations
-=======
-      if: ${{ steps.scrape.outputs.new_file_detected == 'True' }}
-=======
->>>>>>> 65332af (fix(workflow): remove workflow conditions and add failed stage/load reprocessing)
-      run: |
-        dbt test --project-dir dbt_transformations/NYC_Taxi_dbt --profiles-dir dbt_transformations
->>>>>>> 3e8891f (fix(workflow): installation des dependances avant run)
