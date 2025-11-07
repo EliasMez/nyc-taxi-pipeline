@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.3.1 (2025-11-07)
+
+### Bug Fixes
+
+- **workflows**: Correction interval dependabot
+  ([`36781dd`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/36781ddaed87b83461342c0134766c836725e412))
+
+
 ## v1.3.0 (2025-11-07)
 
 ### Bug Fixes
