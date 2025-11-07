@@ -15,6 +15,7 @@ jobs:
       SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
       SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
       PASSWORD_DEV: ${{ secrets.PASSWORD_DEV }}
+      SCRAPING_YEAR: ${{ vars.SCRAPING_YEAR }}
       LOGGER_LEVEL: ${{ vars.LOGGER_LEVEL || 'INFO' }}
       WH_NAME: ${{ vars.WH_NAME || 'NYC_WH' }}
       DW_NAME: ${{ vars.DW_NAME || 'NYC_TAXI_DW' }}
