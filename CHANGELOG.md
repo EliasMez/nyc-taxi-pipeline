@@ -2,6 +2,22 @@
 
 <!-- version list -->
 
+## v1.3.0 (2025-11-07)
+
+### Bug Fixes
+
+- **workflow**: Remove workflow conditions and add failed stage/load reprocessing
+  ([`310f2dc`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/310f2dcc0d9395f9865ab6c8b91d67bc71cb57dd))
+
+### Features
+
+- **dbt**: Set incremental materialization for fact_trips and staging tables
+  ([`f4fcb8c`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/f4fcb8cd535edd7e6e723a04d1163ffd8ad0537b))
+
+- **workflow**: Dependabot
+  ([`7038073`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/703807379325c6596e0edfc79c3b4958e37dbc3b))
+
+
 ## v1.2.0 (2025-11-03)
 
 ### Bug Fixes
