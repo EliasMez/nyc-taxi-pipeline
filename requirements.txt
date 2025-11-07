@@ -65,7 +65,7 @@ Pygments==2.19.2
 PyJWT==2.10.1
 pyOpenSSL==25.3.0
 python-dateutil==2.9.0.post0
-python-dotenv==1.1.1
+python-dotenv==1.2.1
 python-gitlab==6.5.0
 python-semantic-release==10.4.1
 python-slugify==8.0.4
