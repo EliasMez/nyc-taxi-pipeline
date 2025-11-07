@@ -2,6 +2,24 @@
 
 <!-- version list -->
 
+## v1.4.0 (2025-11-07)
+
+### Bug Fixes
+
+- **workflows**: Correction interval dependabot
+  ([`36781dd`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/36781ddaed87b83461342c0134766c836725e412))
+
+### Chores
+
+- **workflow**: Release token name change
+  ([`7cb5769`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/7cb576905a8b7aabcbdf6fb2b9e6e52dad749c40))
+
+### Features
+
+- **scraper**: Ajout de variable année scraping
+  ([`8e212a8`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/8e212a8047c9c3d227bf8d9633b782f9d2682dc3))
+
+
 ## v1.3.1 (2025-11-07)
 
 ### Bug Fixes
