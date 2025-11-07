@@ -1,4 +1,4 @@
-agate==1.9.1
+agate==1.13.0
 annotated-types==0.7.0
 asn1crypto==1.5.1
 attrs==25.3.0
