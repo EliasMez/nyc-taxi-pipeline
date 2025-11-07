@@ -1,11 +1,42 @@
 import requests
 from lxml import html
 from functions import *
+from datetime import datetime
 
 config_logger()
 logger = logging.getLogger(__name__)
 
 SQL_DIR = SQL_BASE_DIR / "02_scraping"
+
+current_year = datetime.now().year
+current_month = datetime.now().month
+
+def get_scraping_year():
+    default_year = current_year - 1 if current_month <= 3 else current_year
+    if SCRAPING_YEAR == "":
+        return default_year
+    else:
+        try:
+            int_year = int(SCRAPING_YEAR)
+        except:
+            logger.error(f"\"SCRAPING_YEAR = {SCRAPING_YEAR}\" n'est pas une année valide !")
+            logger.warning(f"L'année du scraping a été réinitialisée à {default_year}")
+            return default_year
+        
+        if int_year < 2009 or int_year > current_year:
+            logger.error(f"\"SCRAPING_YEAR = {SCRAPING_YEAR}\" l'année du scraping doit être compris entre 2009 et {current_year} inclus!")
+            logger.warning(f"L'année du scraping a été réinitialisée à {default_year}")
+            return default_year
+        logger.info(f"Les fichiers seront scrapés à partir de l'année {default_year}")
+        return int_year
+     
+
+def get_xpath():
+    xpath_query = "//a[@title='Yellow Taxi Trip Records' and ("
+    get_contains = lambda year: f"contains(@href, '{year}')"
+    contains_list = [get_contains(year) for year in range(get_scraping_year(),current_year+1)]
+    xpath_query+= " or ".join(contains_list) + ")]"
+    return xpath_query
 
 
 def get_parquet_links():
@@ -13,7 +44,7 @@ def get_parquet_links():
     url = "https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page"
     response = requests.get(url)
     tree = html.fromstring(response.content)
-    xpath_query = "//a[@title='Yellow Taxi Trip Records' and (contains(@href, '2025') or contains(@href, '2024'))]"
+    xpath_query = get_xpath()
     filtered_links = tree.xpath(xpath_query)
     return [link.get('href') for link in filtered_links if link.get('href') and link.get('href').endswith('.parquet')]
 

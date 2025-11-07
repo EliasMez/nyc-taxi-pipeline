@@ -24,6 +24,7 @@ PARQUET_FORMAT = os.getenv('PARQUET_FORMAT')
 ROLE_TRANSFORMER = os.getenv('ROLE_TRANSFORMER')
 USER_DEV = os.getenv('USER_DEV')
 
+SCRAPING_YEAR = os.getenv('SCRAPING_YEAR')
 LOGGER_LEVEL = getattr(logging, os.getenv('LOGGER_LEVEL'))
 
 
