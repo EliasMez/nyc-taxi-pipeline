@@ -47,7 +47,7 @@ MarkupSafe==3.0.3
 mashumaro==3.14
 mdurl==0.1.2
 more-itertools==10.8.0
-msgpack==1.1.1
+msgpack==1.1.2
 networkx==3.5
 opentelemetry-api==1.38.0
 opentelemetry-sdk==1.38.0
