@@ -42,7 +42,7 @@ jsonschema-specifications==2025.9.1
 keyring==25.6.0
 leather==0.4.0
 lxml==6.0.2
-markdown-it-py==3.0.0
+markdown-it-py==4.0.0
 MarkupSafe==3.0.3
 mashumaro==3.14
 mdurl==0.1.2
