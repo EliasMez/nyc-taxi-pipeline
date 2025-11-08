@@ -19,7 +19,7 @@ dbt-common==1.36.0
 dbt-core==1.10.13
 dbt-extractor==0.6.0
 dbt-protos==1.0.382
-dbt-semantic-interfaces==0.10.0
+dbt-semantic-interfaces==0.9.0
 dbt-snowflake==1.10.3
 deepdiff==8.6.1
 Deprecated==1.3.1
