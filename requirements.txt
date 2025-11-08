@@ -14,7 +14,7 @@ click-option-group==0.5.9
 colorama==0.4.6
 cryptography==46.0.3
 daff==1.4.2
-dbt-adapters==1.17.2
+dbt-adapters==1.19.0
 dbt-common==1.36.0
 dbt-core==1.10.13
 dbt-extractor==0.6.0
