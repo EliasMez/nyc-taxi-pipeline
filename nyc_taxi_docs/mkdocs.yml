@@ -1,0 +1,20 @@
+site_name: NYC Taxi Data Pipeline
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - toc.integrate
+    - search.suggest
+    - search.highlight
+
+nav:
+  - 🚕 Accueil: index.md
+  - 📋 Prérequis: prerequisites.md
+  - 📁 Architecture: architecture.md
+  - 📊 Flux de traitement: flow.md
+  - 📈 Monitoring: monitoring.md
+  - 🚀 Exécution: execution.md
+  - ⚙️ Configuration: configuration.md
+  - 🔐 Sécurité: security.md
+  - 🐛 Dépannage: troubleshooting.md
