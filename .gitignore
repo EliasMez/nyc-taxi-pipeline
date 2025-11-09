@@ -16,3 +16,6 @@ package-lock.yml
 
 # dossier généré par github action (après pull)
 node_modules
+
+# mkdocs
+site/
