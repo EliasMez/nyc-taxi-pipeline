@@ -1,0 +1,3 @@
+- Les secrets sont chiffrés dans GitHub
+- Rôle Snowflake avec permissions minimales nécessaires
+- Mots de passe illisibles dans les logs DEBUG
