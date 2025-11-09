@@ -1,0 +1,12 @@
+name: "Python CodeQL Config"
+
+paths:
+  - snowflake_ingestion
+  - dbt_transformations
+
+paths-ignore:
+  - nyc_taxi_docs
+  - .github
+
+queries:
+  - uses: security-and-quality
