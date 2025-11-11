@@ -2,6 +2,19 @@
 
 <!-- version list -->
 
+## v1.6.0 (2025-11-11)
+
+### Chores
+
+- **sql**: Modif lint correction sql
+  ([`d2c2f59`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/d2c2f5917579949b726474bdb89f551acf8c13d9))
+
+### Features
+
+- **workflow**: Ajout de sqlfluff
+  ([`61615cf`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/61615cf3d121b1f62394f8c190bba6531c425400))
+
+
 ## v1.5.0 (2025-11-09)
 
 ### Bug Fixes
