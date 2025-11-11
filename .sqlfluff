@@ -1,0 +1,35 @@
+[sqlfluff]
+dialect = snowflake
+; templater = python
+exclude_rules = None
+max_line_length = 800
+
+[sqlfluff:indentation]
+indent_unit = space
+tab_space_size = 4
+
+[sqlfluff:layout:type:comma]
+line_position = trailing
+
+[sqlfluff:rules]
+allowed_values_in_comment = None
+ambiguous_column_references = None
+capitalisation_policy = consistent
+consistent_joins = True
+consistent_using = True
+field_alias_policy = consistent
+leading_commas = False
+multiline_newline = True
+single_table_references = consistent
+spacing_before = consistent
+spacing_after = consistent
+trailing_commas = always
+unnecessary_GROUP_by = True
+unnecessary_WHERE = True
+
+
+
+[sqlfluff:templater:dbt]
+project_dir = dbt_transformations/NYC_Taxi_dbt
+profiles_dir = ./
+
