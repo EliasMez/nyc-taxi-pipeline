@@ -1,6 +1,5 @@
 [sqlfluff]
 dialect = snowflake
-; templater = python
 exclude_rules = None
 max_line_length = 800
 

@@ -67,7 +67,7 @@ def use_context(cur, WH_NAME, DW_NAME, RAW_SCHEMA):
 
 
 
-def run_sql_file(cur, filepath):
+def run_sql_file_old(cur, filepath):
     with open(filepath, "r") as f:
         sql = f.read()
         keys = re.findall(r"{\s*(\w+)\s*}", sql)
@@ -77,6 +77,24 @@ def run_sql_file(cur, filepath):
 
         for key, value in variables.items():
             sql = sql.replace(f"{{ {key} }}", str(value))
+        masked_vars = {k: "*****" if "PASSWORD" in k.upper() else v for k, v in variables.items()}
+        logger.debug(f"🧱 Variables utilisées : {dict(sorted(masked_vars.items()))}")
+
+        for statement in sql.split(";"):
+            statement = statement.strip()
+            if statement:
+                cur.execute(statement)
+
+
+def run_sql_file(cur, filepath):
+    with open(filepath, "r") as f:
+        sql = f.read()
+        keys = re.findall(r"(\w+)_PLACEHOLDER", sql)
+        variables = {k: globals().get(k, f"<{k}_NOT_FOUND>") for k in keys}
+        logger.debug(f"🔎 Variables détectées dans {filepath.name}: {sorted(set(keys))}")
+        for key, value in variables.items():
+            sql = sql.replace(f"{key}_PLACEHOLDER", str(value))
+        
         masked_vars = {k: "*****" if "PASSWORD" in k.upper() else v for k, v in variables.items()}
         logger.debug(f"🧱 Variables utilisées : {dict(sorted(masked_vars.items()))}")
 

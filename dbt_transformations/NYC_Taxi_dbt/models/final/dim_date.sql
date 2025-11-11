@@ -1,18 +1,17 @@
 with dates as (
-    select distinct
-        date(tpep_pickup_datetime) as date
+    select distinct date(tpep_pickup_datetime) as trip_date
     from {{ ref('yellow_taxi_trips_stg') }}
-    union
-    select distinct
-        date(tpep_dropoff_datetime) as date
+    union distinct
+    select distinct date(tpep_dropoff_datetime) as trip_date
     from {{ ref('yellow_taxi_trips_stg') }}
 )
+
 select
-    row_number() over (order by date) as date_key,
-    date,
-    extract(year from date) as year,
-    extract(month from date) as month,
-    extract(day from date) as day,
-    extract(quarter from date) as quarter,
-    extract(dayofweek from date) as day_of_week,
+    trip_date,
+    row_number() over (order by trip_date) as date_key,
+    extract(year from trip_date) as year,
+    extract(month from trip_date) as month,
+    extract(day from trip_date) as day,
+    extract(quarter from trip_date) as quarter,
+    extract(dayofweek from trip_date) as day_of_week
 from dates
