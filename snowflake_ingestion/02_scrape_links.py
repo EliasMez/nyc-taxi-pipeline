@@ -12,7 +12,7 @@ current_year = datetime.now().year
 current_month = datetime.now().month
 
 
-def get_scraping_year():
+def get_scraping_year()-> int:
     """Determine the scraping year to use based on environment settings.
 
     Uses SCRAPING_YEAR if defined and valid, otherwise selects the previous
@@ -46,7 +46,7 @@ def get_scraping_year():
         return int_year
      
 
-def get_xpath():
+def get_xpath() -> str:
     """Build the XPath expression used to locate Parquet file links.
 
     The expression filters NYC Taxi data links by year, starting from the
@@ -62,7 +62,7 @@ def get_xpath():
     return xpath_query
 
 
-def get_parquet_links():
+def get_parquet_links()-> list[str]:
     """Scrape the NYC Taxi data page for Parquet file URLs.
 
     Sends an HTTP request to the NYC Taxi & Limousine Commission website,

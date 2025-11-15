@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 SQL_DIR = SQL_BASE_DIR / "03_stage"
 
 
-def download_and_upload_file(cur, file_url, filename, temp_dir="temp_files"):
+def download_and_upload_file(cur, file_url, filename, temp_dir="temp_files") -> str:
     """Download a Parquet file and upload it to Snowflake stage.
 
     The function downloads the file from the specified URL, saves it

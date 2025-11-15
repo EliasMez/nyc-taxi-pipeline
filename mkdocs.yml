@@ -8,6 +8,17 @@ theme:
     - search.suggest
     - search.highlight
 
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            docstring_style: google
+            show_source: true
+
+
+
 nav:
   - 🚕 Accueil: index.md
   - 📋 Prérequis: prerequisites.md
@@ -18,3 +29,4 @@ nav:
   - ⚙️ Configuration: configuration.md
   - 🔐 Sécurité: security.md
   - 🐛 Dépannage: troubleshooting.md
+  - 📚 Docstrings: docstrings.md
