@@ -10,6 +10,21 @@ SQL_DIR = SQL_BASE_DIR / "03_stage"
 
 
 def download_and_upload_file(cur, file_url, filename, temp_dir="temp_files"):
+    """Download a Parquet file and upload it to Snowflake stage.
+
+    The function downloads the file from the specified URL, saves it
+    temporarily on disk, and uploads it to the user's Snowflake stage
+    using the PUT command.
+
+    Args:
+        cur (snowflake.connector.cursor.SnowflakeCursor): Active Snowflake cursor.
+        file_url (str): URL of the file to download.
+        filename (str): File name to save locally.
+        temp_dir (str, optional): Temporary directory path. Defaults to "temp_files".
+
+    Returns:
+        str: Path to the temporary file created on disk.
+    """
     os.makedirs(temp_dir, exist_ok=True)
     tmp_path = f"{temp_dir}/{filename}"
     logger.info(f"📥 Téléchargement de {filename}...")
@@ -23,6 +38,12 @@ def download_and_upload_file(cur, file_url, filename, temp_dir="temp_files"):
     return tmp_path
 
 def main():
+    """Main staging process for Parquet files.
+
+    Connects to Snowflake, retrieves metadata for scraped files, downloads
+    each file, uploads it to the stage, and updates the metadata table
+    with the appropriate load status.
+    """
     conn = connect_with_role(USER_DEV, PASSWORD_DEV, ACCOUNT, ROLE_TRANSFORMER)
 
     with conn.cursor() as cur:
