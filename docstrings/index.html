@@ -1,0 +1,3402 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../troubleshooting/">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.23">
+    
+    
+      
+        <title>📚 Docstrings - NYC Taxi Data Pipeline</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.84d31ad4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#docstrings-modules-python" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="NYC Taxi Data Pipeline" class="md-header__button md-logo" aria-label="NYC Taxi Data Pipeline" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            NYC Taxi Data Pipeline
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              📚 Docstrings
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  🚕 Accueil
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../prerequisites/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  📋 Prérequis
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../architecture/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  📁 Architecture
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../flow/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  📊 Flux de traitement
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../monitoring/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  📈 Monitoring
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../execution/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  🚀 Exécution
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../configuration/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  ⚙️ Configuration
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../security/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  🔐 Sécurité
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  🐛 Dépannage
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  📚 Docstrings
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="NYC Taxi Data Pipeline" class="md-nav__button md-logo" aria-label="NYC Taxi Data Pipeline" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    NYC Taxi Data Pipeline
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    🚕 Accueil
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../prerequisites/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    📋 Prérequis
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    📁 Architecture
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../flow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    📊 Flux de traitement
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../monitoring/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    📈 Monitoring
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../execution/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    🚀 Exécution
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ⚙️ Configuration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    🔐 Sécurité
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    🐛 Dépannage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    📚 Docstrings
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    📚 Docstrings
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#snowflake-initialisation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Snowflake Initialisation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#snowflake_ingestion.01_init_infra_snowflake" class="md-nav__link">
+    <span class="md-ellipsis">
+      01_init_infra_snowflake
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#snowflake_ingestion.01_init_infra_snowflake.create_roles_and_user" class="md-nav__link">
+    <span class="md-ellipsis">
+      create_roles_and_user
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#snowflake_ingestion.01_init_infra_snowflake.grant_privileges" class="md-nav__link">
+    <span class="md-ellipsis">
+      grant_privileges
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#snowflake_ingestion.01_init_infra_snowflake.main" class="md-nav__link">
+    <span class="md-ellipsis">
+      main
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#snowflake_ingestion.01_init_infra_snowflake.setup_data_warehouse" class="md-nav__link">
+    <span class="md-ellipsis">
+      setup_data_warehouse
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scraping" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scraping
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#snowflake_ingestion.02_scrape_links" class="md-nav__link">
+    <span class="md-ellipsis">
+      02_scrape_links
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#snowflake_ingestion.02_scrape_links.get_parquet_links" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_parquet_links
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#snowflake_ingestion.02_scrape_links.get_scraping_year" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_scraping_year
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#snowflake_ingestion.02_scrape_links.get_xpath" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_xpath
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#snowflake_ingestion.02_scrape_links.main" class="md-nav__link">
+    <span class="md-ellipsis">
+      main
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#snowflake_ingestion.02_scrape_links.setup_meta_table" class="md-nav__link">
+    <span class="md-ellipsis">
+      setup_meta_table
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#staging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Staging
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#snowflake_ingestion.03_upload_stage" class="md-nav__link">
+    <span class="md-ellipsis">
+      03_upload_stage
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#snowflake_ingestion.03_upload_stage.download_and_upload_file" class="md-nav__link">
+    <span class="md-ellipsis">
+      download_and_upload_file
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#snowflake_ingestion.03_upload_stage.main" class="md-nav__link">
+    <span class="md-ellipsis">
+      main
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#loading" class="md-nav__link">
+    <span class="md-ellipsis">
+      Loading
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#snowflake_ingestion.04_load_to_table" class="md-nav__link">
+    <span class="md-ellipsis">
+      04_load_to_table
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#snowflake_ingestion.04_load_to_table.cleanup_stage_file" class="md-nav__link">
+    <span class="md-ellipsis">
+      cleanup_stage_file
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#snowflake_ingestion.04_load_to_table.copy_file_to_table_and_count" class="md-nav__link">
+    <span class="md-ellipsis">
+      copy_file_to_table_and_count
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#snowflake_ingestion.04_load_to_table.create_table" class="md-nav__link">
+    <span class="md-ellipsis">
+      create_table
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#snowflake_ingestion.04_load_to_table.handle_loading_error" class="md-nav__link">
+    <span class="md-ellipsis">
+      handle_loading_error
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#snowflake_ingestion.04_load_to_table.main" class="md-nav__link">
+    <span class="md-ellipsis">
+      main
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#snowflake_ingestion.04_load_to_table.update_metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      update_metadata
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fonctions-utilitaires" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fonctions utilitaires
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#snowflake_ingestion.functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      functions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#snowflake_ingestion.functions.config_logger" class="md-nav__link">
+    <span class="md-ellipsis">
+      config_logger
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#snowflake_ingestion.functions.connect_with_role" class="md-nav__link">
+    <span class="md-ellipsis">
+      connect_with_role
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#snowflake_ingestion.functions.run_sql_file" class="md-nav__link">
+    <span class="md-ellipsis">
+      run_sql_file
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#snowflake_ingestion.functions.use_context" class="md-nav__link">
+    <span class="md-ellipsis">
+      use_context
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="docstrings-modules-python">Docstrings – Modules Python</h1>
+<h2 id="snowflake-initialisation">Snowflake Initialisation</h2>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="snowflake_ingestion.01_init_infra_snowflake"></a>
+    <div class="doc doc-contents first">
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="snowflake_ingestion.01_init_infra_snowflake.create_roles_and_user" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">create_roles_and_user</span><span class="p">(</span><span class="n">cur</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Create the DBT role and user in Snowflake.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>cur</code>
+            </td>
+            <td>
+                  <code><span title="snowflake.connector.cursor.SnowflakeCursor">SnowflakeCursor</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Active Snowflake cursor.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>snowflake_ingestion/01_init_infra_snowflake.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">create_roles_and_user</span><span class="p">(</span><span class="n">cur</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create the DBT role and user in Snowflake.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        cur (snowflake.connector.cursor.SnowflakeCursor): Active Snowflake cursor.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;🔐 Création du rôle et de l&#39;utilisateur DBT...&quot;</span><span class="p">)</span>
+    <span class="n">sql_file</span> <span class="o">=</span> <span class="n">SQL_DIR</span> <span class="o">/</span> <span class="s2">&quot;create_roles_and_user.sql&quot;</span>
+    <span class="n">run_sql_file</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">sql_file</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;✅ Rôle et utilisateur créés&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="snowflake_ingestion.01_init_infra_snowflake.grant_privileges" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">grant_privileges</span><span class="p">(</span><span class="n">cur</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Grant required privileges to the TRANSFORMER role in Snowflake.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>cur</code>
+            </td>
+            <td>
+                  <code><span title="snowflake.connector.cursor.SnowflakeCursor">SnowflakeCursor</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Active Snowflake cursor.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>snowflake_ingestion/01_init_infra_snowflake.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">grant_privileges</span><span class="p">(</span><span class="n">cur</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Grant required privileges to the TRANSFORMER role in Snowflake.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        cur (snowflake.connector.cursor.SnowflakeCursor): Active Snowflake cursor.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;🔑 Attribution des privilèges au rôle TRANSFORMER...&quot;</span><span class="p">)</span>
+    <span class="n">sql_file</span> <span class="o">=</span> <span class="n">SQL_DIR</span> <span class="o">/</span> <span class="s2">&quot;grant_privileges.sql&quot;</span>
+    <span class="n">run_sql_file</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">sql_file</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;✅ Privilèges attribués&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="snowflake_ingestion.01_init_infra_snowflake.main" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">main</span><span class="p">()</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Main initialization process for the Snowflake environment.</p>
+<p>Establishes connections with appropriate roles (SYSADMIN, SECURITYADMIN)
+and executes setup steps in order.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>snowflake_ingestion/01_init_infra_snowflake.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Main initialization process for the Snowflake environment.</span>
+
+<span class="sd">    Establishes connections with appropriate roles (SYSADMIN, SECURITYADMIN)</span>
+<span class="sd">    and executes setup steps in order.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">conn</span> <span class="o">=</span> <span class="n">connect_with_role</span><span class="p">(</span><span class="n">USER</span><span class="p">,</span> <span class="n">PASSWORD</span><span class="p">,</span> <span class="n">ACCOUNT</span><span class="p">,</span> <span class="s1">&#39;SYSADMIN&#39;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span> <span class="k">as</span> <span class="n">cur</span><span class="p">:</span>
+            <span class="n">setup_data_warehouse</span><span class="p">(</span><span class="n">cur</span><span class="p">)</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="n">conn</span> <span class="o">=</span> <span class="n">connect_with_role</span><span class="p">(</span><span class="n">USER</span><span class="p">,</span> <span class="n">PASSWORD</span><span class="p">,</span> <span class="n">ACCOUNT</span><span class="p">,</span> <span class="s1">&#39;SECURITYADMIN&#39;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span> <span class="k">as</span> <span class="n">cur</span><span class="p">:</span>
+            <span class="n">create_roles_and_user</span><span class="p">(</span><span class="n">cur</span><span class="p">)</span>
+            <span class="n">grant_privileges</span><span class="p">(</span><span class="n">cur</span><span class="p">)</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;🎯 Initialisation complète terminée avec succès !&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;❌ Erreur : </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="snowflake_ingestion.01_init_infra_snowflake.setup_data_warehouse" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">setup_data_warehouse</span><span class="p">(</span><span class="n">cur</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Create the data warehouse, database, and schemas in Snowflake.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>cur</code>
+            </td>
+            <td>
+                  <code><span title="snowflake.connector.cursor.SnowflakeCursor">SnowflakeCursor</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Active Snowflake cursor.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>snowflake_ingestion/01_init_infra_snowflake.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">setup_data_warehouse</span><span class="p">(</span><span class="n">cur</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create the data warehouse, database, and schemas in Snowflake.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        cur (snowflake.connector.cursor.SnowflakeCursor): Active Snowflake cursor.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;🏗️ Création du warehouse, base et schémas...&quot;</span><span class="p">)</span>
+    <span class="n">sql_file</span> <span class="o">=</span> <span class="n">SQL_DIR</span> <span class="o">/</span> <span class="s2">&quot;setup_data_warehouse.sql&quot;</span>
+    <span class="n">run_sql_file</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">sql_file</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;✅ Warehouse et schémas créés&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div><h2 id="scraping">Scraping</h2>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="snowflake_ingestion.02_scrape_links"></a>
+    <div class="doc doc-contents first">
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="snowflake_ingestion.02_scrape_links.get_parquet_links" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_parquet_links</span><span class="p">()</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Scrape the NYC Taxi data page for Parquet file URLs.</p>
+<p>Sends an HTTP request to the NYC Taxi &amp; Limousine Commission website,
+parses the page HTML, and extracts links to Parquet files for the
+relevant years.</p>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="list">list</span>[<span title="str">str</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>list[str]: List of Parquet file URLs.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>snowflake_ingestion/02_scrape_links.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_parquet_links</span><span class="p">()</span><span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Scrape the NYC Taxi data page for Parquet file URLs.</span>
+
+<span class="sd">    Sends an HTTP request to the NYC Taxi &amp; Limousine Commission website,</span>
+<span class="sd">    parses the page HTML, and extracts links to Parquet files for the</span>
+<span class="sd">    relevant years.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list[str]: List of Parquet file URLs.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;🌐 Début du scraping des données NYC Taxi&quot;</span><span class="p">)</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page&quot;</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="n">tree</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+    <span class="n">xpath_query</span> <span class="o">=</span> <span class="n">get_xpath</span><span class="p">()</span>
+    <span class="n">filtered_links</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">xpath_query</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">link</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;href&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="n">filtered_links</span> <span class="k">if</span> <span class="n">link</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;href&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">link</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;href&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.parquet&#39;</span><span class="p">)]</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="snowflake_ingestion.02_scrape_links.get_scraping_year" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_scraping_year</span><span class="p">()</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Determine the scraping year to use based on environment settings.</p>
+<p>Uses SCRAPING_YEAR if defined and valid, otherwise selects the previous
+year when current month ≤ 3, or the current year otherwise.</p>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>int</code></td>            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The year to scrape.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+        <p>Doctests:
+from functions import SCRAPING_YEAR</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>get_scraping_year() == int(SCRAPING_YEAR) - int(current_month &lt;= 3)
+True</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>snowflake_ingestion/02_scrape_links.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_scraping_year</span><span class="p">()</span><span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Determine the scraping year to use based on environment settings.</span>
+
+<span class="sd">    Uses SCRAPING_YEAR if defined and valid, otherwise selects the previous</span>
+<span class="sd">    year when current month ≤ 3, or the current year otherwise.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        int: The year to scrape.</span>
+
+<span class="sd">    Doctests:</span>
+<span class="sd">    from functions import SCRAPING_YEAR</span>
+<span class="sd">    &gt;&gt;&gt; get_scraping_year() == int(SCRAPING_YEAR) - int(current_month &lt;= 3)</span>
+<span class="sd">    True</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">default_year</span> <span class="o">=</span> <span class="n">current_year</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">current_month</span> <span class="o">&lt;=</span> <span class="mi">3</span> <span class="k">else</span> <span class="n">current_year</span>
+    <span class="k">if</span> <span class="n">SCRAPING_YEAR</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">default_year</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">int_year</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">SCRAPING_YEAR</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">SCRAPING_YEAR = </span><span class="si">{</span><span class="n">SCRAPING_YEAR</span><span class="si">}</span><span class="se">\&quot;</span><span class="s2"> n&#39;est pas une année valide !&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;L&#39;année du scraping a été réinitialisée à </span><span class="si">{</span><span class="n">default_year</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">default_year</span>
+
+        <span class="k">if</span> <span class="n">int_year</span> <span class="o">&lt;</span> <span class="mi">2009</span> <span class="ow">or</span> <span class="n">int_year</span> <span class="o">&gt;</span> <span class="n">current_year</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">SCRAPING_YEAR = </span><span class="si">{</span><span class="n">SCRAPING_YEAR</span><span class="si">}</span><span class="se">\&quot;</span><span class="s2"> l&#39;année du scraping doit être compris entre 2009 et </span><span class="si">{</span><span class="n">current_year</span><span class="si">}</span><span class="s2"> inclus!&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;L&#39;année du scraping a été réinitialisée à </span><span class="si">{</span><span class="n">default_year</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">default_year</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Les fichiers seront scrapés à partir de l&#39;année </span><span class="si">{</span><span class="n">default_year</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">int_year</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="snowflake_ingestion.02_scrape_links.get_xpath" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_xpath</span><span class="p">()</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Build the XPath expression used to locate Parquet file links.</p>
+<p>The expression filters NYC Taxi data links by year, starting from the
+scraping year up to the current year.</p>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>str</code></td>            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>XPath query string.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>snowflake_ingestion/02_scrape_links.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_xpath</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Build the XPath expression used to locate Parquet file links.</span>
+
+<span class="sd">    The expression filters NYC Taxi data links by year, starting from the</span>
+<span class="sd">    scraping year up to the current year.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: XPath query string.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">xpath_query</span> <span class="o">=</span> <span class="s2">&quot;//a[@title=&#39;Yellow Taxi Trip Records&#39; and (&quot;</span>
+    <span class="n">get_contains</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">year</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;contains(@href, &#39;</span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s2">&#39;)&quot;</span>
+    <span class="n">contains_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">get_contains</span><span class="p">(</span><span class="n">year</span><span class="p">)</span> <span class="k">for</span> <span class="n">year</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">get_scraping_year</span><span class="p">(),</span><span class="n">current_year</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+    <span class="n">xpath_query</span><span class="o">+=</span> <span class="s2">&quot; or &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">contains_list</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;)]&quot;</span>
+    <span class="k">return</span> <span class="n">xpath_query</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="snowflake_ingestion.02_scrape_links.main" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">main</span><span class="p">()</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Main scraping and metadata update workflow.</p>
+<p>Connects to Snowflake using the transformer role, initializes context,
+checks or creates the metadata table, scrapes new file URLs, and updates
+the metadata accordingly.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>snowflake_ingestion/02_scrape_links.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Main scraping and metadata update workflow.</span>
+
+<span class="sd">    Connects to Snowflake using the transformer role, initializes context,</span>
+<span class="sd">    checks or creates the metadata table, scrapes new file URLs, and updates</span>
+<span class="sd">    the metadata accordingly.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">connect_with_role</span><span class="p">(</span><span class="n">USER_DEV</span><span class="p">,</span> <span class="n">PASSWORD_DEV</span><span class="p">,</span> <span class="n">ACCOUNT</span><span class="p">,</span> <span class="n">ROLE_TRANSFORMER</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span> <span class="k">as</span> <span class="n">cur</span><span class="p">:</span>
+        <span class="n">use_context</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">WH_NAME</span><span class="p">,</span> <span class="n">DW_NAME</span><span class="p">,</span> <span class="n">RAW_SCHEMA</span><span class="p">)</span>
+        <span class="n">setup_meta_table</span><span class="p">(</span><span class="n">cur</span><span class="p">)</span>
+
+        <span class="n">links</span> <span class="o">=</span> <span class="n">get_parquet_links</span><span class="p">()</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;📎 </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">links</span><span class="p">)</span><span class="si">}</span><span class="s2"> liens trouvés&quot;</span><span class="p">)</span>
+        <span class="n">new_file_detected</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">links</span><span class="p">:</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SELECT 1 FROM </span><span class="si">{</span><span class="n">METADATA_TABLE</span><span class="si">}</span><span class="s2"> WHERE file_name = %s&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">filename</span><span class="p">,))</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">():</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;➕ Nouveau fichier détecté : </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">new_file_detected</span> <span class="o">=</span> <span class="kc">True</span>
+
+                <span class="c1"># Extraire année et mois depuis le filename</span>
+                <span class="n">parts</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;yellow_tripdata_&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.parquet&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+                <span class="n">year</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span>
+                <span class="n">month</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="kc">None</span>
+
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🚀 Chargement de </span><span class="si">{</span><span class="n">METADATA_TABLE</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                    INSERT INTO </span><span class="si">{</span><span class="n">METADATA_TABLE</span><span class="si">}</span><span class="s2"> (file_url, file_name, year, month, rows_loaded, load_status)</span>
+<span class="s2">                    VALUES (%s, %s, %s, %s, 0, &#39;SCRAPED&#39;)</span>
+<span class="s2">                &quot;&quot;&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;⏭️  </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2"> déjà référencé&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">new_file_detected</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;🔍 Analyse des fichiers SCRAPED&quot;</span><span class="p">)</span>
+                <span class="n">run_sql_file</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">SQL_DIR</span> <span class="o">/</span> <span class="s2">&quot;count_new_files.sql&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">new_file_detected</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">new_file_detected</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;⚠️  Aucun nouveau fichier à charger.&quot;</span><span class="p">)</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;✅ Scraping terminé&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="snowflake_ingestion.02_scrape_links.setup_meta_table" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">setup_meta_table</span><span class="p">(</span><span class="n">cur</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Ensure the metadata table exists in Snowflake.</p>
+<p>Executes the SQL script responsible for creating or verifying the
+metadata table.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>cur</code>
+            </td>
+            <td>
+                  <code><span title="snowflake.connector.cursor.SnowflakeCursor">SnowflakeCursor</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Active Snowflake cursor.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>snowflake_ingestion/02_scrape_links.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span>
+<span class="normal">88</span>
+<span class="normal">89</span>
+<span class="normal">90</span>
+<span class="normal">91</span>
+<span class="normal">92</span>
+<span class="normal">93</span>
+<span class="normal">94</span>
+<span class="normal">95</span>
+<span class="normal">96</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">setup_meta_table</span><span class="p">(</span><span class="n">cur</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Ensure the metadata table exists in Snowflake.</span>
+
+<span class="sd">    Executes the SQL script responsible for creating or verifying the</span>
+<span class="sd">    metadata table.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        cur (snowflake.connector.cursor.SnowflakeCursor): Active Snowflake cursor.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;📋 Vérification/Création de la table de metadata&quot;</span><span class="p">)</span>
+    <span class="n">sql_file</span> <span class="o">=</span> <span class="n">SQL_DIR</span> <span class="o">/</span> <span class="s2">&quot;setup_meta_table.sql&quot;</span>
+    <span class="n">run_sql_file</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">sql_file</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;✅ Table de metadata prête&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div><h2 id="staging">Staging</h2>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="snowflake_ingestion.03_upload_stage"></a>
+    <div class="doc doc-contents first">
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="snowflake_ingestion.03_upload_stage.download_and_upload_file" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">download_and_upload_file</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">file_url</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">temp_dir</span><span class="o">=</span><span class="s1">&#39;temp_files&#39;</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Download a Parquet file and upload it to Snowflake stage.</p>
+<p>The function downloads the file from the specified URL, saves it
+temporarily on disk, and uploads it to the user's Snowflake stage
+using the PUT command.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>cur</code>
+            </td>
+            <td>
+                  <code><span title="snowflake.connector.cursor.SnowflakeCursor">SnowflakeCursor</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Active Snowflake cursor.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>file_url</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>URL of the file to download.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>filename</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>File name to save locally.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>temp_dir</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Temporary directory path. Defaults to "temp_files".</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;temp_files&#39;</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>str</code></td>            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Path to the temporary file created on disk.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>snowflake_ingestion/03_upload_stage.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">download_and_upload_file</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">file_url</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">temp_dir</span><span class="o">=</span><span class="s2">&quot;temp_files&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Download a Parquet file and upload it to Snowflake stage.</span>
+
+<span class="sd">    The function downloads the file from the specified URL, saves it</span>
+<span class="sd">    temporarily on disk, and uploads it to the user&#39;s Snowflake stage</span>
+<span class="sd">    using the PUT command.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        cur (snowflake.connector.cursor.SnowflakeCursor): Active Snowflake cursor.</span>
+<span class="sd">        file_url (str): URL of the file to download.</span>
+<span class="sd">        filename (str): File name to save locally.</span>
+<span class="sd">        temp_dir (str, optional): Temporary directory path. Defaults to &quot;temp_files&quot;.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: Path to the temporary file created on disk.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">temp_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">tmp_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">temp_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;📥 Téléchargement de </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">file_url</span><span class="p">)</span>
+    <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">tmp_path</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;📤 Upload vers Snowflake...&quot;</span><span class="p">)</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;PUT &#39;file://</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">tmp_path</span><span class="p">)</span><span class="si">}</span><span class="s2">&#39; @~ AUTO_COMPRESS=FALSE&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tmp_path</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="snowflake_ingestion.03_upload_stage.main" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">main</span><span class="p">()</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Main staging process for Parquet files.</p>
+<p>Connects to Snowflake, retrieves metadata for scraped files, downloads
+each file, uploads it to the stage, and updates the metadata table
+with the appropriate load status.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>snowflake_ingestion/03_upload_stage.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Main staging process for Parquet files.</span>
+
+<span class="sd">    Connects to Snowflake, retrieves metadata for scraped files, downloads</span>
+<span class="sd">    each file, uploads it to the stage, and updates the metadata table</span>
+<span class="sd">    with the appropriate load status.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">connect_with_role</span><span class="p">(</span><span class="n">USER_DEV</span><span class="p">,</span> <span class="n">PASSWORD_DEV</span><span class="p">,</span> <span class="n">ACCOUNT</span><span class="p">,</span> <span class="n">ROLE_TRANSFORMER</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span> <span class="k">as</span> <span class="n">cur</span><span class="p">:</span>
+        <span class="n">use_context</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">WH_NAME</span><span class="p">,</span> <span class="n">DW_NAME</span><span class="p">,</span> <span class="n">RAW_SCHEMA</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;📥 Récupération des URLs et noms des fichiers scrappés&quot;</span><span class="p">)</span>
+        <span class="n">run_sql_file</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">SQL_DIR</span> <span class="o">/</span> <span class="s2">&quot;select_file_url_name_from_meta_scraped.sql&quot;</span><span class="p">)</span>
+        <span class="n">scraped_files</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+        <span class="n">scraped_files_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">scraped_files</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">scraped_files_count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;⚠️  Aucun fichier à uploader&quot;</span><span class="p">)</span>
+        <span class="k">else</span> <span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;📦 </span><span class="si">{</span><span class="n">scraped_files_count</span><span class="si">}</span><span class="s2"> fichiers à uploader&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">file_url</span><span class="p">,</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">scraped_files</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">tmp_path</span> <span class="o">=</span> <span class="n">download_and_upload_file</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">file_url</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2"> uploadé&quot;</span><span class="p">)</span>
+                <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;UPDATE </span><span class="si">{</span><span class="n">METADATA_TABLE</span><span class="si">}</span><span class="s2"> SET load_status=&#39;STAGED&#39; WHERE file_name=%s&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">filename</span><span class="p">,))</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🚀 Chargement de </span><span class="si">{</span><span class="n">METADATA_TABLE</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;❌ Erreur upload </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🚀 Chargement de </span><span class="si">{</span><span class="n">METADATA_TABLE</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;UPDATE </span><span class="si">{</span><span class="n">METADATA_TABLE</span><span class="si">}</span><span class="s2"> SET load_status=&#39;FAILED_STAGE&#39; WHERE file_name=%s&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">filename</span><span class="p">,))</span>
+            <span class="k">finally</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">tmp_path</span><span class="p">):</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">tmp_path</span><span class="p">)</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="s2">&quot;temp_files&quot;</span><span class="p">,</span> <span class="n">ignore_errors</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div><h2 id="loading">Loading</h2>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="snowflake_ingestion.04_load_to_table"></a>
+    <div class="doc doc-contents first">
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="snowflake_ingestion.04_load_to_table.cleanup_stage_file" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">cleanup_stage_file</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Remove the processed file from the Snowflake stage.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>cur</code>
+            </td>
+            <td>
+                  <code><span title="snowflake.connector.cursor.SnowflakeCursor">SnowflakeCursor</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Active Snowflake cursor.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>filename</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Name of the file to delete from the stage.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>snowflake_ingestion/04_load_to_table.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span>
+<span class="normal">88</span>
+<span class="normal">89</span>
+<span class="normal">90</span>
+<span class="normal">91</span>
+<span class="normal">92</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">cleanup_stage_file</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Remove the processed file from the Snowflake stage.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        cur (snowflake.connector.cursor.SnowflakeCursor): Active Snowflake cursor.</span>
+<span class="sd">        filename (str): Name of the file to delete from the stage.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;REMOVE @~/</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2"> supprimé du stage&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="snowflake_ingestion.04_load_to_table.copy_file_to_table_and_count" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">copy_file_to_table_and_count</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Load a Parquet file from stage into the RAW table and count inserted rows.</p>
+<p>Compares the number of rows before and after the COPY INTO operation
+to determine how many records were loaded.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>cur</code>
+            </td>
+            <td>
+                  <code><span title="snowflake.connector.cursor.SnowflakeCursor">SnowflakeCursor</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Active Snowflake cursor.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>filename</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Name of the staged file to load.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>int</code></td>            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Number of rows inserted into the RAW table.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>snowflake_ingestion/04_load_to_table.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">copy_file_to_table_and_count</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span><span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load a Parquet file from stage into the RAW table and count inserted rows.</span>
+
+<span class="sd">    Compares the number of rows before and after the COPY INTO operation</span>
+<span class="sd">    to determine how many records were loaded.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        cur (snowflake.connector.cursor.SnowflakeCursor): Active Snowflake cursor.</span>
+<span class="sd">        filename (str): Name of the staged file to load.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        int: Number of rows inserted into the RAW table.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🚀 Chargement de </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2"> dans </span><span class="si">{</span><span class="n">RAW_TABLE</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+
+    <span class="n">run_sql_file</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">SQL_DIR</span> <span class="o">/</span> <span class="s2">&quot;count_rows_from_raw_table.sql&quot;</span><span class="p">)</span>
+    <span class="n">before</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        COPY INTO </span><span class="si">{</span><span class="n">RAW_TABLE</span><span class="si">}</span><span class="s2"> </span>
+<span class="s2">        FROM &#39;@~/</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&#39;</span>
+<span class="s2">        FILE_FORMAT=(FORMAT_NAME=&#39;</span><span class="si">{</span><span class="n">DW_NAME</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">RAW_SCHEMA</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">PARQUET_FORMAT</span><span class="si">}</span><span class="s2">&#39;)</span>
+<span class="s2">        MATCH_BY_COLUMN_NAME=CASE_INSENSITIVE</span>
+<span class="s2">    &quot;&quot;&quot;</span><span class="p">)</span>
+
+    <span class="n">run_sql_file</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">SQL_DIR</span> <span class="o">/</span> <span class="s2">&quot;count_rows_from_raw_table.sql&quot;</span><span class="p">)</span>
+    <span class="n">after</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">rows_loaded</span> <span class="o">=</span> <span class="n">after</span> <span class="o">-</span> <span class="n">before</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2"> chargé (</span><span class="si">{</span><span class="n">rows_loaded</span><span class="si">}</span><span class="s2"> lignes)&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">rows_loaded</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="snowflake_ingestion.04_load_to_table.create_table" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">create_table</span><span class="p">(</span><span class="n">cur</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Create or verify the RAW table dynamically based on staged file schema.</p>
+<p>Executes SQL to detect the file schema in the Snowflake stage,
+creates the RAW table if it does not exist, and adds the filename
+column if needed.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>cur</code>
+            </td>
+            <td>
+                  <code><span title="snowflake.connector.cursor.SnowflakeCursor">SnowflakeCursor</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Active Snowflake cursor.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>snowflake_ingestion/04_load_to_table.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">create_table</span><span class="p">(</span><span class="n">cur</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create or verify the RAW table dynamically based on staged file schema.</span>
+
+<span class="sd">    Executes SQL to detect the file schema in the Snowflake stage,</span>
+<span class="sd">    creates the RAW table if it does not exist, and adds the filename</span>
+<span class="sd">    column if needed.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        cur (snowflake.connector.cursor.SnowflakeCursor): Active Snowflake cursor.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;📋 Vérification/Création dynamique de la table </span><span class="si">{</span><span class="n">RAW_TABLE</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">run_sql_file</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">SQL_DIR</span> <span class="o">/</span> <span class="s2">&quot;detect_file_schema_stage.sql&quot;</span><span class="p">)</span>
+    <span class="n">schema</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+    <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">col_name</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">col_type</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">col_name</span><span class="p">,</span> <span class="n">col_type</span> <span class="ow">in</span> <span class="n">schema</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">columns</span><span class="p">)</span><span class="o">!=</span><span class="mi">0</span> <span class="p">:</span>
+        <span class="n">create_sql</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;CREATE TABLE IF NOT EXISTS </span><span class="si">{</span><span class="n">RAW_TABLE</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">columns</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span>
+        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">create_sql</span><span class="p">)</span>
+        <span class="n">run_sql_file</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">SQL_DIR</span> <span class="o">/</span> <span class="s2">&quot;add_filename_to_raw_table.sql&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Table </span><span class="si">{</span><span class="n">RAW_TABLE</span><span class="si">}</span><span class="s2"> prête&quot;</span><span class="p">)</span>
+    <span class="k">else</span> <span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;⚠️  Aucune donnée dans le STAGE&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="snowflake_ingestion.04_load_to_table.handle_loading_error" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">handle_loading_error</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Handle errors occurring during file loading into the RAW table.</p>
+<p>Logs the error and updates the metadata table to mark the file
+as failed during the load step.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>cur</code>
+            </td>
+            <td>
+                  <code><span title="snowflake.connector.cursor.SnowflakeCursor">SnowflakeCursor</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Active Snowflake cursor.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>filename</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Name of the file that failed to load.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>error</code>
+            </td>
+            <td>
+                  <code><span title="Exception">Exception</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Exception raised during the loading process.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>snowflake_ingestion/04_load_to_table.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">handle_loading_error</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle errors occurring during file loading into the RAW table.</span>
+
+<span class="sd">    Logs the error and updates the metadata table to mark the file</span>
+<span class="sd">    as failed during the load step.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        cur (snowflake.connector.cursor.SnowflakeCursor): Active Snowflake cursor.</span>
+<span class="sd">        filename (str): Name of the file that failed to load.</span>
+<span class="sd">        error (Exception): Exception raised during the loading process.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;❌ Erreur de chargement </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🚀 Chargement de </span><span class="si">{</span><span class="n">METADATA_TABLE</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;UPDATE </span><span class="si">{</span><span class="n">METADATA_TABLE</span><span class="si">}</span><span class="s2"> SET load_status=&#39;FAILED_LOAD&#39; WHERE file_name=%s&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">filename</span><span class="p">,))</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="snowflake_ingestion.04_load_to_table.main" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">main</span><span class="p">()</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Main process for loading staged Parquet files into the RAW table.</p>
+<p>Connects to Snowflake, ensures the RAW table exists, retrieves staged files,
+loads each into the RAW table, updates metadata, and cleans up stage files.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>snowflake_ingestion/04_load_to_table.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Main process for loading staged Parquet files into the RAW table.</span>
+
+<span class="sd">    Connects to Snowflake, ensures the RAW table exists, retrieves staged files,</span>
+<span class="sd">    loads each into the RAW table, updates metadata, and cleans up stage files.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">connect_with_role</span><span class="p">(</span><span class="n">USER_DEV</span><span class="p">,</span> <span class="n">PASSWORD_DEV</span><span class="p">,</span> <span class="n">ACCOUNT</span><span class="p">,</span> <span class="n">ROLE_TRANSFORMER</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span> <span class="k">as</span> <span class="n">cur</span><span class="p">:</span>
+        <span class="n">use_context</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">WH_NAME</span><span class="p">,</span> <span class="n">DW_NAME</span><span class="p">,</span> <span class="n">RAW_SCHEMA</span><span class="p">)</span>
+        <span class="n">create_table</span><span class="p">(</span><span class="n">cur</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;🔍 Analyse des fichiers dans le STAGE&quot;</span><span class="p">)</span>
+        <span class="n">run_sql_file</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">SQL_DIR</span> <span class="o">/</span> <span class="s2">&quot;select_filename_from_meta_staged.sql&quot;</span><span class="p">)</span>
+        <span class="n">staged_files</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="n">filename</span><span class="p">,)</span> <span class="ow">in</span> <span class="n">staged_files</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">rows_loaded</span> <span class="o">=</span> <span class="n">copy_file_to_table_and_count</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+                <span class="n">update_metadata</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">rows_loaded</span><span class="p">)</span>
+                <span class="n">cleanup_stage_file</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">handle_loading_error</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+
+    <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="snowflake_ingestion.04_load_to_table.update_metadata" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">update_metadata</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">rows_loaded</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Update the metadata table after successful file loading.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>cur</code>
+            </td>
+            <td>
+                  <code><span title="snowflake.connector.cursor.SnowflakeCursor">SnowflakeCursor</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Active Snowflake cursor.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>filename</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Name of the loaded file.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>rows_loaded</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Number of rows successfully inserted.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>snowflake_ingestion/04_load_to_table.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">update_metadata</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">rows_loaded</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Update the metadata table after successful file loading.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        cur (snowflake.connector.cursor.SnowflakeCursor): Active Snowflake cursor.</span>
+<span class="sd">        filename (str): Name of the loaded file.</span>
+<span class="sd">        rows_loaded (int): Number of rows successfully inserted.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        UPDATE </span><span class="si">{</span><span class="n">METADATA_TABLE</span><span class="si">}</span><span class="s2"> </span>
+<span class="s2">        SET rows_loaded = %s, load_status = &#39;SUCCESS&#39; </span>
+<span class="s2">        WHERE file_name = %s</span>
+<span class="s2">    &quot;&quot;&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">rows_loaded</span><span class="p">,</span> <span class="n">filename</span><span class="p">))</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🚀 Chargement de </span><span class="si">{</span><span class="n">METADATA_TABLE</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div><h2 id="fonctions-utilitaires">Fonctions utilitaires</h2>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="snowflake_ingestion.functions"></a>
+    <div class="doc doc-contents first">
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="snowflake_ingestion.functions.config_logger" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">config_logger</span><span class="p">()</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Configure the global logger.</p>
+<p>Reads LOGGER_LEVEL from the module environment and configures the
+root logging settings (level, format, date format). Intended to be
+called once at application start.</p>
+<p>No return value.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>snowflake_ingestion/functions.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">config_logger</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Configure the global logger.</span>
+
+<span class="sd">    Reads LOGGER_LEVEL from the module environment and configures the</span>
+<span class="sd">    root logging settings (level, format, date format). Intended to be</span>
+<span class="sd">    called once at application start.</span>
+
+<span class="sd">    No return value.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span>
+        <span class="n">level</span><span class="o">=</span><span class="n">LOGGER_LEVEL</span><span class="p">,</span>
+        <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> - </span><span class="si">%(levelname)s</span><span class="s1"> - </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">,</span>
+        <span class="n">datefmt</span><span class="o">=</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span>
+    <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="snowflake_ingestion.functions.connect_with_role" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">connect_with_role</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">account</span><span class="p">,</span> <span class="n">role</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Create a Snowflake connection using the specified credentials and role.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>user</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Snowflake username.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>password</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Snowflake password.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>account</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Snowflake account identifier.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>role</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Snowflake role to assume for the session.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="snowflake.connector.SnowflakeConnection">SnowflakeConnection</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>snowflake.connector.connection.SnowflakeConnection:
+A Snowflake connection object with autocommit enabled.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<details class="notes" open>
+  <summary>Notes</summary>
+  <p>This function opens a network connection to Snowflake. The caller
+is responsible for closing the connection when it is no longer needed.</p>
+</details>
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>snowflake_ingestion/functions.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">connect_with_role</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">account</span><span class="p">,</span> <span class="n">role</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">snowflake</span><span class="o">.</span><span class="n">connector</span><span class="o">.</span><span class="n">SnowflakeConnection</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a Snowflake connection using the specified credentials and role.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        user (str): Snowflake username.</span>
+<span class="sd">        password (str): Snowflake password.</span>
+<span class="sd">        account (str): Snowflake account identifier.</span>
+<span class="sd">        role (str): Snowflake role to assume for the session.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        snowflake.connector.connection.SnowflakeConnection:</span>
+<span class="sd">            A Snowflake connection object with autocommit enabled.</span>
+
+<span class="sd">    Notes:</span>
+<span class="sd">        This function opens a network connection to Snowflake. The caller</span>
+<span class="sd">        is responsible for closing the connection when it is no longer needed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">snowflake</span><span class="o">.</span><span class="n">connector</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+        <span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">,</span>
+        <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">,</span>
+        <span class="n">account</span><span class="o">=</span><span class="n">account</span><span class="p">,</span>
+        <span class="n">role</span><span class="o">=</span><span class="n">role</span><span class="p">,</span>
+        <span class="n">autocommit</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="snowflake_ingestion.functions.run_sql_file" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">run_sql_file</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">filepath</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Execute SQL statements from a file using VAR_PLACEHOLDER placeholders.</p>
+
+
+<details class="the-function" open>
+  <summary>The function</summary>
+  <ul>
+<li>Reads the SQL file.</li>
+<li>Finds placeholders in the form VAR_PLACEHOLDER (captures VAR).</li>
+<li>Replaces each found placeholder with the value of the corresponding
+  global variable named VAR (stringified).</li>
+<li>Masks variables containing "PASSWORD" in logger output.</li>
+<li>Splits the file by semicolons and executes non-empty statements.</li>
+</ul>
+</details>
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>cur</code>
+            </td>
+            <td>
+                  <code><span title="snowflake.connector.cursor.SnowflakeCursor">SnowflakeCursor</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Active cursor.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>filepath</code>
+            </td>
+            <td>
+                  <code><span title="pathlib.Path">Path</span> or <span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Path to the SQL file.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<details class="notes" open>
+  <summary>Notes</summary>
+  <p>Placeholders that do not match a global variable are replaced with
+a string of the form "<VAR_NOT_FOUND>".</p>
+</details>
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>snowflake_ingestion/functions.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">run_sql_file</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">filepath</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Execute SQL statements from a file using VAR_PLACEHOLDER placeholders.</span>
+
+<span class="sd">    The function:</span>
+<span class="sd">      - Reads the SQL file.</span>
+<span class="sd">      - Finds placeholders in the form VAR_PLACEHOLDER (captures VAR).</span>
+<span class="sd">      - Replaces each found placeholder with the value of the corresponding</span>
+<span class="sd">        global variable named VAR (stringified).</span>
+<span class="sd">      - Masks variables containing &quot;PASSWORD&quot; in logger output.</span>
+<span class="sd">      - Splits the file by semicolons and executes non-empty statements.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        cur (snowflake.connector.cursor.SnowflakeCursor): Active cursor.</span>
+<span class="sd">        filepath (pathlib.Path or str): Path to the SQL file.</span>
+
+<span class="sd">    Notes:</span>
+<span class="sd">        Placeholders that do not match a global variable are replaced with</span>
+<span class="sd">        a string of the form &quot;&lt;VAR_NOT_FOUND&gt;&quot;.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">sql</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;(\w+)_PLACEHOLDER&quot;</span><span class="p">,</span> <span class="n">sql</span><span class="p">)</span>
+        <span class="n">variables</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="nb">globals</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;&lt;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">_NOT_FOUND&gt;&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">}</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🔎 Variables détectées dans </span><span class="si">{</span><span class="n">filepath</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">keys</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">variables</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">sql</span> <span class="o">=</span> <span class="n">sql</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">_PLACEHOLDER&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+
+        <span class="n">masked_vars</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="s2">&quot;*****&quot;</span> <span class="k">if</span> <span class="s2">&quot;PASSWORD&quot;</span> <span class="ow">in</span> <span class="n">k</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">else</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">variables</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🧱 Variables utilisées : </span><span class="si">{</span><span class="nb">dict</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">masked_vars</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">statement</span> <span class="ow">in</span> <span class="n">sql</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;;&quot;</span><span class="p">):</span>
+            <span class="n">statement</span> <span class="o">=</span> <span class="n">statement</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">statement</span><span class="p">:</span>
+                <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">statement</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="snowflake_ingestion.functions.use_context" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">use_context</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">WH_NAME</span><span class="p">,</span> <span class="n">DW_NAME</span><span class="p">,</span> <span class="n">RAW_SCHEMA</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Set the Snowflake session context: warehouse, database and schema.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>cur</code>
+            </td>
+            <td>
+                  <code><span title="snowflake.connector.cursor.SnowflakeCursor">SnowflakeCursor</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Active Snowflake cursor.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>WH_NAME</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Warehouse name to use.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>DW_NAME</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Database name to use.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>RAW_SCHEMA</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Schema name to use.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="SystemExit">SystemExit</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Exits the process on any exception when setting the context.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>snowflake_ingestion/functions.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">use_context</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">WH_NAME</span><span class="p">,</span> <span class="n">DW_NAME</span><span class="p">,</span> <span class="n">RAW_SCHEMA</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the Snowflake session context: warehouse, database and schema.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        cur (snowflake.connector.cursor.SnowflakeCursor): Active Snowflake cursor.</span>
+<span class="sd">        WH_NAME (str): Warehouse name to use.</span>
+<span class="sd">        DW_NAME (str): Database name to use.</span>
+<span class="sd">        RAW_SCHEMA (str): Schema name to use.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        SystemExit: Exits the process on any exception when setting the context.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;⚙️ Configuration du contexte: WH=</span><span class="si">{</span><span class="n">WH_NAME</span><span class="si">}</span><span class="s2">, DB=</span><span class="si">{</span><span class="n">DW_NAME</span><span class="si">}</span><span class="s2">, SCHEMA=</span><span class="si">{</span><span class="n">RAW_SCHEMA</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">try</span> <span class="p">:</span>
+        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;USE WAREHOUSE </span><span class="si">{</span><span class="n">WH_NAME</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;USE DATABASE </span><span class="si">{</span><span class="n">DW_NAME</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;USE SCHEMA </span><span class="si">{</span><span class="n">RAW_SCHEMA</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;❌ Erreur : Relancer l&#39;étape 01 - Initialisation&quot;</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.sections", "toc.integrate", "search.suggest", "search.highlight"], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
+</html>
