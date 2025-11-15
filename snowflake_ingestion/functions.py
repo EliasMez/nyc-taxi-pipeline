@@ -52,7 +52,7 @@ logger = logging.getLogger(__name__)
 
 
 
-def connect_with_role(user, password, account, role):
+def connect_with_role(user, password, account, role) -> snowflake.connector.SnowflakeConnection:
     """Create a Snowflake connection using the specified credentials and role.
 
     Args:

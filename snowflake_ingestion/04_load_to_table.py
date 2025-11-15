@@ -30,7 +30,7 @@ def create_table(cur):
 
 
 
-def copy_file_to_table_and_count(cur, filename):
+def copy_file_to_table_and_count(cur, filename)-> int:
     """Load a Parquet file from stage into the RAW table and count inserted rows.
 
     Compares the number of rows before and after the COPY INTO operation
