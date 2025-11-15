@@ -7,6 +7,15 @@ SQL_DIR = SQL_BASE_DIR / "04_load"
 
 
 def create_table(cur):
+    """Create or verify the RAW table dynamically based on staged file schema.
+
+    Executes SQL to detect the file schema in the Snowflake stage,
+    creates the RAW table if it does not exist, and adds the filename
+    column if needed.
+
+    Args:
+        cur (snowflake.connector.cursor.SnowflakeCursor): Active Snowflake cursor.
+    """
     logger.info(f"📋 Vérification/Création dynamique de la table {RAW_TABLE}")
     run_sql_file(cur, SQL_DIR / "detect_file_schema_stage.sql")
     schema = cur.fetchall()
@@ -22,6 +31,18 @@ def create_table(cur):
 
 
 def copy_file_to_table_and_count(cur, filename):
+    """Load a Parquet file from stage into the RAW table and count inserted rows.
+
+    Compares the number of rows before and after the COPY INTO operation
+    to determine how many records were loaded.
+
+    Args:
+        cur (snowflake.connector.cursor.SnowflakeCursor): Active Snowflake cursor.
+        filename (str): Name of the staged file to load.
+
+    Returns:
+        int: Number of rows inserted into the RAW table.
+    """
     logger.info(f"🚀 Chargement de {filename} dans {RAW_TABLE}...")
 
     run_sql_file(cur, SQL_DIR / "count_rows_from_raw_table.sql")
@@ -43,7 +64,14 @@ def copy_file_to_table_and_count(cur, filename):
 
 
 
-def update_metadata(cur, filename, rows_loaded):  
+def update_metadata(cur, filename, rows_loaded):
+    """Update the metadata table after successful file loading.
+
+    Args:
+        cur (snowflake.connector.cursor.SnowflakeCursor): Active Snowflake cursor.
+        filename (str): Name of the loaded file.
+        rows_loaded (int): Number of rows successfully inserted.
+    """
     cur.execute(f"""
         UPDATE {METADATA_TABLE} 
         SET rows_loaded = %s, load_status = 'SUCCESS' 
@@ -54,12 +82,28 @@ def update_metadata(cur, filename, rows_loaded):
 
 
 def cleanup_stage_file(cur, filename):
+    """Remove the processed file from the Snowflake stage.
+
+    Args:
+        cur (snowflake.connector.cursor.SnowflakeCursor): Active Snowflake cursor.
+        filename (str): Name of the file to delete from the stage.
+    """
     cur.execute(f"REMOVE @~/{filename}")
     logger.info(f"✅ {filename} supprimé du stage")
 
 
 
 def handle_loading_error(cur, filename, error):
+    """Handle errors occurring during file loading into the RAW table.
+
+    Logs the error and updates the metadata table to mark the file
+    as failed during the load step.
+
+    Args:
+        cur (snowflake.connector.cursor.SnowflakeCursor): Active Snowflake cursor.
+        filename (str): Name of the file that failed to load.
+        error (Exception): Exception raised during the loading process.
+    """
     logger.error(f"❌ Erreur de chargement {filename}: {error}")
     logger.debug(f"🚀 Chargement de {METADATA_TABLE}")
     cur.execute(f"UPDATE {METADATA_TABLE} SET load_status='FAILED_LOAD' WHERE file_name=%s", (filename,))
@@ -67,6 +111,11 @@ def handle_loading_error(cur, filename, error):
 
 
 def main():
+    """Main process for loading staged Parquet files into the RAW table.
+
+    Connects to Snowflake, ensures the RAW table exists, retrieves staged files,
+    loads each into the RAW table, updates metadata, and cleans up stage files.
+    """
     conn = connect_with_role(USER_DEV, PASSWORD_DEV, ACCOUNT, ROLE_TRANSFORMER)
     with conn.cursor() as cur:
         use_context(cur, WH_NAME, DW_NAME, RAW_SCHEMA)

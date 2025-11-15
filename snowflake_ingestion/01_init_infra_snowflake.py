@@ -9,6 +9,11 @@ SQL_DIR = SQL_BASE_DIR / "01_init"
 
 
 def setup_data_warehouse(cur):
+    """Create the data warehouse, database, and schemas in Snowflake.
+
+    Args:
+        cur (snowflake.connector.cursor.SnowflakeCursor): Active Snowflake cursor.
+    """
     logger.info("🏗️ Création du warehouse, base et schémas...")
     sql_file = SQL_DIR / "setup_data_warehouse.sql"
     run_sql_file(cur, sql_file)
@@ -16,6 +21,11 @@ def setup_data_warehouse(cur):
 
 
 def create_roles_and_user(cur):
+    """Create the DBT role and user in Snowflake.
+
+    Args:
+        cur (snowflake.connector.cursor.SnowflakeCursor): Active Snowflake cursor.
+    """
     logger.info("🔐 Création du rôle et de l'utilisateur DBT...")
     sql_file = SQL_DIR / "create_roles_and_user.sql"
     run_sql_file(cur, sql_file)
@@ -23,6 +33,11 @@ def create_roles_and_user(cur):
 
 
 def grant_privileges(cur):
+    """Grant required privileges to the TRANSFORMER role in Snowflake.
+
+    Args:
+        cur (snowflake.connector.cursor.SnowflakeCursor): Active Snowflake cursor.
+    """
     logger.info("🔑 Attribution des privilèges au rôle TRANSFORMER...")
     sql_file = SQL_DIR / "grant_privileges.sql"
     run_sql_file(cur, sql_file)
@@ -30,6 +45,11 @@ def grant_privileges(cur):
 
 
 def main():
+    """Main initialization process for the Snowflake environment.
+
+    Establishes connections with appropriate roles (SYSADMIN, SECURITYADMIN)
+    and executes setup steps in order.
+    """
     try:
         conn = connect_with_role(USER, PASSWORD, ACCOUNT, 'SYSADMIN')
         with conn.cursor() as cur:

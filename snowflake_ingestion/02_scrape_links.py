@@ -11,7 +11,22 @@ SQL_DIR = SQL_BASE_DIR / "02_scraping"
 current_year = datetime.now().year
 current_month = datetime.now().month
 
+
 def get_scraping_year():
+    """Determine the scraping year to use based on environment settings.
+
+    Uses SCRAPING_YEAR if defined and valid, otherwise selects the previous
+    year when current month ≤ 3, or the current year otherwise.
+
+    Returns:
+        int: The year to scrape.
+
+    Doctests:
+    from functions import SCRAPING_YEAR
+    >>> get_scraping_year() == int(SCRAPING_YEAR) - int(current_month <= 3)
+    True
+
+    """
     default_year = current_year - 1 if current_month <= 3 else current_year
     if SCRAPING_YEAR == "":
         return default_year
@@ -32,6 +47,14 @@ def get_scraping_year():
      
 
 def get_xpath():
+    """Build the XPath expression used to locate Parquet file links.
+
+    The expression filters NYC Taxi data links by year, starting from the
+    scraping year up to the current year.
+
+    Returns:
+        str: XPath query string.
+    """
     xpath_query = "//a[@title='Yellow Taxi Trip Records' and ("
     get_contains = lambda year: f"contains(@href, '{year}')"
     contains_list = [get_contains(year) for year in range(get_scraping_year(),current_year+1)]
@@ -40,6 +63,15 @@ def get_xpath():
 
 
 def get_parquet_links():
+    """Scrape the NYC Taxi data page for Parquet file URLs.
+
+    Sends an HTTP request to the NYC Taxi & Limousine Commission website,
+    parses the page HTML, and extracts links to Parquet files for the
+    relevant years.
+
+    Returns:
+        list[str]: List of Parquet file URLs.
+    """
     logger.info("🌐 Début du scraping des données NYC Taxi")
     url = "https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page"
     response = requests.get(url)
@@ -50,12 +82,27 @@ def get_parquet_links():
 
 
 def setup_meta_table(cur):
+    """Ensure the metadata table exists in Snowflake.
+
+    Executes the SQL script responsible for creating or verifying the
+    metadata table.
+
+    Args:
+        cur (snowflake.connector.cursor.SnowflakeCursor): Active Snowflake cursor.
+    """
     logger.info("📋 Vérification/Création de la table de metadata")
     sql_file = SQL_DIR / "setup_meta_table.sql"
     run_sql_file(cur, sql_file)
     logger.info("✅ Table de metadata prête")
 
+
 def main():
+    """Main scraping and metadata update workflow.
+
+    Connects to Snowflake using the transformer role, initializes context,
+    checks or creates the metadata table, scrapes new file URLs, and updates
+    the metadata accordingly.
+    """
     conn = connect_with_role(USER_DEV, PASSWORD_DEV, ACCOUNT, ROLE_TRANSFORMER)
     with conn.cursor() as cur:
         use_context(cur, WH_NAME, DW_NAME, RAW_SCHEMA)
@@ -99,4 +146,6 @@ def main():
     logger.info("✅ Scraping terminé")
 
 if __name__ == "__main__":
+    import doctest
+    doctest.testmod(verbose=True)
     main()
