@@ -1,9 +1,9 @@
-from functions import *
+from snowflake_ingestion.functions import *
 
 config_logger()
 logger = logging.getLogger(__name__)
 
-SQL_DIR = SQL_BASE_DIR / "04_load"
+SQL_DIR = SQL_BASE_DIR / "loading"
 
 
 def create_table(cur):

@@ -1,0 +1,439 @@
+import pytest
+from unittest.mock import Mock, patch, MagicMock, call, ANY
+import sys
+import os
+
+# Ajouter le chemin pour les imports
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+
+from snowflake_ingestion.load_to_table import (
+    create_table, copy_file_to_table_and_count, update_metadata,
+    cleanup_stage_file, handle_loading_error, main
+)
+from snowflake_ingestion.load_to_table import SQL_DIR, USER_DEV, PASSWORD_DEV, ACCOUNT, ROLE_TRANSFORMER
+from snowflake_ingestion.load_to_table import WH_NAME, DW_NAME, RAW_SCHEMA, RAW_TABLE, METADATA_TABLE, PARQUET_FORMAT
+
+
+def test_create_table_success():
+    """Test unitaire de create_table avec schéma détecté.
+    
+    Vérifie que la fonction crée la table RAW avec les colonnes détectées
+    et ajoute la colonne filename si nécessaire.
+    """
+    mock_cursor = Mock()
+    mock_cursor.fetchall.return_value = [
+        ("vendor_id", "NUMBER"),
+        ("tpep_pickup_datetime", "TIMESTAMP_NTZ"),
+        ("tpep_dropoff_datetime", "TIMESTAMP_NTZ")
+    ]
+    
+    with patch('snowflake_ingestion.load_to_table.run_sql_file') as mock_run_sql:
+        with patch('snowflake_ingestion.load_to_table.logger') as mock_logger:
+            
+            create_table(mock_cursor)
+            
+            # Vérifications
+            mock_run_sql.assert_any_call(mock_cursor, SQL_DIR / "detect_file_schema_stage.sql")
+            mock_run_sql.assert_any_call(mock_cursor, SQL_DIR / "add_filename_to_raw_table.sql")
+            # Vérifie que execute est appelé avec une commande CREATE TABLE
+            mock_cursor.execute.assert_called_once()
+            create_call = mock_cursor.execute.call_args[0][0]
+            assert "CREATE TABLE IF NOT EXISTS" in create_call
+            assert "vendor_id NUMBER" in create_call
+            assert "tpep_pickup_datetime TIMESTAMP_NTZ" in create_call
+            mock_logger.info.assert_any_call(f"📋 Vérification/Création dynamique de la table {RAW_TABLE}")
+            mock_logger.info.assert_any_call(f"✅ Table {RAW_TABLE} prête")
+
+
+def test_create_table_no_schema():
+    """Test unitaire de create_table sans schéma détecté.
+    
+    Vérifie que la fonction logge un avertissement quand aucun schéma
+    n'est détecté dans le stage.
+    """
+    mock_cursor = Mock()
+    mock_cursor.fetchall.return_value = []  # Aucun schéma détecté
+    
+    with patch('snowflake_ingestion.load_to_table.run_sql_file'):
+        with patch('snowflake_ingestion.load_to_table.logger') as mock_logger:
+            
+            create_table(mock_cursor)
+            
+            # Vérifie l'avertissement
+            mock_logger.warning.assert_called_with("⚠️  Aucune donnée dans le STAGE")
+            # Vérifie que CREATE TABLE n'est pas appelé
+            mock_cursor.execute.assert_not_called()
+
+
+def test_copy_file_to_table_and_count_success():
+    """Test unitaire de copy_file_to_table_and_count en cas de succès.
+    
+    Vérifie que la fonction charge le fichier depuis le stage, compte
+    les lignes insérées et retourne le bon nombre.
+    """
+    mock_cursor = Mock()
+    mock_cursor.fetchone.side_effect = [
+        [100],  # before count
+        [350]   # after count
+    ]
+    
+    with patch('snowflake_ingestion.load_to_table.run_sql_file') as mock_run_sql:
+        with patch('snowflake_ingestion.load_to_table.logger') as mock_logger:
+            
+            result = copy_file_to_table_and_count(mock_cursor, "test_file.parquet")
+            
+            # Vérifications
+            assert result == 250  # 350 - 100
+            mock_run_sql.assert_any_call(mock_cursor, SQL_DIR / "count_rows_from_raw_table.sql")
+            # Vérifie que COPY INTO est appelé avec les bons paramètres
+            mock_cursor.execute.assert_called_once()
+            copy_call = mock_cursor.execute.call_args[0][0]
+            assert "COPY INTO" in copy_call
+            assert "test_file.parquet" in copy_call
+            assert RAW_TABLE in copy_call
+            mock_logger.info.assert_any_call(f"🚀 Chargement de test_file.parquet dans {RAW_TABLE}...")
+            mock_logger.info.assert_any_call("✅ test_file.parquet chargé (250 lignes)")
+
+
+def test_copy_file_to_table_and_count_zero_rows():
+    """Test unitaire de copy_file_to_table_and_count avec 0 lignes insérées.
+    
+    Vérifie que la fonction gère correctement le cas où aucune nouvelle ligne
+    n'est insérée lors du chargement.
+    """
+    mock_cursor = Mock()
+    mock_cursor.fetchone.side_effect = [
+        [100],  # before count
+        [100]   # after count (même nombre)
+    ]
+    
+    with patch('snowflake_ingestion.load_to_table.run_sql_file'):
+        with patch('snowflake_ingestion.load_to_table.logger') as mock_logger:
+            
+            result = copy_file_to_table_and_count(mock_cursor, "test_file.parquet")
+            
+            # Vérifications
+            assert result == 0
+            mock_logger.info.assert_any_call("✅ test_file.parquet chargé (0 lignes)")
+
+
+def test_update_metadata():
+    """Test unitaire de update_metadata.
+    
+    Vérifie que la fonction met à jour correctement la table de métadonnées
+    avec le nombre de lignes chargées et le statut SUCCESS.
+    """
+    mock_cursor = Mock()
+    
+    with patch('snowflake_ingestion.load_to_table.logger') as mock_logger:
+        
+        update_metadata(mock_cursor, "test_file.parquet", 250)
+        
+        # Vérifications
+        mock_cursor.execute.assert_called_once()
+        update_call = mock_cursor.execute.call_args
+        assert "UPDATE" in update_call[0][0]
+        assert "rows_loaded" in update_call[0][0]
+        assert "SUCCESS" in update_call[0][0]
+        assert update_call[0][1] == (250, "test_file.parquet")
+        mock_logger.debug.assert_called_with(f"🚀 Chargement de {METADATA_TABLE}")
+
+
+def test_cleanup_stage_file():
+    """Test unitaire de cleanup_stage_file.
+    
+    Vérifie que la fonction supprime correctement le fichier du stage Snowflake.
+    """
+    mock_cursor = Mock()
+    
+    with patch('snowflake_ingestion.load_to_table.logger') as mock_logger:
+        
+        cleanup_stage_file(mock_cursor, "test_file.parquet")
+        
+        # Vérifications
+        mock_cursor.execute.assert_called_once_with("REMOVE @~/test_file.parquet")
+        mock_logger.info.assert_called_with("✅ test_file.parquet supprimé du stage")
+
+
+def test_handle_loading_error():
+    """Test unitaire de handle_loading_error.
+    
+    Vérifie que la fonction logge l'erreur et met à jour le statut FAILED_LOAD
+    dans la table de métadonnées.
+    """
+    mock_cursor = Mock()
+    test_error = Exception("COPY INTO failed")
+    
+    with patch('snowflake_ingestion.load_to_table.logger') as mock_logger:
+        
+        handle_loading_error(mock_cursor, "test_file.parquet", test_error)
+        
+        # Vérifications
+        mock_logger.error.assert_called_with("❌ Erreur de chargement test_file.parquet: COPY INTO failed")
+        mock_logger.debug.assert_called_with(f"🚀 Chargement de {METADATA_TABLE}")
+        mock_cursor.execute.assert_called_once()
+        update_call = mock_cursor.execute.call_args
+        assert "FAILED_LOAD" in update_call[0][0]
+        assert update_call[0][1] == ("test_file.parquet",)
+
+
+def test_main_success_flow():
+    """Test unitaire de main avec flux de succès complet.
+    
+    Vérifie que la fonction principale gère correctement le chargement
+    de tous les fichiers staged avec succès.
+    """
+    mock_conn = MagicMock()
+    mock_cursor = MagicMock()
+    mock_conn.cursor.return_value.__enter__.return_value = mock_cursor
+    
+    # Mock des fichiers staged
+    mock_cursor.fetchall.return_value = [
+        ("file1.parquet",),
+        ("file2.parquet",)
+    ]
+    
+    with patch('snowflake_ingestion.load_to_table.connect_with_role', return_value=mock_conn):
+        with patch('snowflake_ingestion.load_to_table.use_context'):
+            with patch('snowflake_ingestion.load_to_table.create_table'):
+                with patch('snowflake_ingestion.load_to_table.run_sql_file'):
+                    with patch('snowflake_ingestion.load_to_table.copy_file_to_table_and_count') as mock_copy:
+                        with patch('snowflake_ingestion.load_to_table.update_metadata'):
+                            with patch('snowflake_ingestion.load_to_table.cleanup_stage_file'):
+                                with patch('snowflake_ingestion.load_to_table.logger') as mock_logger:
+                                    
+                                    mock_copy.return_value = 100  # rows loaded
+                                    
+                                    main()
+                                    
+                                    # Vérifications
+                                    mock_logger.info.assert_any_call("🔍 Analyse des fichiers dans le STAGE")
+                                    assert mock_copy.call_count == 2
+                                    mock_copy.assert_any_call(mock_cursor, "file1.parquet")
+                                    mock_copy.assert_any_call(mock_cursor, "file2.parquet")
+
+
+def test_main_with_loading_error():
+    """Test unitaire de main avec erreur de chargement.
+    
+    Vérifie que la fonction principale gère correctement les erreurs
+    pendant le chargement des fichiers.
+    """
+    mock_conn = MagicMock()
+    mock_cursor = MagicMock()
+    mock_conn.cursor.return_value.__enter__.return_value = mock_cursor
+    
+    mock_cursor.fetchall.return_value = [
+        ("file1.parquet",),
+        ("file2.parquet",)
+    ]
+    
+    with patch('snowflake_ingestion.load_to_table.connect_with_role', return_value=mock_conn):
+        with patch('snowflake_ingestion.load_to_table.use_context'):
+            with patch('snowflake_ingestion.load_to_table.create_table'):
+                with patch('snowflake_ingestion.load_to_table.run_sql_file'):
+                    with patch('snowflake_ingestion.load_to_table.copy_file_to_table_and_count') as mock_copy:
+                        with patch('snowflake_ingestion.load_to_table.update_metadata'):
+                            with patch('snowflake_ingestion.load_to_table.cleanup_stage_file'):
+                                with patch('snowflake_ingestion.load_to_table.handle_loading_error') as mock_handle_error:
+                                    with patch('snowflake_ingestion.load_to_table.logger'):
+                                        
+                                        # Simule une erreur sur le deuxième fichier
+                                        def mock_copy_side_effect(cur, filename):
+                                            if filename == "file1.parquet":
+                                                return 100
+                                            else:
+                                                raise Exception("COPY INTO failed")
+                                        
+                                        mock_copy.side_effect = mock_copy_side_effect
+                                        
+                                        main()
+                                        
+                                        # Vérifications
+                                        assert mock_copy.call_count == 2
+                                        # Utilise ANY pour l'exception car elle est recréée
+                                        mock_handle_error.assert_called_once_with(mock_cursor, "file2.parquet", ANY)
+
+
+def test_main_no_staged_files():
+    """Test unitaire de main sans fichiers staged.
+    
+    Vérifie que la fonction principale gère correctement le cas où
+    aucun fichier n'est disponible dans le stage.
+    """
+    mock_conn = MagicMock()
+    mock_cursor = MagicMock()
+    mock_conn.cursor.return_value.__enter__.return_value = mock_cursor
+    
+    # Aucun fichier staged
+    mock_cursor.fetchall.return_value = []
+    
+    with patch('snowflake_ingestion.load_to_table.connect_with_role', return_value=mock_conn):
+        with patch('snowflake_ingestion.load_to_table.use_context'):
+            with patch('snowflake_ingestion.load_to_table.create_table'):
+                with patch('snowflake_ingestion.load_to_table.run_sql_file'):
+                    with patch('snowflake_ingestion.load_to_table.logger') as mock_logger:
+                        
+                        main()
+                        
+                        # Vérifie que l'analyse des fichiers est loggée
+                        mock_logger.info.assert_any_call("🔍 Analyse des fichiers dans le STAGE")
+                        # Vérifie qu'aucun chargement n'est effectué
+                        assert not any("COPY INTO" in str(call) for call in mock_cursor.execute.call_args_list)
+
+
+def test_main_table_creation_error():
+    """Test unitaire de main avec erreur lors de la création de table.
+    
+    Vérifie que la fonction principale gère les erreurs lors de la
+    création de la table RAW.
+    """
+    mock_conn = MagicMock()
+    mock_cursor = MagicMock()
+    mock_conn.cursor.return_value.__enter__.return_value = mock_cursor
+    
+    with patch('snowflake_ingestion.load_to_table.connect_with_role', return_value=mock_conn):
+        with patch('snowflake_ingestion.load_to_table.use_context'):
+            with patch('snowflake_ingestion.load_to_table.create_table') as mock_create_table:
+                with patch('snowflake_ingestion.load_to_table.logger') as mock_logger:
+                    
+                    # Simule une erreur lors de la création de table
+                    mock_create_table.side_effect = Exception("Table creation failed")
+                    
+                    # Vérifie que l'exception est propagée
+                    with pytest.raises(Exception, match="Table creation failed"):
+                        main()
+                    
+                    # Ne pas vérifier le logger.error car l'exception peut être propagée sans être loggée
+                    # ou être loggée à un niveau différent. Le test principal est que l'exception est propagée.
+
+
+def test_main_connection_error():
+    """Test unitaire de main avec erreur de connexion.
+    
+    Vérifie que la fonction principale propage les erreurs de connexion.
+    """
+    with patch('snowflake_ingestion.load_to_table.connect_with_role') as mock_connect:
+        with patch('snowflake_ingestion.load_to_table.logger') as mock_logger:
+            
+            # Simule une erreur de connexion
+            mock_connect.side_effect = Exception("Connection failed")
+            
+            with pytest.raises(Exception, match="Connection failed"):
+                main()
+            
+            # Ne pas forcer la vérification du logger.error car la gestion des logs peut varier
+
+
+def test_main_complete_flow_with_counts():
+    """Test unitaire du flux complet avec vérification des comptages.
+    
+    Vérifie l'ordre des opérations et les appels aux différentes fonctions.
+    """
+    mock_conn = MagicMock()
+    mock_cursor = MagicMock()
+    mock_conn.cursor.return_value.__enter__.return_value = mock_cursor
+    
+    mock_cursor.fetchall.return_value = [
+        ("file1.parquet",)
+    ]
+    
+    with patch('snowflake_ingestion.load_to_table.connect_with_role', return_value=mock_conn):
+        with patch('snowflake_ingestion.load_to_table.use_context'):
+            with patch('snowflake_ingestion.load_to_table.create_table'):
+                with patch('snowflake_ingestion.load_to_table.run_sql_file'):
+                    with patch('snowflake_ingestion.load_to_table.copy_file_to_table_and_count', return_value=150):
+                        with patch('snowflake_ingestion.load_to_table.update_metadata') as mock_update:
+                            with patch('snowflake_ingestion.load_to_table.cleanup_stage_file') as mock_cleanup:
+                                with patch('snowflake_ingestion.load_to_table.logger'):
+                                    
+                                    main()
+                                    
+                                    # Vérifie l'ordre des opérations
+                                    mock_update.assert_called_once_with(mock_cursor, "file1.parquet", 150)
+                                    mock_cleanup.assert_called_once_with(mock_cursor, "file1.parquet")
+
+
+def test_main_multiple_files_different_results():
+    """Test unitaire de main avec plusieurs fichiers et résultats différents.
+    
+    Vérifie que la fonction principale gère correctement plusieurs fichiers
+    avec des nombres de lignes chargées différents.
+    """
+    mock_conn = MagicMock()
+    mock_cursor = MagicMock()
+    mock_conn.cursor.return_value.__enter__.return_value = mock_cursor
+    
+    mock_cursor.fetchall.return_value = [
+        ("small_file.parquet",),
+        ("large_file.parquet",)
+    ]
+    
+    with patch('snowflake_ingestion.load_to_table.connect_with_role', return_value=mock_conn):
+        with patch('snowflake_ingestion.load_to_table.use_context'):
+            with patch('snowflake_ingestion.load_to_table.create_table'):
+                with patch('snowflake_ingestion.load_to_table.run_sql_file'):
+                    with patch('snowflake_ingestion.load_to_table.copy_file_to_table_and_count') as mock_copy:
+                        with patch('snowflake_ingestion.load_to_table.update_metadata') as mock_update:
+                            with patch('snowflake_ingestion.load_to_table.cleanup_stage_file'):
+                                with patch('snowflake_ingestion.load_to_table.logger'):
+                                    
+                                    # Simule des nombres de lignes différents
+                                    mock_copy.side_effect = [50, 1000]
+                                    
+                                    main()
+                                    
+                                    # Vérifie que update_metadata est appelé avec les bons comptes
+                                    update_calls = mock_update.call_args_list
+                                    assert len(update_calls) == 2
+                                    assert update_calls[0][0] == (mock_cursor, "small_file.parquet", 50)
+                                    assert update_calls[1][0] == (mock_cursor, "large_file.parquet", 1000)
+
+
+def test_main_exception_handling_in_loop():
+    """Test unitaire de la gestion des exceptions dans la boucle principale.
+    
+    Vérifie que si une exception se produit dans la boucle de traitement,
+    elle est correctement gérée et n'arrête pas le traitement des fichiers suivants.
+    """
+    mock_conn = MagicMock()
+    mock_cursor = MagicMock()
+    mock_conn.cursor.return_value.__enter__.return_value = mock_cursor
+    
+    mock_cursor.fetchall.return_value = [
+        ("file1.parquet",),
+        ("file2.parquet",),
+        ("file3.parquet",)
+    ]
+    
+    with patch('snowflake_ingestion.load_to_table.connect_with_role', return_value=mock_conn):
+        with patch('snowflake_ingestion.load_to_table.use_context'):
+            with patch('snowflake_ingestion.load_to_table.create_table'):
+                with patch('snowflake_ingestion.load_to_table.run_sql_file'):
+                    with patch('snowflake_ingestion.load_to_table.copy_file_to_table_and_count') as mock_copy:
+                        with patch('snowflake_ingestion.load_to_table.update_metadata') as mock_update:
+                            with patch('snowflake_ingestion.load_to_table.cleanup_stage_file') as mock_cleanup:
+                                with patch('snowflake_ingestion.load_to_table.handle_loading_error') as mock_handle_error:
+                                    with patch('snowflake_ingestion.load_to_table.logger'):
+                                        
+                                        # Simule une erreur sur le deuxième fichier seulement
+                                        def mock_copy_side_effect(cur, filename):
+                                            if filename == "file2.parquet":
+                                                raise Exception("Error on file2")
+                                            return 100
+                                        
+                                        mock_copy.side_effect = mock_copy_side_effect
+                                        
+                                        main()
+                                        
+                                        # Vérifie que tous les fichiers sont traités
+                                        assert mock_copy.call_count == 3
+                                        # Vérifie que l'erreur est gérée pour file2
+                                        mock_handle_error.assert_called_once_with(mock_cursor, "file2.parquet", ANY)
+                                        # Vérifie que les autres fichiers sont mis à jour normalement
+                                        assert mock_update.call_count == 2
+                                        assert mock_cleanup.call_count == 2
+
+
+if __name__ == "__main__":
+    pytest.main([__file__, "-v"])
