@@ -1,12 +1,12 @@
 import requests
 from lxml import html
-from functions import *
+from snowflake_ingestion.functions import *
 from datetime import datetime
 
 config_logger()
 logger = logging.getLogger(__name__)
 
-SQL_DIR = SQL_BASE_DIR / "02_scraping"
+SQL_DIR = SQL_BASE_DIR / "scraping"
 
 current_year = datetime.now().year
 current_month = datetime.now().month

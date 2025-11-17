@@ -1,10 +1,10 @@
-from functions import *
+from snowflake_ingestion.functions import *
 
 config_logger()
 logger = logging.getLogger(__name__)
 
 
-SQL_DIR = SQL_BASE_DIR / "01_init"
+SQL_DIR = SQL_BASE_DIR / "init"
 
 
 

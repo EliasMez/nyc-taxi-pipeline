@@ -1,12 +1,12 @@
 import os
 import requests
 import shutil
-from functions import *
+from snowflake_ingestion.functions import *
 
 config_logger()
 logger = logging.getLogger(__name__)
 
-SQL_DIR = SQL_BASE_DIR / "03_stage"
+SQL_DIR = SQL_BASE_DIR / "staging"
 
 
 def download_and_upload_file(cur, file_url, filename, temp_dir="temp_files") -> str:
@@ -58,6 +58,7 @@ def main():
             logger.info(f"📦 {scraped_files_count} fichiers à uploader")
 
         for file_url, filename in scraped_files:
+            tmp_path = None
             try:
                 tmp_path = download_and_upload_file(cur, file_url, filename)
                 logger.info(f"✅ {filename} uploadé")
@@ -68,7 +69,7 @@ def main():
                 logger.debug(f"🚀 Chargement de {METADATA_TABLE}")
                 cur.execute(f"UPDATE {METADATA_TABLE} SET load_status='FAILED_STAGE' WHERE file_name=%s", (filename,))
             finally:
-                if os.path.exists(tmp_path):
+                if tmp_path is not None and os.path.exists(tmp_path):
                     os.unlink(tmp_path)
         shutil.rmtree("temp_files", ignore_errors=True)
     conn.close()
