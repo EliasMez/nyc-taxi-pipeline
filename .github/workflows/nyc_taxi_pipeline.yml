@@ -32,7 +32,7 @@ jobs:
       
     
     steps:
-    - name: Checkout code
+    - name: Checkout Code
       uses: actions/checkout@v5
       
     - name: Setup Python
@@ -45,34 +45,37 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Run python tests
+    - name: Run Python Tests
       run: |
         pytest snowflake_ingestion/tests/ -v
 
+    - name: Install Modules
+      run: pip install -e .
+
     - name: Snowflake Infra Init
       run: |
-        python snowflake_ingestion/init_infra_snowflake.py
+        python -m snowflake_ingestion.init_infra_snowflake
 
     - name: Scrape Links
       run: |
-        python snowflake_ingestion/scrape_links.py
+        python -m snowflake_ingestion.scrape_links
 
     - name: Upload to Stage
       run: |
-        python snowflake_ingestion/upload_stage.py
+        python -m snowflake_ingestion.upload_stage
 
     - name: Load to Table
       run: |
-        python snowflake_ingestion/load_to_table.py
+        python -m snowflake_ingestion.load_to_table
 
-    - name: Install dbt dependencies
+    - name: Install dbt Dependencies
       run: |
         dbt deps --project-dir dbt_transformations/NYC_Taxi_dbt --profiles-dir dbt_transformations
 
-    - name: Run dbt transformations
+    - name: Run dbt Transformations
       run: |
         dbt run --project-dir dbt_transformations/NYC_Taxi_dbt --profiles-dir dbt_transformations
 
-    - name: Run dbt tests
+    - name: Run dbt Tests
       run: |
         dbt test --project-dir dbt_transformations/NYC_Taxi_dbt --profiles-dir dbt_transformations

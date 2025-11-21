@@ -22,7 +22,7 @@ def get_scraping_year()-> int:
 
     Doctests:
     from functions import SCRAPING_YEAR
-    >>> get_scraping_year() == int(SCRAPING_YEAR) - int(current_month <= 3)
+    >>> get_scraping_year() == (int(SCRAPING_YEAR) if SCRAPING_YEAR != '' else current_year) - int(current_month <= 3)
     True
 
     """
@@ -140,6 +140,7 @@ def main():
     logger.info("✅ Scraping terminé")
 
 if __name__ == "__main__":
-    import doctest
-    doctest.testmod(verbose=True)
+    if LOGGER_LEVEL == "DEBUG":
+        import doctest
+        doctest.testmod(verbose=True)
     main()
