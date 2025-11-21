@@ -2,6 +2,37 @@
 
 <!-- version list -->
 
+## v1.7.0 (2025-11-21)
+
+### Chores
+
+- **workflow**: Update version 3.10 release
+  ([`c87b519`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/c87b5190e033c9e269fe8a2b7667d4839da46840))
+
+### Documentation
+
+- Ajout des docstrings et doctest
+  ([`37852f4`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/37852f49ad7261459343b00bc986d8e7f75c928a))
+
+- **mkdocs**: Ajout des docstrings dans mkdocs
+  ([`c90c5b4`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/c90c5b4090a4be521c30a146f3c10e025def6b45))
+
+### Features
+
+- **pytests**: Ajout des tests pytest et modifs noms de fichiers
+  ([`7c4a112`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/7c4a11285e3f97dea36d0726a020612258580a61))
+
+### Refactoring
+
+- **stage**: Modif temp_file
+  ([`1537f73`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/1537f730f72c6eadb2edf77292d0d20eede2056c))
+
+### Testing
+
+- **pytest**: Ajout des tests complets
+  ([`9224ca2`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/9224ca2135f969ebb8e52e7aa8bc53eb3bbcf071))
+
+
 ## v1.6.0 (2025-11-11)
 
 ### Chores
