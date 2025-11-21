@@ -96,7 +96,7 @@ def use_context(cur, WH_NAME, DW_NAME, RAW_SCHEMA):
         cur.execute(f"USE DATABASE {DW_NAME}")
         cur.execute(f"USE SCHEMA {RAW_SCHEMA}")
     except Exception as e:
-        logger.critical(f"❌ Erreur : Relancer l'étape 01 - Initialisation")
+        logger.critical(f"❌ Erreur : Relancer l'étape Snowflake Infra Init")
         sys.exit(1)
 
 
