@@ -45,6 +45,10 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
+    - name: Run python tests
+      run: |
+        pytest snowflake_ingestion/tests/ -v
+
     - name: Snowflake Infra Init
       run: |
         python snowflake_ingestion/init_infra_snowflake.py
