@@ -14,7 +14,6 @@ current_month = datetime.now().month
 
 def get_scraping_year()-> int:
     """Determine the scraping year to use based on environment settings.
-
     Uses SCRAPING_YEAR if defined and valid, otherwise selects the previous
     year when current month ≤ 3, or the current year otherwise.
 
@@ -48,7 +47,6 @@ def get_scraping_year()-> int:
 
 def get_xpath() -> str:
     """Build the XPath expression used to locate Parquet file links.
-
     The expression filters NYC Taxi data links by year, starting from the
     scraping year up to the current year.
 
@@ -64,10 +62,8 @@ def get_xpath() -> str:
 
 def get_parquet_links()-> list[str]:
     """Scrape the NYC Taxi data page for Parquet file URLs.
-
-    Sends an HTTP request to the NYC Taxi & Limousine Commission website,
-    parses the page HTML, and extracts links to Parquet files for the
-    relevant years.
+    Sends an HTTP request to the NYC Taxi,parses the page HTML,
+    and extracts links to Parquet files for the relevant years.
 
     Returns:
         list[str]: List of Parquet file URLs.
@@ -83,7 +79,6 @@ def get_parquet_links()-> list[str]:
 
 def setup_meta_table(cur):
     """Ensure the metadata table exists in Snowflake.
-
     Executes the SQL script responsible for creating or verifying the
     metadata table.
 
@@ -98,7 +93,6 @@ def setup_meta_table(cur):
 
 def main():
     """Main scraping and metadata update workflow.
-
     Connects to Snowflake using the transformer role, initializes context,
     checks or creates the metadata table, scrapes new file URLs, and updates
     the metadata accordingly.
@@ -109,7 +103,8 @@ def main():
         setup_meta_table(cur)
 
         links = get_parquet_links()
-        logger.info(f"📎 {len(links)} liens trouvés")
+        s = "s" if len(links) >= 2 else ""
+        logger.info(f"📎 {len(links)} lien{s} trouvé{s}")
         new_file_detected = False
 
         for url in links:
@@ -119,7 +114,6 @@ def main():
                 logger.info(f"➕ Nouveau fichier détecté : {filename}")
                 new_file_detected = True
                 
-                # Extraire année et mois depuis le filename
                 parts = filename.replace('yellow_tripdata_', '').replace('.parquet', '').split('-')
                 year = int(parts[0]) if len(parts) > 0 else None
                 month = int(parts[1]) if len(parts) > 1 else None
