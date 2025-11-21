@@ -1,11 +1,8 @@
-import pytest
 from unittest.mock import Mock, patch
-from snowflake_ingestion.init_infra_snowflake import setup_data_warehouse, create_roles_and_user, grant_privileges, main
-from snowflake_ingestion.init_infra_snowflake import SQL_DIR, USER, PASSWORD, ACCOUNT
+from snowflake_ingestion.init_infra_snowflake import *
 
 def test_setup_data_warehouse():
     """Test unitaire de la fonction setup_data_warehouse.
-    
     Vérifie que la fonction appelle run_sql_file avec le bon fichier SQL
     et logge les messages appropriés pour la création du warehouse et des schémas.
     """
@@ -21,7 +18,6 @@ def test_setup_data_warehouse():
 
 def test_create_roles_and_user():
     """Test unitaire de la fonction create_roles_and_user.
-    
     Vérifie que la fonction appelle run_sql_file avec le bon fichier SQL
     et logge les messages appropriés pour la création des rôles et utilisateurs.
     """
@@ -37,7 +33,6 @@ def test_create_roles_and_user():
 
 def test_grant_privileges():
     """Test unitaire de la fonction grant_privileges.
-    
     Vérifie que la fonction appelle run_sql_file avec le bon fichier SQL
     et logge les messages appropriés pour l'attribution des privilèges.
     """
@@ -81,7 +76,6 @@ def test_main_success():
 
 def test_main_exception():
     """Test unitaire de la fonction main en cas d'erreur.
-    
     Vérifie que la fonction logge l'erreur et ne lève pas d'exception
     lorsqu'une erreur se produit pendant l'initialisation.
     """

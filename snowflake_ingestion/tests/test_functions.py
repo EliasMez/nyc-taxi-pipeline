@@ -1,11 +1,10 @@
 import pytest
 from unittest.mock import Mock, patch, mock_open
 from pathlib import Path
-from ..functions import connect_with_role, use_context, run_sql_file
+from snowflake_ingestion.functions import connect_with_role, use_context, run_sql_file
 
 def test_connect_with_role_success():
     """Test unitaire de connect_with_role en cas de succès.
-    
     Vérifie que la fonction appelle snowflake.connector.connect avec les bons
     paramètres, active l'autocommit et retourne l'objet connexion.
     """
@@ -29,7 +28,7 @@ def test_connect_with_role_autocommit_enabled():
     """
     mock_connection = Mock()
     with patch('snowflake_ingestion.functions.snowflake.connector.connect', return_value=mock_connection) as mock_connect:
-        result = connect_with_role("different_user", "different_pass", "different_account", "different_role")
+        connect_with_role("different_user", "different_pass", "different_account", "different_role")
         call_kwargs = mock_connect.call_args.kwargs
         assert call_kwargs['autocommit'] == True
 
@@ -47,7 +46,7 @@ def test_connect_with_role_parameters_passed_correctly():
             'account': 'test_account',
             'role': 'test_role'
         }
-        result = connect_with_role(**test_params)
+        connect_with_role(**test_params)
         call_kwargs = mock_connect.call_args.kwargs
         for key, value in test_params.items():
             assert call_kwargs[key] == value
