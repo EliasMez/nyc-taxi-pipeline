@@ -8,7 +8,6 @@ SQL_DIR = SQL_BASE_DIR / "loading"
 
 def create_table(cur):
     """Create or verify the RAW table dynamically based on staged file schema.
-
     Executes SQL to detect the file schema in the Snowflake stage,
     creates the RAW table if it does not exist, and adds the filename
     column if needed.
@@ -32,7 +31,6 @@ def create_table(cur):
 
 def copy_file_to_table_and_count(cur, filename)-> int:
     """Load a Parquet file from stage into the RAW table and count inserted rows.
-
     Compares the number of rows before and after the COPY INTO operation
     to determine how many records were loaded.
 
@@ -59,14 +57,14 @@ def copy_file_to_table_and_count(cur, filename)-> int:
     after = cur.fetchone()[0]
 
     rows_loaded = after - before
-    logger.info(f"✅ {filename} chargé ({rows_loaded} lignes)")
+    s = "s" if rows_loaded >= 2 else ""
+    logger.info(f"✅ {filename} chargé ({rows_loaded} ligne{s})")
     return rows_loaded
 
 
 
 def update_metadata(cur, filename, rows_loaded):
     """Update the metadata table after successful file loading.
-
     Args:
         cur (snowflake.connector.cursor.SnowflakeCursor): Active Snowflake cursor.
         filename (str): Name of the loaded file.
@@ -83,7 +81,6 @@ def update_metadata(cur, filename, rows_loaded):
 
 def cleanup_stage_file(cur, filename):
     """Remove the processed file from the Snowflake stage.
-
     Args:
         cur (snowflake.connector.cursor.SnowflakeCursor): Active Snowflake cursor.
         filename (str): Name of the file to delete from the stage.
@@ -95,7 +92,6 @@ def cleanup_stage_file(cur, filename):
 
 def handle_loading_error(cur, filename, error):
     """Handle errors occurring during file loading into the RAW table.
-
     Logs the error and updates the metadata table to mark the file
     as failed during the load step.
 
@@ -112,7 +108,6 @@ def handle_loading_error(cur, filename, error):
 
 def main():
     """Main process for loading staged Parquet files into the RAW table.
-
     Connects to Snowflake, ensures the RAW table exists, retrieves staged files,
     loads each into the RAW table, updates metadata, and cleans up stage files.
     """
