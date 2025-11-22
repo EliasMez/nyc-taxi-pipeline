@@ -10,6 +10,8 @@ paths-ignore:
 
 queries:
   - uses: security-and-quality
-    exclude:
-      - id: py/namespace-pollution
   - uses: security-extended
+
+query-filters:
+- exclude:
+     id: py/polluting-import
