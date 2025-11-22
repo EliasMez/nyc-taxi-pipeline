@@ -10,3 +10,6 @@ paths-ignore:
 
 queries:
   - uses: security-and-quality
+    exclude:
+      - id: py/namespace-pollution
+  

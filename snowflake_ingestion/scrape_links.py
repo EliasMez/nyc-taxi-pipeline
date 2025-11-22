@@ -32,7 +32,7 @@ def get_scraping_year()-> int:
     else:
         try:
             int_year = int(SCRAPING_YEAR)
-        except:
+        except ValueError:
             logger.error(f"\"SCRAPING_YEAR = {SCRAPING_YEAR}\" n'est pas une année valide !")
             logger.warning(f"L'année du scraping a été réinitialisée à {default_year}")
             return default_year

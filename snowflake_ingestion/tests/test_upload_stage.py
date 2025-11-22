@@ -1,5 +1,5 @@
 import pytest
-from unittest.mock import Mock, patch, MagicMock, mock_open, call
+from unittest.mock import Mock, patch, MagicMock
 import sys
 import os
 import requests

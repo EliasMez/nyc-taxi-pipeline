@@ -1,4 +1,3 @@
-import os
 import requests
 import tempfile
 from snowflake_ingestion.functions import *
