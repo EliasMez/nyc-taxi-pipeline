@@ -52,38 +52,39 @@ def test_create_table_no_schema():
 
 
 def test_copy_file_to_table_and_count_success():
-    """Test unitaire de copy_file_to_table_and_count en cas de succès.
-    Vérifie que la fonction charge le fichier depuis le stage, compte
-    les lignes insérées et retourne le bon nombre.
-    """
+    """Test unitaire de copy_file_to_table_and_count en cas de succès."""
     mock_cursor = Mock()
-    mock_cursor.fetchone.side_effect = [[100], [350]]
-    with patch('snowflake_ingestion.load_to_table.run_sql_file') as mock_run_sql:
-        with patch('snowflake_ingestion.load_to_table.logger') as mock_logger:
-            result = copy_file_to_table_and_count(mock_cursor, "test_file.parquet")
-            assert result == 250
-            mock_run_sql.assert_any_call(mock_cursor, SQL_DIR / "count_rows_from_raw_table.sql")
-            mock_cursor.execute.assert_called_once()
-            copy_call = mock_cursor.execute.call_args[0][0]
-            assert "COPY INTO" in copy_call
-            assert "test_file.parquet" in copy_call
-            assert RAW_TABLE in copy_call
-            mock_logger.info.assert_any_call(f"🚀 Chargement de test_file.parquet dans {RAW_TABLE}...")
-            mock_logger.info.assert_any_call("✅ test_file.parquet chargé (250 lignes)")
-
-
-def test_copy_file_to_table_and_count_zero_rows():
-    """Test unitaire de copy_file_to_table_and_count avec 0 ligne insérée.
-    Vérifie que la fonction gère correctement le cas où aucune nouvelle ligne
-    n'est insérée lors du chargement.
-    """
-    mock_cursor = Mock()
-    mock_cursor.fetchone.side_effect = [[100], [100]]
+    mock_cursor.fetchone.return_value = ('test_file.parquet', 'LOADED', 250, 250, 1, 0, None, None, None, None)
+    
     with patch('snowflake_ingestion.load_to_table.run_sql_file'):
         with patch('snowflake_ingestion.load_to_table.logger') as mock_logger:
             result = copy_file_to_table_and_count(mock_cursor, "test_file.parquet")
+            assert result == 250
+            mock_cursor.execute.assert_any_call("UPDATE YELLOW_TAXI_TRIPS_RAW SET filename = %s WHERE filename IS NULL", ('test_file.parquet',))
+
+
+def test_copy_file_to_table_and_count_zero_loaded():
+    """Test quand COPY INTO retourne 0 lignes chargées."""
+    mock_cursor = Mock()
+    mock_cursor.fetchone.return_value = ('Copy executed with 0 files processed.',)
+    
+    with patch('snowflake_ingestion.load_to_table.run_sql_file'):
+        with patch('snowflake_ingestion.load_to_table.logger'):
+            result = copy_file_to_table_and_count(mock_cursor, "test_file.parquet")
             assert result == 0
-            mock_logger.info.assert_any_call("✅ test_file.parquet chargé (0 ligne)")
+
+
+def test_copy_file_to_table_and_count_update_error():
+    """Test gestion d'erreur lors de l'UPDATE filename."""
+    mock_cursor = Mock()
+    mock_cursor.fetchone.return_value = ('test_file.parquet', 'LOADED', 100, 100, 1, 0, None, None, None, None)
+    mock_cursor.execute.side_effect = [None, Exception("Update failed")]
+    
+    with patch('snowflake_ingestion.load_to_table.run_sql_file'):
+        with patch('snowflake_ingestion.load_to_table.logger') as mock_logger:
+            with pytest.raises(Exception):
+                copy_file_to_table_and_count(mock_cursor, "test_file.parquet")
+
 
 
 def test_update_metadata():

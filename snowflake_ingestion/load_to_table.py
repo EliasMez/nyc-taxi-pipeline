@@ -6,6 +6,7 @@ logger = logging.getLogger(__name__)
 SQL_DIR = SQL_BASE_DIR / "loading"
 
 
+
 def create_table(cur):
     """Create or verify the RAW table dynamically based on staged file schema.
     Executes SQL to detect the file schema in the Snowflake stage,
@@ -18,13 +19,20 @@ def create_table(cur):
     logger.info(f"📋 Vérification/Création dynamique de la table {RAW_TABLE}")
     run_sql_file(cur, SQL_DIR / "detect_file_schema_stage.sql")
     schema = cur.fetchall()
-    columns = [f"{col_name} {col_type}" for col_name, col_type in schema]
-    if len(columns)!=0 :
+    seen = set()
+    unique_schema = []
+    for col_name, col_type in schema:
+        if col_name.lower() not in seen:
+            seen.add(col_name.lower())
+            unique_schema.append((col_name, col_type))
+    
+    columns = [f"{col_name} {col_type}" for col_name, col_type in unique_schema]
+    if len(columns) != 0:
         create_sql = f"CREATE TABLE IF NOT EXISTS {RAW_TABLE} ({', '.join(columns)})"
         cur.execute(create_sql)
         run_sql_file(cur, SQL_DIR / "add_filename_to_raw_table.sql")
         logger.info(f"✅ Table {RAW_TABLE} prête")
-    else :
+    else:
         logger.warning(f"⚠️  Aucune donnée dans le STAGE")
 
 
@@ -43,24 +51,24 @@ def copy_file_to_table_and_count(cur, filename)-> int:
     """
     logger.info(f"🚀 Chargement de {filename} dans {RAW_TABLE}...")
 
-    run_sql_file(cur, SQL_DIR / "count_rows_from_raw_table.sql")
-    before = cur.fetchone()[0]
-
     cur.execute(f"""
         COPY INTO {RAW_TABLE} 
         FROM '@~/{filename}'
         FILE_FORMAT=(FORMAT_NAME='{DW_NAME}.{RAW_SCHEMA}.{PARQUET_FORMAT}')
         MATCH_BY_COLUMN_NAME=CASE_INSENSITIVE
+        FORCE = TRUE
     """)
 
-    run_sql_file(cur, SQL_DIR / "count_rows_from_raw_table.sql")
-    after = cur.fetchone()[0]
+    result = cur.fetchone()
+    if result and len(result) > 3:
+       rows_loaded = result[3]
+       cur.execute(f"UPDATE {RAW_TABLE} SET filename = %s WHERE filename IS NULL", (filename,))
+    else:
+       rows_loaded = 0
 
-    rows_loaded = after - before
     s = "s" if rows_loaded >= 2 else ""
     logger.info(f"✅ {filename} chargé ({rows_loaded} ligne{s})")
     return rows_loaded
-
 
 
 def update_metadata(cur, filename, rows_loaded):

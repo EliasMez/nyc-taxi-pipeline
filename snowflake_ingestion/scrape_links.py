@@ -10,7 +10,7 @@ SQL_DIR = SQL_BASE_DIR / "scraping"
 
 current_year = datetime.now().year
 current_month = datetime.now().month
-
+scraping_url = "https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page"
 
 def get_scraping_year()-> int:
     """Determine the scraping year to use based on environment settings.
@@ -69,7 +69,7 @@ def get_parquet_links()-> list[str]:
         list[str]: List of Parquet file URLs.
     """
     logger.info("🌐 Début du scraping des données NYC Taxi")
-    url = "https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page"
+    url = scraping_url
     response = requests.get(url)
     tree = html.fromstring(response.content)
     xpath_query = get_xpath()
