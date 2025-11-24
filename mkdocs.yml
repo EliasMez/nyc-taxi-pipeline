@@ -16,17 +16,12 @@ plugins:
           options:
             docstring_style: google
             show_source: true
-
-
+            show_root_heading: true
+            heading_level: 3
 
 nav:
   - 🚕 Accueil: index.md
-  - 📋 Prérequis: prerequisites.md
-  - 📁 Architecture: architecture.md
-  - 📊 Flux de traitement: flow.md
-  - 📈 Monitoring: monitoring.md
+  - 🏛️ Architecture: architecture.md
+  - 📈 Governance: governance.md
   - 🚀 Exécution: execution.md
-  - ⚙️ Configuration: configuration.md
-  - 🔐 Sécurité: security.md
-  - 🐛 Dépannage: troubleshooting.md
   - 📚 Docstrings: docstrings.md
