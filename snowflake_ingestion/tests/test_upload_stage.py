@@ -5,7 +5,7 @@ import os
 import requests
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-from snowflake_ingestion.upload_stage import *
+import snowflake_ingestion.upload_stage as stage
 
 def test_download_and_upload_file_success():
     """Test unitaire de download_and_upload_file en cas de succès.
@@ -25,9 +25,9 @@ def test_download_and_upload_file_success():
     
     with patch('snowflake_ingestion.upload_stage.requests.get', return_value=mock_response):
         with patch('snowflake_ingestion.upload_stage.tempfile.NamedTemporaryFile') as mock_tempfile:
-            with patch('snowflake_ingestion.upload_stage.logger') as mock_logger:
+            with patch('snowflake_ingestion.upload_stage.logger') as mock_logger:  # CHANGEMENT ICI
                 mock_tempfile.return_value = mock_temp_file
-                download_and_upload_file(mock_cursor, "http://example.com/test.parquet", "test.parquet")
+                stage.download_and_upload_file(mock_cursor, "http://example.com/test.parquet", "test.parquet")
                 
                 mock_response.raise_for_status.assert_called_once()
                 mock_temp_file.write.assert_called_once_with(b"fake parquet content")
@@ -48,9 +48,9 @@ def test_download_and_upload_file_http_error():
     
     with patch('snowflake_ingestion.upload_stage.requests.get', return_value=mock_response):
         with patch('snowflake_ingestion.upload_stage.tempfile.NamedTemporaryFile'):
-            with patch('snowflake_ingestion.upload_stage.logger'):
+            with patch('snowflake_ingestion.upload_stage.logger'):  # CHANGEMENT ICI
                 with pytest.raises(requests.HTTPError):
-                    download_and_upload_file(mock_cursor, "http://example.com/test.parquet", "test.parquet")
+                    stage.download_and_upload_file(mock_cursor, "http://example.com/test.parquet", "test.parquet")
 
 
 def test_download_and_upload_file_snowflake_error():
@@ -70,10 +70,10 @@ def test_download_and_upload_file_snowflake_error():
     
     with patch('snowflake_ingestion.upload_stage.requests.get', return_value=mock_response):
         with patch('snowflake_ingestion.upload_stage.tempfile.NamedTemporaryFile', return_value=mock_temp_file):
-            with patch('snowflake_ingestion.upload_stage.logger'):
+            with patch('snowflake_ingestion.upload_stage.logger'):  # CHANGEMENT ICI
                 mock_cursor.execute.side_effect = Exception("Snowflake PUT failed")       
                 with pytest.raises(Exception, match="Snowflake PUT failed"):
-                    download_and_upload_file(mock_cursor, "http://example.com/test.parquet", "test.parquet")
+                    stage.download_and_upload_file(mock_cursor, "http://example.com/test.parquet", "test.parquet")
 
 
 def test_download_and_upload_file_tempfile_error():
@@ -87,12 +87,11 @@ def test_download_and_upload_file_tempfile_error():
     
     with patch('snowflake_ingestion.upload_stage.requests.get', return_value=mock_response):
         with patch('snowflake_ingestion.upload_stage.tempfile.NamedTemporaryFile') as mock_tempfile:
-            with patch('snowflake_ingestion.upload_stage.logger'):
+            with patch('snowflake_ingestion.upload_stage.logger'):  # CHANGEMENT ICI
                 mock_tempfile.side_effect = OSError("Cannot create temp file")
                 
                 with pytest.raises(OSError, match="Cannot create temp file"):
-                    download_and_upload_file(mock_cursor, "http://example.com/test.parquet", "test.parquet")
-
+                    stage.download_and_upload_file(mock_cursor, "http://example.com/test.parquet", "test.parquet")
 
 
 def test_main_with_files():
@@ -109,12 +108,12 @@ def test_main_with_files():
         ("http://example.com/file2.parquet", "file2.parquet")
     ]
     
-    with patch('snowflake_ingestion.upload_stage.connect_with_role', return_value=mock_conn):
-        with patch('snowflake_ingestion.upload_stage.use_context'):
-            with patch('snowflake_ingestion.upload_stage.run_sql_file'):
+    with patch('snowflake_ingestion.upload_stage.functions.connect_with_role', return_value=mock_conn):
+        with patch('snowflake_ingestion.upload_stage.functions.use_context'):
+            with patch('snowflake_ingestion.upload_stage.functions.run_sql_file'):
                 with patch('snowflake_ingestion.upload_stage.download_and_upload_file') as mock_download:  
-                    with patch('snowflake_ingestion.upload_stage.logger') as mock_logger:   
-                        main()
+                    with patch('snowflake_ingestion.upload_stage.logger') as mock_logger:  # CHANGEMENT ICI
+                        stage.main()
                         mock_logger.info.assert_any_call("📦 2 fichiers à uploader")
                         mock_logger.info.assert_any_call("✅ file1.parquet uploadé")
                         mock_logger.info.assert_any_call("✅ file2.parquet uploadé")
@@ -133,19 +132,18 @@ def test_main_with_upload_error():
     mock_conn.cursor.return_value.__enter__.return_value = mock_cursor
     mock_cursor.fetchall.return_value = [("http://example.com/file1.parquet", "file1.parquet")]
     
-    with patch('snowflake_ingestion.upload_stage.connect_with_role', return_value=mock_conn):
-        with patch('snowflake_ingestion.upload_stage.use_context'):
-            with patch('snowflake_ingestion.upload_stage.run_sql_file'):
+    with patch('snowflake_ingestion.upload_stage.functions.connect_with_role', return_value=mock_conn):
+        with patch('snowflake_ingestion.upload_stage.functions.use_context'):
+            with patch('snowflake_ingestion.upload_stage.functions.run_sql_file'):
                 with patch('snowflake_ingestion.upload_stage.download_and_upload_file') as mock_download:
-                    with patch('snowflake_ingestion.upload_stage.logger') as mock_logger:
+                    with patch('snowflake_ingestion.upload_stage.logger') as mock_logger:  # CHANGEMENT ICI
                         mock_download.side_effect = Exception("Upload failed")
-                        main()
+                        stage.main()
 
                         mock_logger.error.assert_called_with("❌ Erreur upload file1.parquet: Upload failed")
                         update_calls = [call for call in mock_cursor.execute.call_args_list 
                                       if 'FAILED_STAGE' in str(call[0][0])]
                         assert len(update_calls) == 1
-
 
 
 def test_main_file_processing_flow():
@@ -166,13 +164,13 @@ def test_main_file_processing_flow():
     
     mock_cursor.execute.side_effect = track_execute
     
-    with patch('snowflake_ingestion.upload_stage.connect_with_role', return_value=mock_conn):
-        with patch('snowflake_ingestion.upload_stage.use_context'):
-            with patch('snowflake_ingestion.upload_stage.run_sql_file'):
+    with patch('snowflake_ingestion.upload_stage.functions.connect_with_role', return_value=mock_conn):
+        with patch('snowflake_ingestion.upload_stage.functions.use_context'):
+            with patch('snowflake_ingestion.upload_stage.functions.run_sql_file'):
                 with patch('snowflake_ingestion.upload_stage.download_and_upload_file'):
-                    with patch('snowflake_ingestion.upload_stage.logger'):
+                    with patch('snowflake_ingestion.upload_stage.logger'):  # CHANGEMENT ICI
                         
-                        main()
+                        stage.main()
 
                         staged_updates = []
                         for args, kwargs in execute_calls:
@@ -183,7 +181,6 @@ def test_main_file_processing_flow():
                         update_args = staged_updates[0][0]
                         assert len(update_args) >= 2
                         assert update_args[1] == ('test.parquet',)
-
 
 
 if __name__ == "__main__":
