@@ -1,4 +1,4 @@
-# 🚕 NYC Taxi Data Pipeline
+# NYC Taxi Data Pipeline
 
 Ce workflow GitHub Actions automatise le pipeline de données de bout en bout, depuis l'initialisation de l'infrastructure Snowflake jusqu'à la production de tables et vues analytiques en utilisant python et dbt.
 <br> <br>
@@ -7,9 +7,10 @@ Ce workflow GitHub Actions automatise le pipeline de données de bout en bout, d
 
 ## 📊 Source des Données
 
-**TLC Trip Record Data** - Commission des Taxis et Limousines de NYC
+[**TLC Trip Record Data**](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page) - Commission des Taxis et Limousines de NYC
 
 Les données incluent :
+
 - Dates/heures de prise en charge et dépose
 - Localisations GPS des trajets
 - Distances, tarifs détaillés, types de paiement
@@ -20,6 +21,7 @@ Les données incluent :
 ## 📄 Licence
 
 Ce projet est sous licence MIT. Les données source sont fournies par la [NYC TLC](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page) et soumises à leurs conditions d'utilisation.
+<br>
 <br>
 <br>
 
@@ -111,7 +113,7 @@ Pipeline d'ingestion exécuté mensuellement :
 <br>
 
 
-# 💻 Utilisation du Projet
+# 💻 Démarrage du Projet
 
 ## 📋 Prérequis
 
@@ -165,10 +167,10 @@ Pipeline d'ingestion exécuté mensuellement :
 Le workflow **Release** nécessite un token GitHub (`GH_RELEASE_TOKEN`) pour fonctionner.  
 Si ce token n’est pas défini, **le workflow échouera systématiquement** lors de l’étape de publication.
 
-### Option 1 : Désactiver le workflow *Release*
+**Option 1** : Désactiver le workflow *Release*
 Si vous n’avez pas besoin du versionnement automatique de code : `Actions` → `Release` → **Disable workflow**
 
-### Option 2 : Créer un Personal Access Token (recommandé si vous gardez le workflow)
+**Option 2** : Créer un Personal Access Token (recommandé si vous gardez le workflow)
 1. Allez dans :  `Settings` → `Developer settings` → `Personal access tokens` → **Tokens (classic)**  
 2. Créez un token avec les permissions `repo`  
 3. Ajoutez-le comme secret : `Settings` → `Secrets and variables` → `Actions` → **New repository secret**  
@@ -182,6 +184,7 @@ Si vous n’avez pas besoin du versionnement automatique de code : `Actions` →
 - Timeout scraping : Vérifier l'accès aux URLs sources
 - Erreur dbt : Consulter les logs détaillés du job
 - Passer la valeur de la variable `LOGGER_LEVEL` à `DEBUG` pour voir les logs détaillés
+<br>
 <br>
 
 
