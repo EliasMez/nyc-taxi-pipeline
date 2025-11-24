@@ -1,16 +1,8 @@
-# Docstrings – Modules Python
+# Docstrings Python
 
-## Snowflake Initialisation
-::: snowflake_ingestion.01_init_infra_snowflake
-
-## Scraping
-::: snowflake_ingestion.02_scrape_links
-
-## Staging  
-::: snowflake_ingestion.03_upload_stage
-
-## Loading  
-::: snowflake_ingestion.04_load_to_table
-
-## Fonctions utilitaires  
+  
 ::: snowflake_ingestion.functions
+::: snowflake_ingestion.init_infra_snowflake
+::: snowflake_ingestion.scrape_links
+::: snowflake_ingestion.upload_stage
+::: snowflake_ingestion.load_to_table
