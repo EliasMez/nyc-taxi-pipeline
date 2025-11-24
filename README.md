@@ -2,17 +2,36 @@
 
 Ce workflow GitHub Actions automatise le pipeline de données de bout en bout, depuis l'initialisation de l'infrastructure Snowflake jusqu'à la production de tables et vues analytiques en utilisant python et dbt.
 <br> <br>
+<a href="https://eliasmez.github.io/nyc-taxi-pipeline">📚 Documentation complète en ligne</a>
+<br>
 
+## 📊 Source des Données
 
-## 📋 Prérequis
+**TLC Trip Record Data** - Commission des Taxis et Limousines de NYC
 
-- Compte **Snowflake** avec droits **SECURITYADMIN** et **SYSADMIN**
-- Dépôt **GitHub** avec **secrets configurés** (voir partie configuration)
-- Accès sources de données NYC Taxi : **https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page**
+Les données incluent :
+- Dates/heures de prise en charge et dépose
+- Localisations GPS des trajets
+- Distances, tarifs détaillés, types de paiement
+- Nombre de passagers rapporté par le chauffeur
+
+*Les données sont collectées par les fournisseurs technologiques autorisés et fournies à la TLC. La TLC ne garantit pas l'exactitude de ces données.*
+
+## 📄 Licence
+
+Ce projet est sous licence MIT. Les données source sont fournies par la [NYC TLC](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page) et soumises à leurs conditions d'utilisation.
+<br>
 <br>
 
 
+# 🏛️ Architecture
+
 ## 🏗️ Architecture Technique
+
+[![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?logo=github-actions&logoColor=white)]()
+[![Snowflake](https://img.shields.io/badge/Snowflake-Data_Warehouse-29B5E8?logo=snowflake&logoColor=white)]()
+[![Python](https://img.shields.io/badge/Python-3.10-3776AB?logo=python&logoColor=white)]()
+[![dbt](https://img.shields.io/badge/dbt-Transformations-FF694B?logo=dbt&logoColor=white)]()
 
 - **Orchestration** : GitHub Actions
 - **Data Warehouse** : Snowflake
@@ -23,19 +42,31 @@ Ce workflow GitHub Actions automatise le pipeline de données de bout en bout, d
 ## 📁 Structure du Projet
 ```bash
 nyc-taxi-pipeline/
-├── .github/workflows/nyc_taxi_pipeline.yml
+├── .github/
+│ ├── workflows/
+│ │ ├── nyc_taxi_pipeline.yml
+│ │ ├── codeql.yml
+│ │ ├── python_code_tests.yml
+│ │ ├── release.yml
+│ │ └── sqlfluff.yml
+│ │
+│ └── dependabot.yml
+│
+├── docs/
 │
 ├── snowflake_ingestion/
-│ ├── sql
-│ │ ├── 01_init/
-│ │ ├── 02_scraping/
-│ │ ├── 03_stage/
-│ │ └── 04_load/
+│ ├── init_data_warehouse.py
+│ ├── scrape_links.py
+│ ├── upload_stage.py
+│ ├── load_to_table.py
 │ │
-│ ├── 01_init_data_warehouse.py
-│ ├── 02_scrape_links.py
-│ ├── 03_upload_stage.py
-│ └── 04_load_to_table.py
+│ ├── sql/
+│ │ ├── init/
+│ │ ├── scraping/
+│ │ ├── stage/
+│ │ └── load/
+│ │
+│ └── tests/
 │
 └── dbt_transformations/
   └── NYC_Taxi_dbt/
@@ -48,42 +79,57 @@ nyc-taxi-pipeline/
 
 
 ## 📊 Flux de traitement
- 
-1. **Initialisation de l'environnement Snowflake** : <br>
-Création de la base de données, du schéma, du data warehouse, de l'utilisateur, création et attribution des permissions via le rôle.
 
-2. **Scraping** : <br>
-Extraction des données sources via un script Python.
+### Pipeline Principal :
 
-3. **Stockage temporaire** : <br>
-Ingestion des données brutes dans un buffer ou un stage Snowflake avant traitement.
+**NYC Taxi Data Pipeline**  
+Pipeline d'ingestion exécuté mensuellement :
+<br>
 
-4. **Chargement des données** : <br>
-Chargement des données brutes dans la table du du schéma RAW.
+1. **Snowflake Infra Init**  
+   Initialisation de l'infrastructure Snowflake (base, schémas, warehouse, rôle, utilisateur).
+2. **Scrape Links**  
+   Scraping et récupération des liens sources.
+3. **Upload to Stage**  
+   Upload des fichiers bruts dans le stage Snowflake.
+4. **Load to Table**  
+   Chargement des données dans la table du schéma RAW.
+5. **Run dbt Transformations**  
+   Transformations dbt (STAGING puis FINAL).
+6. **Run dbt Tests**  
+   Exécution des tests dbt pour valider les modèles.
+   
+### Pipelines Qualité
 
-5. **Transformation avec dbt** : <br>
-Nettoyage et préparation des données dans la table di schéma STAGING, puis modélisation dans les tables du schéma FINAL (dimensions, fait et vues agrégées).
+- **CodeQL Security Scan** <br> Analyse statique du code Python à l’aide de CodeQL afin de détecter des vulnérabilités sur chaque push ou pull request vers `dev` et `main`.
+- **Dependabot Updates** <br> Mises à jour automatisées des dépendances Python et GitHub Actions selon une planification trimestrielle.
+- **pages-build-deployment** <br> Déploiement automatique de la documentation du projet via GitHub Pages.
+- **Python Code Tests** <br> Exécution des tests unitaires Pytest sur chaque push ou pull request vers `dev` et `main`.
+- **Release** <br> Versioning automatique, génération du changelog et publication des releases via Python Semantic Release sur chaque push ou pull request vers `main`.
+- **SQL Code Quality** <br> Linting automatique du code SQL (modèles dbt et scripts Snowflake) avec SQLFluff sur chaque push ou pull request vers `dev` et `main`.
+<br>
 <br>
 
 
-## 📈 Monitoring et Qualité des données
+# 💻 Utilisation du Projet
 
-- Logs détaillés dans GitHub Actions (personnalisation du niveau de log possible - voir partie Configuration Optionnelle)
-- Table de métadonnées pour le suivi (scraped/staged/succes/failed)
-- Alertes mail en cas d'échec et d'arrêt de job
-- Gestion des doublons : vérification via métadonnées avant traitement.
+## 📋 Prérequis
+
+- Compte **Snowflake** avec droits **SECURITYADMIN** et **SYSADMIN**
+- Dépôt **GitHub** avec **secrets configurés** (voir partie configuration)
+- Accès sources de données NYC Taxi : **https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page**
 <br>
 
 
-## 🚀 Exécution Automatique (GitHub Actions)
-Le pipeline s'exécute automatiquement **tous les 1 du mois à 10h**. <br>
-Le pipeline peut aussi être déclenché manuellement. <br>
+## 🚀 Exécution
+- Automatique : tous les 1 du mois à 10h
+- Manuel : via GitHub Actions interface
 <br>
 
 
-### ⚙️ Configuration
+## ⚙️ Configuration
 1. **Forkez** ce dépôt : https://github.com/EliasMez/nyc-taxi-pipeline
-
+<br>
 
 2. **Ajoutez les secrets OBLIGATOIRES :** `Settings` > `Secrets and variables` > `Actions` > `Secrets` > `New repository secret` <br>
 
@@ -93,9 +139,9 @@ Le pipeline peut aussi être déclenché manuellement. <br>
 | `SNOWFLAKE_PASSWORD` | Mot de passe utilisateur Snowflake |
 | `SNOWFLAKE_ACCOUNT` | Identifiant du compte Snowflake |
 | `PASSWORD_DEV` | Mot de passe de l'utilisateur de développement |
+<br>
 
-
-3. **Ajoutez les variables OPTIONNELLES :** `Settings` > `Secrets and variables` > `Actions` > `Variables` > `New repository variables` <br>
+3. **Personnalisez les variables OPTIONNELLES :** `Settings` > `Secrets and variables` > `Actions` > `Variables` > `New repository variables` <br>
 
 | Variable | Description | Valeur par défaut |
 |----------|-------------|-------------------|
@@ -111,16 +157,63 @@ Le pipeline peut aussi être déclenché manuellement. <br>
 | `RAW_TABLE` | Table des données brutes | `YELLOW_TAXI_TRIPS_RAW` |
 | `STAGING_TABLE` | Table de staging | `YELLOW_TAXI_TRIPS_STG` |
 | `LOGGER_LEVEL` | Niveau de logging | `INFO` |
-<br>
-<br>
-
-### 🔐 Sécurité
-- Les secrets sont chiffrés dans GitHub
-- Rôle Snowflake avec permissions minimales nécessaires
+| `SCRAPING_YEAR` | Date de début du scraping (>2000 et <année courante)| année courante |
+| `GH_RELEASE_TOKEN` | Token GitHub pour le versionnement automatique (nécessaire seulement si vous utilisez le workflow Release) | ⚠️ non défini |
 <br>
 
+⚠️ **Workflow Release (Semantic Release)**  
+Le workflow **Release** nécessite un token GitHub (`GH_RELEASE_TOKEN`) pour fonctionner.  
+Si ce token n’est pas défini, **le workflow échouera systématiquement** lors de l’étape de publication.
 
-### 🐛 Dépannage Rapide
+### Option 1 : Désactiver le workflow *Release*
+Si vous n’avez pas besoin du versionnement automatique de code : `Actions` → `Release` → **Disable workflow**
+
+### Option 2 : Créer un Personal Access Token (recommandé si vous gardez le workflow)
+1. Allez dans :  `Settings` → `Developer settings` → `Personal access tokens` → **Tokens (classic)**  
+2. Créez un token avec les permissions `repo`  
+3. Ajoutez-le comme secret : `Settings` → `Secrets and variables` → `Actions` → **New repository secret**  
+   - Nom : `GH_RELEASE_TOKEN`  
+   - Valeur : *votre token*
+<br>
+
+
+## 🔧 Dépannage Rapide
 - Échec connexion Snowflake : Vérifier les secrets GitHub
 - Timeout scraping : Vérifier l'accès aux URLs sources
 - Erreur dbt : Consulter les logs détaillés du job
+- Passer la valeur de la variable `LOGGER_LEVEL` à `DEBUG` pour voir les logs détaillés
+<br>
+
+
+# 📈 Gouvernance des données
+
+[![CodeQL](https://img.shields.io/badge/CodeQL-Security-0078D7?logo=github&logoColor=white)]()
+[![Dependabot](https://img.shields.io/badge/Dependabot-Security-025E8C?logo=dependabot&logoColor=white)]()
+[![Semantic Release](https://img.shields.io/badge/Semantic_Release-Versioning-494949?logo=semantic-release&logoColor=white)]()
+[![SQLFluff](https://img.shields.io/badge/SQLFluff-Linting-000000?logo=sqlfluff&logoColor=white)]()
+
+## 📊 Monitoring
+- Logs détaillés dans GitHub Actions.  
+- Alertes e-mail en cas d’échec ou d’annulation du workflow.  
+- Suivi de l’état via une table de métadonnées indiquant chaque étape (*scraped / staged / success / failed*).
+
+## ✅ Qualité des données
+- Tests **dbt** garantissant l’intégrité, la cohérence et la validité des données.  
+- Gestion des doublons via une vérification systématique des métadonnées.
+
+## 🧪 Qualité du code
+- Tests unitaires avec **Pytest**.  
+- Validation SQL avec **SQLFluff**.  
+- Docstrings et doctests pour la documentation des fonctions.  
+- <a href="https://eliasmez.github.io/nyc-taxi-pipeline/docstrings/">📚 Documentation technique</a>
+
+## 🔐 Sécurité
+- Secrets chiffrés dans les logs.  
+- Utilisation des **GitHub Secrets**.  
+- Permissions minimales appliquées dans Snowflake.  
+- Analyse statique avec **CodeQL**.  
+- Mises à jour de sécurité automatisées via **Dependabot**.
+
+
+
+
