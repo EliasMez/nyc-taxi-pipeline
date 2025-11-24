@@ -3,73 +3,43 @@ import sys
 import os
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-from snowflake_ingestion.scrape_links import *
-
+import snowflake_ingestion.scrape_links as scrape
 
 def test_get_scraping_year_with_valid_env():
-    """Test unitaire de get_scraping_year avec variable d'environnement valide.
-    Vérifie que la fonction retourne la valeur de SCRAPING_YEAR convertie en entier
-    quand elle est définie et valide.
-    """
-    with patch('snowflake_ingestion.scrape_links.SCRAPING_YEAR', '2023'):
-        result = get_scraping_year()
+    with patch('snowflake_ingestion.scrape_links.functions.SCRAPING_YEAR', '2023'):
+        result = scrape.get_scraping_year()
         assert result == 2023
 
-
 def test_get_scraping_year_with_empty_env():
-    """Test unitaire de get_scraping_year avec variable d'environnement vide.
-    Vérifie que la fonction retourne l'année par défaut (current_year - 1 si month <= 3,
-    sinon current_year) quand SCRAPING_YEAR est vide.
-    """
-    with patch('snowflake_ingestion.scrape_links.SCRAPING_YEAR', ''):
+    with patch('snowflake_ingestion.scrape_links.functions.SCRAPING_YEAR', ''):
         with patch('snowflake_ingestion.scrape_links.current_month', 2):
-            result = get_scraping_year()
-            expected = current_year - 1
+            result = scrape.get_scraping_year()
+            expected = scrape.current_year - 1
             assert result == expected
-
 
 def test_get_scraping_year_with_empty_env_early_month():
-    """Test unitaire de get_scraping_year avec variable d'environnement vide.
-    Vérifie que la fonction retourne l'année par défaut (current_year - 1 si month <= 3,
-    sinon current_year) quand SCRAPING_YEAR est vide.
-    """
-    with patch('snowflake_ingestion.scrape_links.SCRAPING_YEAR', ''):
+    with patch('snowflake_ingestion.scrape_links.functions.SCRAPING_YEAR', ''):
         with patch('snowflake_ingestion.scrape_links.current_month', 5):
-            result = get_scraping_year()
-            expected = current_year
+            result = scrape.get_scraping_year()
+            expected = scrape.current_year
             assert result == expected
 
-
 def test_get_scraping_year_with_invalid_env_late_month():
-    """Test unitaire de get_scraping_year avec variable d'environnement invalide.
-    Vérifie que la fonction retourne l'année par défaut et logge une erreur
-    quand SCRAPING_YEAR n'est pas un entier valide.
-    """
-    with patch('snowflake_ingestion.scrape_links.SCRAPING_YEAR', 'invalid'):
-        with patch('snowflake_ingestion.scrape_links.logger') as mock_logger:
-                result = get_scraping_year()
-                expected = current_year
+    with patch('snowflake_ingestion.scrape_links.functions.SCRAPING_YEAR', 'invalid'):
+        with patch('snowflake_ingestion.scrape_links.logger') as mock_logger:  # CHANGEMENT ICI
+                result = scrape.get_scraping_year()
+                expected = scrape.current_year
                 assert result == expected
                 mock_logger.error.assert_called_once()
 
-
 def test_get_xpath():
-    """Test unitaire de get_xpath.
-    Vérifie que la fonction génère une expression XPath correcte incluant
-    toutes les années entre l'année de scraping et l'année courante.
-    """
     with patch('snowflake_ingestion.scrape_links.get_scraping_year', return_value=2023):
         with patch('snowflake_ingestion.scrape_links.current_year', 2024):
-            result = get_xpath()
+            result = scrape.get_xpath()
             expected = "//a[@title='Yellow Taxi Trip Records' and (contains(@href, '2023') or contains(@href, '2024'))]"
             assert result == expected
 
-
 def test_get_parquet_links_success():
-    """Test unitaire de get_parquet_links en cas de succès.
-    Vérifie que la fonction effectue une requête HTTP, parse le HTML et
-    retourne les liens Parquet filtrés par l'expression XPath.
-    """
     mock_html_content = """
     <html>
         <a title="Yellow Taxi Trip Records" href="https://example.com/file1.parquet">Link1</a>
@@ -90,102 +60,82 @@ def test_get_parquet_links_success():
     with patch('snowflake_ingestion.scrape_links.requests.get') as mock_get:
         with patch('snowflake_ingestion.scrape_links.html.fromstring') as mock_fromstring:
             with patch('snowflake_ingestion.scrape_links.get_xpath', return_value="//a[@title='Yellow Taxi Trip Records']"):
-                with patch('snowflake_ingestion.scrape_links.logger') as mock_logger:
+                with patch('snowflake_ingestion.scrape_links.logger') as mock_logger:  # CHANGEMENT ICI
                     mock_get.return_value = mock_response
                     mock_fromstring.return_value = mock_tree
                     
-                    result = get_parquet_links()
+                    result = scrape.get_parquet_links()
 
                     mock_get.assert_called_once_with("https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page")
                     mock_logger.info.assert_called_with("🌐 Début du scraping des données NYC Taxi")
                     assert result == ["https://example.com/file1.parquet", "https://example.com/file2.parquet"]
 
-
 def test_setup_meta_table():
-    """Test unitaire de setup_meta_table.s
-    Vérifie que la fonction appelle run_sql_file avec le bon fichier SQL
-    et logge les messages appropriés pour la création de la table de métadonnées.
-    """
     mock_cursor = Mock()
-    with patch('snowflake_ingestion.scrape_links.run_sql_file') as mock_run_sql:
-        with patch('snowflake_ingestion.scrape_links.logger') as mock_logger:
-            setup_meta_table(mock_cursor)
-            mock_run_sql.assert_called_once_with(mock_cursor, SQL_DIR / "setup_meta_table.sql")
+    with patch('snowflake_ingestion.scrape_links.functions.run_sql_file') as mock_run_sql:
+        with patch('snowflake_ingestion.scrape_links.logger') as mock_logger:  # CHANGEMENT ICI
+            scrape.setup_meta_table(mock_cursor)
+            mock_run_sql.assert_called_once_with(mock_cursor, scrape.SQL_DIR / "setup_meta_table.sql")
             mock_logger.info.assert_any_call("📋 Vérification/Création de la table de metadata")
             mock_logger.info.assert_any_call("✅ Table de metadata prête")
 
-
 def test_main_with_new_files():
-    """Test unitaire de main avec nouveaux fichiers détectés.
-    Vérifie que la fonction insère les nouveaux fichiers dans la table de métadonnées
-    quand des fichiers non référencés sont trouvés lors du scraping.
-    """
     mock_conn = MagicMock()
     mock_cursor = MagicMock()
     mock_conn.cursor.return_value.__enter__.return_value = mock_cursor
     mock_cursor.fetchone.side_effect = [None, None, [5]]
     
-    with patch('snowflake_ingestion.scrape_links.connect_with_role', return_value=mock_conn):
-        with patch('snowflake_ingestion.scrape_links.use_context'):
+    with patch('snowflake_ingestion.scrape_links.functions.connect_with_role', return_value=mock_conn):
+        with patch('snowflake_ingestion.scrape_links.functions.use_context'):
             with patch('snowflake_ingestion.scrape_links.setup_meta_table'):
                 with patch('snowflake_ingestion.scrape_links.get_parquet_links') as mock_links:
-                    with patch('snowflake_ingestion.scrape_links.run_sql_file'):
-                        with patch('snowflake_ingestion.scrape_links.logger') as mock_logger:
+                    with patch('snowflake_ingestion.scrape_links.functions.run_sql_file'):
+                        with patch('snowflake_ingestion.scrape_links.logger') as mock_logger:  # CHANGEMENT ICI
                             
                             mock_links.return_value = [
                                 "https://example.com/yellow_tripdata_2023-01.parquet",
                                 "https://example.com/yellow_tripdata_2023-02.parquet"
                             ]
                             
-                            main()
+                            scrape.main()
 
                             assert mock_cursor.execute.call_count >= 4
                             mock_logger.info.assert_any_call("📎 2 liens trouvés")
                             mock_logger.info.assert_any_call("➕ Nouveau fichier détecté : yellow_tripdata_2023-01.parquet")
 
-
 def test_main_without_new_files():
-    """Test unitaire de main sans nouveaux fichiers.
-    Vérifie que la fonction logge un avertissement quand aucun nouveau fichier
-    n'est détecté lors du scraping.
-    """
     mock_conn = MagicMock()
     mock_cursor = MagicMock()
     mock_conn.cursor.return_value.__enter__.return_value = mock_cursor
     mock_cursor.fetchone.side_effect = [[1], [0]]
     
-    with patch('snowflake_ingestion.scrape_links.connect_with_role', return_value=mock_conn):
-        with patch('snowflake_ingestion.scrape_links.use_context'):
+    with patch('snowflake_ingestion.scrape_links.functions.connect_with_role', return_value=mock_conn):
+        with patch('snowflake_ingestion.scrape_links.functions.use_context'):
             with patch('snowflake_ingestion.scrape_links.setup_meta_table'):
                 with patch('snowflake_ingestion.scrape_links.get_parquet_links') as mock_links:
-                    with patch('snowflake_ingestion.scrape_links.run_sql_file'):
-                        with patch('snowflake_ingestion.scrape_links.logger') as mock_logger:
+                    with patch('snowflake_ingestion.scrape_links.functions.run_sql_file'):
+                        with patch('snowflake_ingestion.scrape_links.logger') as mock_logger:  # CHANGEMENT ICI
                             mock_links.return_value = ["https://example.com/yellow_tripdata_2023-01.parquet"]
-                            main()
+                            scrape.main()
                             mock_logger.info.assert_any_call("📎 1 lien trouvé")
                             mock_logger.info.assert_any_call("⏭️  yellow_tripdata_2023-01.parquet déjà référencé")
                             mock_logger.info.assert_any_call("✅ Scraping terminé")
                             mock_logger.warning.assert_called_with("⚠️  Aucun nouveau fichier à charger.")
 
-
 def test_main_file_parsing():
-    """Test unitaire de l'extraction année/mois depuis le nom de fichier.
-    Vérifie que la fonction extrait correctement l'année et le mois depuis
-    le nom du fichier Parquet lors de l'insertion dans les métadonnées.
-    """
     mock_conn = MagicMock()
     mock_cursor = MagicMock()
     mock_conn.cursor.return_value.__enter__.return_value = mock_cursor
     mock_cursor.fetchone.return_value = None
     
-    with patch('snowflake_ingestion.scrape_links.connect_with_role', return_value=mock_conn):
-        with patch('snowflake_ingestion.scrape_links.use_context'):
+    with patch('snowflake_ingestion.scrape_links.functions.connect_with_role', return_value=mock_conn):
+        with patch('snowflake_ingestion.scrape_links.functions.use_context'):
             with patch('snowflake_ingestion.scrape_links.setup_meta_table'):
                 with patch('snowflake_ingestion.scrape_links.get_parquet_links') as mock_links:
-                    with patch('snowflake_ingestion.scrape_links.run_sql_file'):
+                    with patch('snowflake_ingestion.scrape_links.functions.run_sql_file'):
                         with patch('snowflake_ingestion.scrape_links.logger'):
                             mock_links.return_value = ["https://example.com/yellow_tripdata_2023-07.parquet"]
-                            main()
+                            scrape.main()
                             
                             insert_call = None
                             for call in mock_cursor.execute.call_args_list:
@@ -196,3 +146,9 @@ def test_main_file_parsing():
                             assert insert_call is not None
                             assert insert_call[0][1] == ("https://example.com/yellow_tripdata_2023-07.parquet", 
                                                         "yellow_tripdata_2023-07.parquet", 2023, 7)
+                            
+
+
+if __name__ == "__main__":
+    import pytest
+    pytest.main([__file__, "-v"])

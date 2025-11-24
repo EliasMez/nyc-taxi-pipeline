@@ -118,7 +118,7 @@ def run_sql_file(cur, filepath):
 
     Notes:
         Placeholders that do not match a global variable are replaced with
-        a string of the form "<VAR_NOT_FOUND>".
+        a string of the form `<VAR_NOT_FOUND>`.
     """
     with open(filepath, "r") as f:
         sql = f.read()

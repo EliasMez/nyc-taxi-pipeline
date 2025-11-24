@@ -1,9 +1,9 @@
-from snowflake_ingestion.functions import *
+import snowflake_ingestion.functions as functions
 
-config_logger()
-logger = logging.getLogger(__name__)
+functions.config_logger()
+logger = functions.logging.getLogger(__name__)
 
-SQL_DIR = SQL_BASE_DIR / "loading"
+SQL_DIR = functions.SQL_BASE_DIR / "loading"
 
 
 
@@ -16,8 +16,8 @@ def create_table(cur):
     Args:
         cur (snowflake.connector.cursor.SnowflakeCursor): Active Snowflake cursor.
     """
-    logger.info(f"📋 Vérification/Création dynamique de la table {RAW_TABLE}")
-    run_sql_file(cur, SQL_DIR / "detect_file_schema_stage.sql")
+    logger.info(f"📋 Vérification/Création dynamique de la table {functions.RAW_TABLE}")
+    functions.run_sql_file(cur, SQL_DIR / "detect_file_schema_stage.sql")
     schema = cur.fetchall()
     seen = set()
     unique_schema = []
@@ -28,10 +28,10 @@ def create_table(cur):
     
     columns = [f"{col_name} {col_type}" for col_name, col_type in unique_schema]
     if len(columns) != 0:
-        create_sql = f"CREATE TABLE IF NOT EXISTS {RAW_TABLE} ({', '.join(columns)})"
+        create_sql = f"CREATE TABLE IF NOT EXISTS {functions.RAW_TABLE} ({', '.join(columns)})"
         cur.execute(create_sql)
-        run_sql_file(cur, SQL_DIR / "add_filename_to_raw_table.sql")
-        logger.info(f"✅ Table {RAW_TABLE} prête")
+        functions.run_sql_file(cur, SQL_DIR / "add_filename_to_raw_table.sql")
+        logger.info(f"✅ Table {functions.RAW_TABLE} prête")
     else:
         logger.warning(f"⚠️  Aucune donnée dans le STAGE")
 
@@ -49,12 +49,12 @@ def copy_file_to_table_and_count(cur, filename)-> int:
     Returns:
         int: Number of rows inserted into the RAW table.
     """
-    logger.info(f"🚀 Chargement de {filename} dans {RAW_TABLE}...")
+    logger.info(f"🚀 Chargement de {filename} dans {functions.RAW_TABLE}...")
 
     cur.execute(f"""
-        COPY INTO {RAW_TABLE} 
+        COPY INTO {functions.RAW_TABLE} 
         FROM '@~/{filename}'
-        FILE_FORMAT=(FORMAT_NAME='{DW_NAME}.{RAW_SCHEMA}.{PARQUET_FORMAT}')
+        FILE_FORMAT=(FORMAT_NAME='{functions.DW_NAME}.{functions.RAW_SCHEMA}.{functions.PARQUET_FORMAT}')
         MATCH_BY_COLUMN_NAME=CASE_INSENSITIVE
         FORCE = TRUE
     """)
@@ -62,7 +62,7 @@ def copy_file_to_table_and_count(cur, filename)-> int:
     result = cur.fetchone()
     if result and len(result) > 3:
        rows_loaded = result[3]
-       cur.execute(f"UPDATE {RAW_TABLE} SET filename = %s WHERE filename IS NULL", (filename,))
+       cur.execute(f"UPDATE {functions.RAW_TABLE} SET filename = %s WHERE filename IS NULL", (filename,))
     else:
        rows_loaded = 0
 
@@ -79,11 +79,11 @@ def update_metadata(cur, filename, rows_loaded):
         rows_loaded (int): Number of rows successfully inserted.
     """
     cur.execute(f"""
-        UPDATE {METADATA_TABLE} 
+        UPDATE {functions.METADATA_TABLE} 
         SET rows_loaded = %s, load_status = 'SUCCESS' 
         WHERE file_name = %s
     """, (rows_loaded, filename))
-    logger.debug(f"🚀 Chargement de {METADATA_TABLE}")
+    logger.debug(f"🚀 Chargement de {functions.METADATA_TABLE}")
 
 
 
@@ -109,8 +109,8 @@ def handle_loading_error(cur, filename, error):
         error (Exception): Exception raised during the loading process.
     """
     logger.error(f"❌ Erreur de chargement {filename}: {error}")
-    logger.debug(f"🚀 Chargement de {METADATA_TABLE}")
-    cur.execute(f"UPDATE {METADATA_TABLE} SET load_status='FAILED_LOAD' WHERE file_name=%s", (filename,))
+    logger.debug(f"🚀 Chargement de {functions.METADATA_TABLE}")
+    cur.execute(f"UPDATE {functions.METADATA_TABLE} SET load_status='FAILED_LOAD' WHERE file_name=%s", (filename,))
 
 
 
@@ -119,13 +119,13 @@ def main():
     Connects to Snowflake, ensures the RAW table exists, retrieves staged files,
     loads each into the RAW table, updates metadata, and cleans up stage files.
     """
-    conn = connect_with_role(USER_DEV, PASSWORD_DEV, ACCOUNT, ROLE_TRANSFORMER)
+    conn = functions.connect_with_role(functions.USER_DEV, functions.PASSWORD_DEV, functions.ACCOUNT, functions.ROLE_TRANSFORMER)
     with conn.cursor() as cur:
-        use_context(cur, WH_NAME, DW_NAME, RAW_SCHEMA)
+        functions.use_context(cur, functions.WH_NAME, functions.DW_NAME, functions.RAW_SCHEMA)
         create_table(cur)
         
         logger.info("🔍 Analyse des fichiers dans le STAGE")
-        run_sql_file(cur, SQL_DIR / "select_filename_from_meta_staged.sql")
+        functions.run_sql_file(cur, SQL_DIR / "select_filename_from_meta_staged.sql")
         staged_files = cur.fetchall()
 
         for (filename,) in staged_files:

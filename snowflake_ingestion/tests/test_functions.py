@@ -123,3 +123,7 @@ def test_run_sql_file_multiple_statements():
     with patch('builtins.open', mock_open(read_data=sql_content)):
         run_sql_file(mock_cursor, Path("test.sql"))
     assert mock_cursor.execute.call_count == 3
+
+
+if __name__ == "__main__":
+    pytest.main([__file__, "-v"])
