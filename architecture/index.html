@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../prerequisites/">
+        <link rel="prev" href="..">
       
       
-        <link rel="next" href="../flow/">
+        <link rel="next" href="../governance/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -20,7 +20,7 @@
     
     
       
-        <title>📁 Architecture - NYC Taxi Data Pipeline</title>
+        <title>🏛️ Architecture - NYC Taxi Data Pipeline</title>
       
     
     
@@ -64,7 +64,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#architecture-technique" class="md-skip">
+        <a href="#architecture" class="md-skip">
           Skip to content
         </a>
       
@@ -98,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              📁 Architecture
+              🏛️ Architecture
             
           </span>
         </div>
@@ -190,25 +190,6 @@
   
   
   
-  
-    <li class="md-tabs__item">
-      <a href="../prerequisites/" class="md-tabs__link">
-        
-  
-  
-    
-  
-  📋 Prérequis
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
     
   
   
@@ -219,7 +200,7 @@
   
     
   
-  📁 Architecture
+  🏛️ Architecture
 
       </a>
     </li>
@@ -232,32 +213,13 @@
   
   
     <li class="md-tabs__item">
-      <a href="../flow/" class="md-tabs__link">
+      <a href="../governance/" class="md-tabs__link">
         
   
   
     
   
-  📊 Flux de traitement
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../monitoring/" class="md-tabs__link">
-        
-  
-  
-    
-  
-  📈 Monitoring
+  📈 Governance
 
       </a>
     </li>
@@ -277,63 +239,6 @@
     
   
   🚀 Exécution
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../configuration/" class="md-tabs__link">
-        
-  
-  
-    
-  
-  ⚙️ Configuration
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../security/" class="md-tabs__link">
-        
-  
-  
-    
-  
-  🔐 Sécurité
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../troubleshooting/" class="md-tabs__link">
-        
-  
-  
-    
-  
-  🐛 Dépannage
 
       </a>
     </li>
@@ -420,28 +325,6 @@
       
   
   
-  
-  
-    <li class="md-nav__item">
-      <a href="../prerequisites/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    📋 Prérequis
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
     
   
   
@@ -451,13 +334,15 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
   
   
   <span class="md-ellipsis">
-    📁 Architecture
+    🏛️ Architecture
     
   </span>
   
@@ -470,7 +355,7 @@
   
   
   <span class="md-ellipsis">
-    📁 Architecture
+    🏛️ Architecture
     
   </span>
   
@@ -483,6 +368,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -493,7 +380,7 @@
         <li class="md-nav__item">
   <a href="#architecture-technique" class="md-nav__link">
     <span class="md-ellipsis">
-      Architecture Technique
+      🏗️ Architecture Technique
     </span>
   </a>
   
@@ -502,9 +389,42 @@
         <li class="md-nav__item">
   <a href="#structure-du-projet" class="md-nav__link">
     <span class="md-ellipsis">
-      Structure du Projet
+      📁 Structure du Projet
     </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flux-de-traitement" class="md-nav__link">
+    <span class="md-ellipsis">
+      📊 Flux de traitement
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📊 Flux de traitement">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pipeline-principal" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pipeline Principal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pipelines-qualite" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pipelines Qualité
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -523,34 +443,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../flow/" class="md-nav__link">
+      <a href="../governance/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    📊 Flux de traitement
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../monitoring/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    📈 Monitoring
+    📈 Governance
     
   </span>
   
@@ -573,72 +471,6 @@
   
   <span class="md-ellipsis">
     🚀 Exécution
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../configuration/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    ⚙️ Configuration
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../security/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    🔐 Sécurité
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    🐛 Dépannage
     
   </span>
   
@@ -686,38 +518,83 @@
 
 
 
-  <h1>📁 Architecture</h1>
-
-<h2 id="architecture-technique">Architecture Technique</h2>
+<h1 id="architecture">🏛️ Architecture</h1>
+<h2 id="architecture-technique">🏗️ Architecture Technique</h2>
+<p><a href=""><img alt="GitHub Actions" src="https://img.shields.io/badge/GitHub_Actions-2088FF?logo=github-actions&amp;logoColor=white" /></a>
+<a href=""><img alt="Snowflake" src="https://img.shields.io/badge/Snowflake-Data_Warehouse-29B5E8?logo=snowflake&amp;logoColor=white" /></a>
+<a href=""><img alt="Python" src="https://img.shields.io/badge/Python-3.10-3776AB?logo=python&amp;logoColor=white" /></a>
+<a href=""><img alt="dbt" src="https://img.shields.io/badge/dbt-Transformations-FF694B?logo=dbt&amp;logoColor=white" /></a></p>
 <ul>
 <li><strong>Orchestration</strong> : GitHub Actions</li>
 <li><strong>Data Warehouse</strong> : Snowflake</li>
 <li><strong>Transformation</strong> : dbt</li>
-<li><strong>Langage</strong> : Python</li>
+<li><strong>Langage</strong> : Python
+<br></li>
 </ul>
-<h2 id="structure-du-projet">Structure du Projet</h2>
+<h2 id="structure-du-projet">📁 Structure du Projet</h2>
 <pre><code class="language-bash">nyc-taxi-pipeline/
-├── .github/workflows/nyc_taxi_pipeline.yml
+├── .github/
+│ ├── workflows/
+│ │ ├── nyc_taxi_pipeline.yml
+│ │ ├── codeql.yml
+│ │ ├── python_code_tests.yml
+│ │ ├── release.yml
+│ │ └── sqlfluff.yml
+│ │
+│ └── dependabot.yml
+│
+├── docs/
 │
 ├── snowflake_ingestion/
-│   ├── sql
-│   │   ├── 01_init/
-│   │   ├── 02_scraping/
-│   │   ├── 03_stage/
-│   │   └── 04_load/
-│   │
-│   ├── 01_init_data_warehouse.py
-│   ├── 02_scrape_links.py
-│   ├── 03_upload_stage.py
-│   └── 04_load_to_table.py
+│ ├── init_data_warehouse.py
+│ ├── scrape_links.py
+│ ├── upload_stage.py
+│ ├── load_to_table.py
+│ │
+│ ├── sql/
+│ │ ├── init/
+│ │ ├── scraping/
+│ │ ├── stage/
+│ │ └── load/
+│ │
+│ └── tests/
 │
 └── dbt_transformations/
-    └── NYC_Taxi_dbt/
-        └── models/
-            ├── staging/
-            ├── final/
-            └── marts/
+  └── NYC_Taxi_dbt/
+    └── models/
+      ├── staging/
+      ├── final/
+      └── marts/
 </code></pre>
+<p><br></p>
+<h2 id="flux-de-traitement">📊 Flux de traitement</h2>
+<h3 id="pipeline-principal">Pipeline Principal</h3>
+<p><strong>NYC Taxi Data Pipeline</strong><br />
+Pipeline d'ingestion exécuté mensuellement :
+<br></p>
+<ol>
+<li><strong>Snowflake Infra Init</strong><br />
+   Initialisation de l'infrastructure Snowflake (base, schémas, warehouse, rôle, utilisateur).</li>
+<li><strong>Scrape Links</strong><br />
+   Scraping et récupération des liens sources.</li>
+<li><strong>Upload to Stage</strong><br />
+   Upload des fichiers bruts dans le stage Snowflake.</li>
+<li><strong>Load to Table</strong><br />
+   Chargement des données dans la table du schéma RAW.</li>
+<li><strong>Run dbt Transformations</strong><br />
+   Transformations dbt (STAGING puis FINAL).</li>
+<li><strong>Run dbt Tests</strong><br />
+   Exécution des tests dbt pour valider les modèles.</li>
+</ol>
+<h3 id="pipelines-qualite">Pipelines Qualité</h3>
+<ul>
+<li><strong>CodeQL Security Scan</strong> <br> Analyse statique du code Python à l’aide de CodeQL afin de détecter des vulnérabilités sur chaque push ou pull request vers <code>dev</code> et <code>main</code>.</li>
+<li><strong>Dependabot Updates</strong> <br> Mises à jour automatisées des dépendances Python et GitHub Actions selon une planification trimestrielle.</li>
+<li><strong>pages-build-deployment</strong> <br> Déploiement automatique de la documentation du projet via GitHub Pages.</li>
+<li><strong>Python Code Tests</strong> <br> Exécution des tests unitaires Pytest sur chaque push ou pull request vers <code>dev</code> et <code>main</code>.</li>
+<li><strong>Release</strong> <br> Versioning automatique, génération du changelog et publication des releases via Python Semantic Release sur chaque push ou pull request vers <code>main</code>.</li>
+<li><strong>SQL Code Quality</strong> <br> Linting automatique du code SQL (modèles dbt et scripts Snowflake) avec SQLFluff sur chaque push ou pull request vers <code>dev</code> et <code>main</code>.</li>
+</ul>
 
 
 
