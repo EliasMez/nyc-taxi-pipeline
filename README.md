@@ -160,6 +160,7 @@ Pipeline d'ingestion exécuté mensuellement :
 | `STAGING_TABLE` | Table de staging | `YELLOW_TAXI_TRIPS_STG` |
 | `LOGGER_LEVEL` | Niveau de logging | `INFO` |
 | `SCRAPING_YEAR` | Date de début du scraping (>2000 et <année courante)| année courante |
+| `TIMEZONE` | Fuseau horaire qui définit le décalage horaire par rapport à UTC | `UTC` |
 | `GH_RELEASE_TOKEN` | Token GitHub pour le versionnement automatique (nécessaire seulement si vous utilisez le workflow Release) | ⚠️ non défini |
 <br>
 
