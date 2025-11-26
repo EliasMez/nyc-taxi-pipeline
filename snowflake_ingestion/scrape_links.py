@@ -5,9 +5,7 @@ from datetime import datetime
 
 functions.config_logger()
 logger = functions.logging.getLogger(__name__)
-
 SQL_DIR = functions.SQL_BASE_DIR / "scraping"
-
 current_year = datetime.now().year
 current_month = datetime.now().month
 scraping_url = "https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page"

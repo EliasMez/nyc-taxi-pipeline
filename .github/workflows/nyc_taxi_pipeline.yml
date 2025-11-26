@@ -28,6 +28,7 @@ jobs:
       METADATA_TABLE: ${{ vars.METADATA_TABLE || 'FILE_LOADING_METADATA' }}
       RAW_TABLE: ${{ vars.RAW_TABLE || 'YELLOW_TAXI_TRIPS_RAW' }}
       STAGING_TABLE: ${{ vars.STAGING_TABLE || 'YELLOW_TAXI_TRIPS_STG' }}
+      TIMEZONE: ${{ vars.TIMEZONE || 'UTC' }}
       AWS_EC2_METADATA_DISABLED: true
       
     
