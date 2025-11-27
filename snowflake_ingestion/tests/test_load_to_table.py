@@ -1,5 +1,5 @@
 import pytest
-from unittest.mock import Mock, patch, MagicMock, ANY
+from unittest.mock import Mock, patch, MagicMock, ANY, call
 import sys
 import os
 
@@ -17,29 +17,60 @@ def test_create_table_success():
     
     with patch('snowflake_ingestion.load_to_table.functions.run_sql_file') as mock_run_sql:
         with patch('snowflake_ingestion.load_to_table.logger') as mock_logger:
-            load.create_table(mock_cursor)
+            result = load.create_table(mock_cursor)
 
-            mock_run_sql.assert_any_call(mock_cursor, load.SQL_DIR / "detect_file_schema_stage.sql")
-            mock_run_sql.assert_any_call(mock_cursor, load.SQL_DIR / "add_filename_to_raw_table.sql")
+            # Vérifier les appels dans l'ordre correct
+            assert mock_run_sql.call_args_list[0] == call(mock_cursor, load.SQL_DIR / "detect_file_schema_stage.sql")
+            assert mock_run_sql.call_args_list[1] == call(mock_cursor, load.SQL_DIR / "create_sequence.sql")
+            assert mock_run_sql.call_args_list[2] == call(mock_cursor, load.SQL_DIR / "add_filename_to_raw_table.sql")
+            
+            # Vérifier la création de la table
             mock_cursor.execute.assert_called_once()
             create_call = mock_cursor.execute.call_args[0][0]
             assert "CREATE TABLE IF NOT EXISTS" in create_call
             assert "vendor_id NUMBER" in create_call
             assert "tpep_pickup_datetime TIMESTAMP_NTZ" in create_call
-            # CORRECTION : Utilisation de functions.RAW_TABLE
+            
+            # Vérifier les logs
             mock_logger.info.assert_any_call(f"📋 Vérification/Création dynamique de la table {load.functions.RAW_TABLE}")
             mock_logger.info.assert_any_call(f"✅ Table {load.functions.RAW_TABLE} prête")
+            
+            # Vérifier le retour
+            assert result == [
+                ("vendor_id", "NUMBER"),
+                ("tpep_pickup_datetime", "TIMESTAMP_NTZ"),
+                ("tpep_dropoff_datetime", "TIMESTAMP_NTZ")
+            ]
 
 
 def test_create_table_no_schema():
     mock_cursor = Mock()
-    mock_cursor.fetchall.return_value = []
+    mock_cursor.fetchall.return_value = []  # Schéma vide
     
-    with patch('snowflake_ingestion.load_to_table.functions.run_sql_file'):
+    with patch('snowflake_ingestion.load_to_table.functions.run_sql_file') as mock_run_sql:
         with patch('snowflake_ingestion.load_to_table.logger') as mock_logger:
-            load.create_table(mock_cursor)
+            result = load.create_table(mock_cursor)
+            
+            # Vérifier que seul detect_file_schema_stage.sql est appelé
+            mock_run_sql.assert_called_once_with(mock_cursor, load.SQL_DIR / "detect_file_schema_stage.sql")
+            
+            # Vérifier que fetchall est appelé
+            mock_cursor.fetchall.assert_called_once()
+            
+            # Vérifier que le warning est appelé
             mock_logger.warning.assert_called_with("⚠️  Aucune donnée dans le STAGE")
+            
+            # Vérifier que la table n'est pas créée
             mock_cursor.execute.assert_not_called()
+            
+            # Vérifier que create_sequence.sql et add_filename_to_raw_table.sql ne sont PAS appelés
+            create_sequence_call = call(mock_cursor, load.SQL_DIR / "create_sequence.sql")
+            add_filename_call = call(mock_cursor, load.SQL_DIR / "add_filename_to_raw_table.sql")
+            assert create_sequence_call not in mock_run_sql.call_args_list
+            assert add_filename_call not in mock_run_sql.call_args_list
+            
+            # Vérifier que la fonction retourne un schéma vide
+            assert result == []
 
 
 def test_copy_file_to_table_and_count_success():
@@ -48,9 +79,11 @@ def test_copy_file_to_table_and_count_success():
     
     with patch('snowflake_ingestion.load_to_table.functions.run_sql_file'):
         with patch('snowflake_ingestion.load_to_table.logger') as mock_logger:
-            result = load.copy_file_to_table_and_count(mock_cursor, "test_file.parquet")
+            table_schema = [("vendorid", "NUMBER"), ("tpep_pickup_datetime", "TIMESTAMP_NTZ")]
+            result = load.copy_file_to_table_and_count(mock_cursor, "test_file.parquet", table_schema)
             assert result == 250
-            mock_cursor.execute.assert_any_call(ANY, ('test_file.parquet',))
+            mock_cursor.execute.assert_called_once()
+            mock_logger.info.assert_called_with("✅ test_file.parquet chargé (250 lignes)")
 
 
 def test_copy_file_to_table_and_count_zero_loaded():
@@ -59,19 +92,20 @@ def test_copy_file_to_table_and_count_zero_loaded():
     
     with patch('snowflake_ingestion.load_to_table.functions.run_sql_file'):
         with patch('snowflake_ingestion.load_to_table.logger'):
-            result = load.copy_file_to_table_and_count(mock_cursor, "test_file.parquet")
+            table_schema = [("vendorid", "NUMBER"), ("tpep_pickup_datetime", "TIMESTAMP_NTZ")]
+            result = load.copy_file_to_table_and_count(mock_cursor, "test_file.parquet", table_schema)
             assert result == 0
 
 
-def test_copy_file_to_table_and_count_update_error():
+def test_copy_file_to_table_and_count_copy_error():
     mock_cursor = Mock()
-    mock_cursor.fetchone.return_value = ('test_file.parquet', 'LOADED', 100, 100, 1, 0, None, None, None, None)
-    mock_cursor.execute.side_effect = [None, Exception("Update failed")]
+    mock_cursor.execute.side_effect = Exception("COPY failed")
     
     with patch('snowflake_ingestion.load_to_table.functions.run_sql_file'):
         with patch('snowflake_ingestion.load_to_table.logger') as mock_logger:
-            with pytest.raises(Exception):
-                load.copy_file_to_table_and_count(mock_cursor, "test_file.parquet")
+            table_schema = [("vendorid", "NUMBER"), ("tpep_pickup_datetime", "TIMESTAMP_NTZ")]
+            with pytest.raises(Exception, match="COPY failed"):
+                load.copy_file_to_table_and_count(mock_cursor, "test_file.parquet", table_schema)
 
 
 def test_update_metadata():
@@ -86,7 +120,6 @@ def test_update_metadata():
         assert len(update_call[0][1]) == 2
         assert update_call[0][1][0] == 250
         assert update_call[0][1][1] == "test_file.parquet"
-        # CORRECTION : Utilisation de functions.METADATA_TABLE
         mock_logger.debug.assert_called_with(f"🚀 Chargement de {load.functions.METADATA_TABLE}")
 
 
@@ -104,7 +137,6 @@ def test_handle_loading_error():
     with patch('snowflake_ingestion.load_to_table.logger') as mock_logger:
         load.handle_loading_error(mock_cursor, "test_file.parquet", test_error)
         mock_logger.error.assert_called_with("❌ Erreur de chargement test_file.parquet: COPY INTO failed")
-        # CORRECTION : Utilisation de functions.METADATA_TABLE
         mock_logger.debug.assert_called_with(f"🚀 Chargement de {load.functions.METADATA_TABLE}")
         mock_cursor.execute.assert_called_once()
         update_call = mock_cursor.execute.call_args
@@ -120,7 +152,7 @@ def test_main_success_flow():
 
     with patch('snowflake_ingestion.load_to_table.functions.connect_with_role', return_value=mock_conn):
         with patch('snowflake_ingestion.load_to_table.functions.use_context'):
-            with patch('snowflake_ingestion.load_to_table.create_table'):
+            with patch('snowflake_ingestion.load_to_table.create_table', return_value=[("vendorid", "NUMBER")]):
                 with patch('snowflake_ingestion.load_to_table.functions.run_sql_file'):
                     with patch('snowflake_ingestion.load_to_table.copy_file_to_table_and_count') as mock_copy:
                         with patch('snowflake_ingestion.load_to_table.update_metadata'):
@@ -130,8 +162,8 @@ def test_main_success_flow():
                                     load.main()
                                     mock_logger.info.assert_any_call("🔍 Analyse des fichiers dans le STAGE")
                                     assert mock_copy.call_count == 2
-                                    mock_copy.assert_any_call(ANY, "file1.parquet")
-                                    mock_copy.assert_any_call(ANY, "file2.parquet")
+                                    mock_copy.assert_any_call(ANY, "file1.parquet", [("vendorid", "NUMBER")])
+                                    mock_copy.assert_any_call(ANY, "file2.parquet", [("vendorid", "NUMBER")])
 
 
 def test_main_with_loading_error():
@@ -142,14 +174,14 @@ def test_main_with_loading_error():
     
     with patch('snowflake_ingestion.load_to_table.functions.connect_with_role', return_value=mock_conn):
         with patch('snowflake_ingestion.load_to_table.functions.use_context'):
-            with patch('snowflake_ingestion.load_to_table.create_table'):
+            with patch('snowflake_ingestion.load_to_table.create_table', return_value=[("vendorid", "NUMBER")]):
                 with patch('snowflake_ingestion.load_to_table.functions.run_sql_file'):
                     with patch('snowflake_ingestion.load_to_table.copy_file_to_table_and_count') as mock_copy:
                         with patch('snowflake_ingestion.load_to_table.update_metadata'):
                             with patch('snowflake_ingestion.load_to_table.cleanup_stage_file'):
                                 with patch('snowflake_ingestion.load_to_table.handle_loading_error') as mock_handle_error:
                                     with patch('snowflake_ingestion.load_to_table.logger'):
-                                        def mock_copy_side_effect(cur, filename):
+                                        def mock_copy_side_effect(cur, filename, table_schema):
                                             if filename == "file1.parquet":
                                                 return 100
                                             else:
@@ -168,7 +200,7 @@ def test_main_no_staged_files():
     
     with patch('snowflake_ingestion.load_to_table.functions.connect_with_role', return_value=mock_conn):
         with patch('snowflake_ingestion.load_to_table.functions.use_context'):
-            with patch('snowflake_ingestion.load_to_table.create_table'):
+            with patch('snowflake_ingestion.load_to_table.create_table', return_value=[("vendorid", "NUMBER")]):
                 with patch('snowflake_ingestion.load_to_table.functions.run_sql_file'):
                     with patch('snowflake_ingestion.load_to_table.logger') as mock_logger:
                         load.main()
@@ -204,7 +236,7 @@ def test_main_complete_flow_with_counts():
     
     with patch('snowflake_ingestion.load_to_table.functions.connect_with_role', return_value=mock_conn):
         with patch('snowflake_ingestion.load_to_table.functions.use_context'):
-            with patch('snowflake_ingestion.load_to_table.create_table'):
+            with patch('snowflake_ingestion.load_to_table.create_table', return_value=[("vendorid", "NUMBER")]):
                 with patch('snowflake_ingestion.load_to_table.functions.run_sql_file'):
                     with patch('snowflake_ingestion.load_to_table.copy_file_to_table_and_count', return_value=150):
                         with patch('snowflake_ingestion.load_to_table.update_metadata') as mock_update:
@@ -222,7 +254,7 @@ def test_main_multiple_files_different_results():
     mock_cursor.fetchall.return_value = [("small_file.parquet",),("large_file.parquet",)]
     with patch('snowflake_ingestion.load_to_table.functions.connect_with_role', return_value=mock_conn):
         with patch('snowflake_ingestion.load_to_table.functions.use_context'):
-            with patch('snowflake_ingestion.load_to_table.create_table'):
+            with patch('snowflake_ingestion.load_to_table.create_table', return_value=[("vendorid", "NUMBER")]):
                 with patch('snowflake_ingestion.load_to_table.functions.run_sql_file'):
                     with patch('snowflake_ingestion.load_to_table.copy_file_to_table_and_count') as mock_copy:
                         with patch('snowflake_ingestion.load_to_table.update_metadata') as mock_update:
@@ -244,14 +276,14 @@ def test_main_exception_handling_in_loop():
     
     with patch('snowflake_ingestion.load_to_table.functions.connect_with_role', return_value=mock_conn):
         with patch('snowflake_ingestion.load_to_table.functions.use_context'):
-            with patch('snowflake_ingestion.load_to_table.create_table'):
+            with patch('snowflake_ingestion.load_to_table.create_table', return_value=[("vendorid", "NUMBER")]):
                 with patch('snowflake_ingestion.load_to_table.functions.run_sql_file'):
                     with patch('snowflake_ingestion.load_to_table.copy_file_to_table_and_count') as mock_copy:
                         with patch('snowflake_ingestion.load_to_table.update_metadata') as mock_update:
                             with patch('snowflake_ingestion.load_to_table.cleanup_stage_file') as mock_cleanup:
                                 with patch('snowflake_ingestion.load_to_table.handle_loading_error') as mock_handle_error:
                                     with patch('snowflake_ingestion.load_to_table.logger'):
-                                        def mock_copy_side_effect(cur, filename):
+                                        def mock_copy_side_effect(cur, filename, table_schema):
                                             if filename == "file2.parquet":
                                                 raise Exception("Error on file2")
                                             return 100
