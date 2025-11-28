@@ -1,0 +1,53 @@
+version: 2
+
+models:
+  - name: hourly_patterns
+    description: "Trip patterns and metrics by pickup hour."
+    
+    columns:
+      - name: pickup_hour
+        description: "Hour of the day when trip started (0-23)."
+        tests:
+          - not_null
+          - unique
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 23
+
+      - name: trip_count
+        description: "Total number of trips in this hour."
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+
+      - name: total_revenue
+        description: "Total revenue generated in this hour."
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+
+      - name: avg_speed
+        description: "Average speed in miles per hour for trips in this hour."
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+
+      - name: avg_duration_minutes
+        description: "Average trip duration in minutes for this hour."
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+
+      - name: avg_fare
+        description: "Average fare amount for trips in this hour."
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0

@@ -1,0 +1,71 @@
+version: 2
+models:
+  - name: time_period_analysis
+    description: "Trip metrics aggregated by day of week and weekend/weekday classification."
+    columns:
+      - name: day_of_week
+        description: "Day of the week as number (1-7)."
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 1
+                max_value: 7
+      - name: is_weekend
+        description: "Whether the day is a weekend (True) or weekday (False)."
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [True, False]
+      - name: trip_count
+        description: "Total number of trips for this time period."
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+      - name: total_revenue
+        description: "Total revenue for this time period."
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+      - name: avg_revenue
+        description: "Average revenue per trip for this time period."
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+      - name: avg_duration
+        description: "Average trip duration in minutes."
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+      - name: avg_distance
+        description: "Average trip distance."
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+      - name: avg_speed
+        description: "Average speed in miles per hour."
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+      - name: avg_tip_amount
+        description: "Average tip amount."
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+      - name: avg_tip_pct
+        description: "Average tip percentage."
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0

@@ -1,0 +1,48 @@
+version: 2
+
+models:
+  - name: revenue_analysis
+    description: "Revenue analysis by pickup and dropoff borough combinations."
+    
+    columns:
+      - name: pickup_borough
+        description: "Borough where the trip started."
+        tests:
+          - not_null
+
+      - name: dropoff_borough
+        description: "Borough where the trip ended."
+        tests:
+          - not_null
+
+      - name: trip_count
+        description: "Number of trips between these boroughs."
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+
+      - name: total_revenue
+        description: "Total revenue from trips between these boroughs."
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+
+      - name: avg_revenue
+        description: "Average revenue per trip between these boroughs."
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+
+      - name: avg_tip_percentage
+        description: "Average tip percentage (tip_amount / fare_amount)."
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                # max_value: 1

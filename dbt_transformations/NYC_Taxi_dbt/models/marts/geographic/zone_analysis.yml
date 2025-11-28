@@ -1,0 +1,54 @@
+version: 2
+
+models:
+  - name: zone_analysis
+    description: "Trip metrics and performance analysis by pickup zone."
+    
+    columns:
+      - name: zone_name
+        description: "Name of the pickup zone."
+        tests:
+          - not_null
+
+      - name: borough
+        description: "Borough where the pickup zone is located."
+        tests:
+          - not_null
+
+      - name: trip_count
+        description: "Total number of trips starting from this zone."
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+
+      - name: avg_revenue
+        description: "Average revenue per trip from this zone."
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+
+      - name: total_revenue
+        description: "Total revenue generated from trips starting in this zone."
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+
+      - name: avg_duration
+        description: "Average trip duration in minutes from this zone."
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+
+      - name: avg_distance
+        description: "Average trip distance from this zone."
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0

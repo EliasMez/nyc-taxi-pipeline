@@ -1,14 +1,22 @@
 version: 2
-
 models:
   - name: dim_locations
-    description: "Dimension des lieux de prise et de dépose des taxis."
+    description: "Dimension table for taxi zones and locations."
     columns:
-      - name: location_key
-        tests:
-          - unique
-          - not_null
       - name: location_id
+        description: "Unique identifier for the location."
         tests:
+          - not_null
           - unique
+      - name: borough
+        description: "Borough name."
+        tests:
+          - not_null
+      - name: zone_name
+        description: "Zone name within the borough."
+        tests:
+          - not_null
+      - name: service_zone
+        description: "Service zone classification."
+        tests:
           - not_null

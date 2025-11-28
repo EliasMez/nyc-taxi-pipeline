@@ -69,6 +69,7 @@ jobs:
     - name: Install dbt Dependencies
       run: |
         dbt deps --project-dir dbt_transformations/NYC_Taxi_dbt --profiles-dir dbt_transformations
+        dbt seed --project-dir dbt_transformations/NYC_Taxi_dbt --profiles-dir dbt_transformations
 
     - name: Run dbt Transformations
       run: |
