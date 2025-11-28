@@ -1,0 +1,7 @@
+.env
+dbt_snow_env/
+logs/
+site/
+snowflake_ingestion/
+memo.txt
+dbt_transformations/
