@@ -1,0 +1,54 @@
+version: 2
+models:
+  - name: borough_analysis
+    description: "Trip metrics and performance analysis by borough (pickup borough)."
+    columns:
+      - name: borough
+        description: "Borough where the trip started."
+        tests:
+          - not_null
+      - name: trip_count
+        description: "Total number of trips starting from this borough."
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+      - name: avg_revenue
+        description: "Average revenue per trip from this borough."
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+      - name: total_revenue
+        description: "Total revenue generated from trips starting in this borough."
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+      - name: avg_duration
+        description: "Average trip duration in minutes from this borough."
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+      - name: avg_distance
+        description: "Average trip distance from this borough."
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+      - name: avg_tip_amount
+        description: "Average tip amount for trips from this borough."
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+      - name: avg_tip_percentage
+        description: "Average tip percentage (tip_amount / fare_amount) for trips from this borough."
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
