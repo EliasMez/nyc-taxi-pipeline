@@ -1,54 +1,61 @@
 version: 2
-
 models:
   - name: yellow_taxi_trips_stg
-    description: "Table de staging nettoyée des trajets de taxis jaunes NYC."
+    description: "Cleaned staging table for NYC Yellow Taxi trips."
     tests:
-    - dbt_expectations.expect_column_pair_values_A_to_be_greater_than_B:
-        arguments:
-          column_A: tpep_dropoff_datetime
-          column_B: tpep_pickup_datetime
-          or_equal: False
-
+      - dbt_expectations.expect_column_pair_values_A_to_be_greater_than_B:
+          arguments:
+            column_A: tpep_dropoff_datetime
+            column_B: tpep_pickup_datetime
+            or_equal: False
     columns:
       - name: vendorid
+        description: "Identifier for the taxi vendor"
         tests:
           - not_null
       - name: tpep_pickup_datetime
+        description: "Timestamp when the passenger was picked up by the taxi"
         tests:
           - not_null
           - valid_datetime
       - name: tpep_dropoff_datetime
+        description: "Timestamp when the passenger was dropped off by the taxi"
         tests:
           - not_null
           - valid_datetime
       - name: passenger_count
+        description: "Number of passengers in the vehicle"
         tests:
           - dbt_utils.accepted_range:
               arguments:
                 column_name: passenger_count
                 min_value: 0
       - name: trip_distance
+        description: "Distance of the trip in miles"
         tests:
           - dbt_utils.accepted_range:
               arguments:
                 column_name: trip_distance
                 min_value: 0
       - name: fare_amount
+        description: "Base fare amount for the trip"
         tests:
           - dbt_utils.accepted_range:
               arguments:
                 column_name: fare_amount
                 min_value: 0
       - name: total_amount
+        description: "Total amount charged to the passenger"
         tests:
           - dbt_utils.accepted_range:
               arguments:
                 column_name: total_amount
                 min_value: 0
       - name: pulocationid
+        description: "Taxi Zone identifier where the trip started"
         tests:
           - not_null
       - name: dolocationid
+        description: "Taxi Zone identifier where the trip ended"
         tests:
           - not_null

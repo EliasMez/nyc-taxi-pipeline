@@ -1,16 +1,18 @@
 version: 2
-
 models:
   - name: int_trip_metrics
-    description: "Table intermédiaire contenant les métriques enrichies des trajets Yellow Taxi"
+    description: "Intermediate table containing enriched metrics for Yellow Taxi trips"
     columns:
       - name: tpep_pickup_datetime
+        description: "Timestamp when the passenger was picked up by the taxi"
         tests:
           - not_null
       - name: tpep_dropoff_datetime
+        description: "Timestamp when the passenger was dropped off by the taxi"
         tests:
           - not_null
       - name: trip_duration_minutes
+        description: "Duration of the trip in minutes"
         tests:
           - not_null
           - dbt_utils.accepted_range:
@@ -18,7 +20,7 @@ models:
                 column_name: trip_duration_minutes
                 min_value: 0
       - name: avg_speed_mph
-        description: "Vitesse moyenne estimée en miles par heure"
+        description: "Estimated average speed in miles per hour"
         tests:
           - dbt_utils.accepted_range:
               arguments:
