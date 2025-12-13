@@ -1,0 +1,48 @@
+name: Deploy dbt Docs
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main, dev]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+      WH_NAME: ${{ vars.WH_NAME || 'NYC_WH' }}
+      DW_NAME: ${{ vars.DW_NAME || 'NYC_TAXI_DW' }}
+      USER_DEV: ${{ vars.USER_DEV || 'USER_DEV' }}
+      PASSWORD_DEV: ${{ secrets.PASSWORD_DEV }}
+      ROLE_TRANSFORMER: ${{ vars.ROLE_TRANSFORMER || 'TRANSFORMER' }}
+      RAW_SCHEMA: ${{ vars.RAW_SCHEMA || 'SCHEMA_RAW' }}
+      STAGING_SCHEMA: ${{ vars.STAGING_SCHEMA || 'STAGING' }}
+      FINAL_SCHEMA: ${{ vars.FINAL_SCHEMA || 'FINAL' }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dbt
+        run: pip install dbt-core dbt-snowflake
+
+      - name: Install dbt Dependencies
+        run: dbt deps --project-dir dbt_transformations/NYC_Taxi_dbt --profiles-dir dbt_transformations
+
+      - name: Generate dbt docs
+        run: dbt docs generate --project-dir dbt_transformations/NYC_Taxi_dbt --profiles-dir dbt_transformations
+
+      - name: Deploy to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: dbt_transformations/NYC_Taxi_dbt/target
+          destination_dir: dbt
