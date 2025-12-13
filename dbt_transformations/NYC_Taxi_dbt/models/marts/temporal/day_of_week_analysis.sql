@@ -13,7 +13,7 @@ select
 from (
     select
         *,
-        dayname(pickup_date,'long') as day_name,
+        dayname(pickup_date) as day_name,
         extract(dayofweek from pickup_date) + 1 as day_of_week,
         case 
             when day_of_week in (1, 7) then true 

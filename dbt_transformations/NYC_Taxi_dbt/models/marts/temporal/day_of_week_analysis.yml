@@ -4,14 +4,14 @@ models:
     description: "Trip metrics aggregated by day of week including day names and weekend/weekday classification."
     columns:
       - name: day_name
-        description: "Name of the day of the week (e.g., Monday, Tuesday)."
+        description: "Three-letter abbreviation of the day of the week (e.g., Mon, Tue, Wed)."
         tests:
           - not_null
           - accepted_values:
               arguments:
-                values: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+                values: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
       - name: day_of_week
-        description: "Day of the week as a number (1-7, where 1=Sunday, 7=Saturday)."
+        description: "Day of the week as a number (1-7, where 1=Sun, 7=Sat)."
         tests:
           - not_null
           - dbt_utils.accepted_range:
