@@ -14,8 +14,8 @@ select
     extract(day from trip_date) as day,
     extract(quarter from trip_date) as quarter,
     extract(dayofweek from trip_date) as day_of_week,
-    case 
-        when day_of_week in (1,7) then 'Weekend'
+    case
+        when day_of_week in (1, 7) then 'Weekend'
         else 'Weekday'
     end as day_type,
     monthname(trip_date) as month_name,

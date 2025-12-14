@@ -13,10 +13,9 @@ growth_data as (
         trip_count,
         total_revenue,
         lag(total_revenue) over (order by year) as prev_year_revenue,
-        case 
-            when prev_year_revenue is not null 
-            then round((total_revenue - prev_year_revenue) / prev_year_revenue, 4)
-            else null
+        case
+            when prev_year_revenue is not null
+                then round((total_revenue - prev_year_revenue) / prev_year_revenue, 4)
         end as yoy_growth
     from yearly_data
 )
