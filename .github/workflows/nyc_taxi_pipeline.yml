@@ -23,11 +23,13 @@ jobs:
       STAGING_SCHEMA: ${{ vars.STAGING_SCHEMA || 'STAGING' }}
       FINAL_SCHEMA: ${{ vars.FINAL_SCHEMA || 'FINAL' }}
       PARQUET_FORMAT: ${{ vars.PARQUET_FORMAT || 'PARQUET_FORMAT' }}
+      ID_SEQUENCE: ${{ vars.ID_SEQUENCE || 'TRIP_ID_SEQ' }}
       ROLE_TRANSFORMER: ${{ vars.ROLE_TRANSFORMER || 'TRANSFORMER' }}
       USER_DEV: ${{ vars.USER_DEV || 'USER_DEV' }}
       METADATA_TABLE: ${{ vars.METADATA_TABLE || 'FILE_LOADING_METADATA' }}
       RAW_TABLE: ${{ vars.RAW_TABLE || 'YELLOW_TAXI_TRIPS_RAW' }}
       STAGING_TABLE: ${{ vars.STAGING_TABLE || 'YELLOW_TAXI_TRIPS_STG' }}
+      TIMEZONE: ${{ vars.TIMEZONE || 'UTC' }}
       AWS_EC2_METADATA_DISABLED: true
       
     
@@ -67,6 +69,7 @@ jobs:
     - name: Install dbt Dependencies
       run: |
         dbt deps --project-dir dbt_transformations/NYC_Taxi_dbt --profiles-dir dbt_transformations
+        dbt seed --project-dir dbt_transformations/NYC_Taxi_dbt --profiles-dir dbt_transformations
 
     - name: Run dbt Transformations
       run: |

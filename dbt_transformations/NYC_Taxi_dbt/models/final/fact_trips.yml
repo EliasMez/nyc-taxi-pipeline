@@ -1,55 +1,65 @@
 version: 2
-
 models:
   - name: fact_trips
-    description: "Table de faits reliant les dimensions (temps, date, lieu) aux mesures de trajets."
+    description: "Fact table linking dimensions (time, date, location) to trip metrics."
     columns:
       - name: pickup_date_key
+        description: "Foreign key referencing the date dimension for the pickup date"
         tests:
           - relationships:
               arguments:
                 to: ref('dim_date')
                 field: date_key
       - name: dropoff_date_key
+        description: "Foreign key referencing the date dimension for the dropoff date"
         tests:
           - relationships:
               arguments:
                 to: ref('dim_date')
                 field: date_key
       - name: pickup_time_key
+        description: "Foreign key referencing the time dimension for the pickup time"
         tests:
           - relationships:
               arguments:
                 to: ref('dim_time')
                 field: time_key
       - name: dropoff_time_key
+        description: "Foreign key referencing the time dimension for the dropoff time"
         tests:
           - relationships:
               arguments:
                 to: ref('dim_time')
                 field: time_key
-      - name: pickup_location_key
+      - name: pickup_location_id
+        description: "Foreign key referencing the location dimension for the pickup location"
         tests:
           - relationships:
               arguments:
                 to: ref('dim_locations')
-                field: location_key
-      - name: dropoff_location_key
+                field: location_id
+      - name: dropoff_location_id
+        description: "Foreign key referencing the location dimension for the dropoff location"
         tests:
           - relationships:
               arguments:
                 to: ref('dim_locations')
-                field: location_key
+                field: location_id
       - name: trip_distance
+        description: "Distance of the trip in miles"
         tests:
           - not_null
       - name: fare_amount
+        description: "Base fare amount for the trip"
         tests:
           - not_null
       - name: tip_amount
+        description: "Tip amount given by the passenger"
         tests:
           - not_null
       - name: total_amount
+        description: "Total amount charged to the passenger"
         tests:
           - not_null
       - name: passenger_count
+        description: "Number of passengers in the vehicle"

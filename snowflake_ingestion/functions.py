@@ -21,10 +21,13 @@ RAW_TABLE = os.getenv('RAW_TABLE')
 METADATA_TABLE = os.getenv('METADATA_TABLE')
 
 PARQUET_FORMAT = os.getenv('PARQUET_FORMAT')
+ID_SEQUENCE = os.getenv('ID_SEQUENCE')
+
 ROLE_TRANSFORMER = os.getenv('ROLE_TRANSFORMER')
 USER_DEV = os.getenv('USER_DEV')
 
 SCRAPING_YEAR = os.getenv('SCRAPING_YEAR')
+TIMEZONE = os.getenv('TIMEZONE')
 LOGGER_LEVEL = getattr(logging, os.getenv('LOGGER_LEVEL'))
 
 

@@ -1,0 +1,81 @@
+version: 2
+
+models:
+  - name: monthly_analysis
+    description: "Aggregation of trips and revenue by month."
+
+    columns:
+      - name: month
+        description: "First day of the month (YYYY-MM-01)."
+        tests:
+          - not_null
+          - unique
+
+      - name: trip_count
+        description: "Total number of trips in this month."
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+
+      - name: avg_distance
+        description: "Average distance traveled per trip in this month."
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+
+      - name: total_revenue
+        description: "Total revenue generated in this month."
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+
+      - name: avg_revenue_per_trip
+        description: "Average revenue per trip in this month."
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+
+      - name: avg_tip_amount
+        description: "Average tip amount per trip in this month."
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+
+      - name: total_passengers
+        description: "Total number of passengers transported in this month."
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+
+      - name: avg_duration
+        description: "Average trip duration in minutes in this month."
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+
+      - name: unique_pickup_locations
+        description: "Number of unique pickup locations in this month."
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+
+      - name: avg_tip_percentage
+        description: "Average tip percentage (tip_amount / fare_amount) in this month."
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0

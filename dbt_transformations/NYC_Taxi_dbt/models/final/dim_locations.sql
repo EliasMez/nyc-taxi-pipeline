@@ -1,12 +1,6 @@
-with locations as (
-    select distinct pulocationid as location_id
-    from {{ ref('yellow_taxi_trips_stg') }}
-    union distinct
-    select distinct dolocationid as location_id
-    from {{ ref('yellow_taxi_trips_stg') }}
-)
-
 select
-    location_id,
-    row_number() over (order by location_id) as location_key
-from locations
+    locationid::NUMBER(10, 2) as location_id,
+    borough::VARCHAR(55) as borough,
+    zone::VARCHAR(55) as zone_name,
+    service_zone::VARCHAR(55) as service_zone
+from {{ ref('taxi_zone_lookup') }}

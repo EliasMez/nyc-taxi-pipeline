@@ -9,12 +9,13 @@ with trips as (
 )
 
 select
+    trips.trip_id,
     dd_pickup.date_key as pickup_date_key,
     dt_pickup.time_key as pickup_time_key,
     dd_dropoff.date_key as dropoff_date_key,
     dt_dropoff.time_key as dropoff_time_key,
-    loc_pickup.location_key as pickup_location_key,
-    loc_dropoff.location_key as dropoff_location_key,
+    trips.pulocationid as pickup_location_id,
+    trips.dolocationid as dropoff_location_id,
 
     trips.trip_distance,
     trips.fare_amount,

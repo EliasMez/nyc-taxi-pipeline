@@ -1,0 +1,59 @@
+version: 2
+
+models:
+  - name: daily_summary
+    description: "Aggregation of trips and revenue by pickup date."
+    
+    columns:
+      - name: pickup_date
+        description: "Trip start date."
+        tests:
+          - not_null
+          - unique
+
+      - name: trip_count
+        description: "Total number of trips on this date."
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+
+      - name: avg_distance
+        description: "Average distance traveled per trip on this date."
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+
+      - name: total_revenue
+        description: "Total revenue generated on this date."
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+
+      - name: avg_revenue_per_trip
+        description: "Average revenue per trip on this date."
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+
+      - name: avg_tip_amount
+        description: "Average tip amount per trip on this date."
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+
+      - name: total_passengers
+        description: "Total number of passengers transported on this date."
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0

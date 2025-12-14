@@ -1,14 +1,15 @@
 version: 2
-
 models:
   - name: dim_date
-    description: "Dimension date dérivée des timestamps de la table staging."
+    description: "Date dimension derived from the timestamps of the staging table."
     columns:
       - name: date_key
+        description: "Unique surrogate key for the date"
         tests:
           - unique
           - not_null
       - name: trip_date
+        description: "Actual date when the trip occurred"
         tests:
           - unique
           - not_null
