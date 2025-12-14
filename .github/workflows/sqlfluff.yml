@@ -31,3 +31,6 @@ jobs:
       - name: Lint Snowflake SQL
         run: |
           sqlfluff lint snowflake_ingestion/sql/ --config .sqlfluff
+      - name: Fix Snowflake SQL
+        run: |
+          sqlfluff fix snowflake_ingestion/sql/ --config .sqlfluff
