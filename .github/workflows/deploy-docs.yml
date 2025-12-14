@@ -30,6 +30,12 @@ jobs:
         with:
           python-version: '3.10'
 
+      - name: Install MkDocs
+        run: pip install mkdocs mkdocs-material mkdocstrings-python
+
+      - name: Deploy MkDocs to gh-pages
+        run: mkdocs gh-deploy --force
+
       - name: Install dbt
         run: pip install dbt-core dbt-snowflake
 
@@ -39,7 +45,7 @@ jobs:
       - name: Generate dbt docs
         run: dbt docs generate --project-dir dbt_transformations/NYC_Taxi_dbt --profiles-dir dbt_transformations
 
-      - name: Deploy to gh-pages branch
+      - name: Deploy dbt docs to gh-pages branch
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
