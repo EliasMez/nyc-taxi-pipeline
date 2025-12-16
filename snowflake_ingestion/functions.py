@@ -1,3 +1,4 @@
+from typing import Any
 import snowflake.connector
 import os
 import sys
@@ -8,34 +9,30 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+ACCOUNT: str = os.getenv("SNOWFLAKE_ACCOUNT")
+USER: str = os.getenv("SNOWFLAKE_USER")
+PASSWORD: str = os.getenv("SNOWFLAKE_PASSWORD")
+PASSWORD_DEV: str = os.getenv("PASSWORD_DEV")
 
-ACCOUNT = os.getenv('SNOWFLAKE_ACCOUNT')
-USER = os.getenv('SNOWFLAKE_USER')
-PASSWORD = os.getenv('SNOWFLAKE_PASSWORD')
-PASSWORD_DEV = os.getenv('PASSWORD_DEV')
+WH_NAME: str = os.getenv("WH_NAME")
+DW_NAME: str = os.getenv("DW_NAME")
+RAW_SCHEMA: str = os.getenv("RAW_SCHEMA")
+RAW_TABLE: str = os.getenv("RAW_TABLE")
+METADATA_TABLE: str = os.getenv("METADATA_TABLE")
 
-WH_NAME = os.getenv('WH_NAME')
-DW_NAME = os.getenv('DW_NAME')
-RAW_SCHEMA = os.getenv('RAW_SCHEMA')
-RAW_TABLE = os.getenv('RAW_TABLE')
-METADATA_TABLE = os.getenv('METADATA_TABLE')
+PARQUET_FORMAT: str = os.getenv("PARQUET_FORMAT")
+ID_SEQUENCE: str = os.getenv("ID_SEQUENCE")
 
-PARQUET_FORMAT = os.getenv('PARQUET_FORMAT')
-ID_SEQUENCE = os.getenv('ID_SEQUENCE')
+ROLE_TRANSFORMER: str = os.getenv("ROLE_TRANSFORMER")
+USER_DEV: str = os.getenv("USER_DEV")
 
-ROLE_TRANSFORMER = os.getenv('ROLE_TRANSFORMER')
-USER_DEV = os.getenv('USER_DEV')
+SCRAPING_YEAR: str = os.getenv("SCRAPING_YEAR")
+TIMEZONE: str = os.getenv("TIMEZONE")
+LOGGER_LEVEL: int = getattr(logging, os.getenv("LOGGER_LEVEL"))
 
-SCRAPING_YEAR = os.getenv('SCRAPING_YEAR')
-TIMEZONE = os.getenv('TIMEZONE')
-LOGGER_LEVEL = getattr(logging, os.getenv('LOGGER_LEVEL'))
+SQL_BASE_DIR: Path = Path("snowflake_ingestion") / "sql"
 
-
-SQL_BASE_DIR = Path("snowflake_ingestion") / "sql"
-
-
-
-def config_logger():
+def config_logger() -> None:
     """Configure the global logger.
 
     Reads LOGGER_LEVEL from the module environment and configures the
@@ -46,16 +43,14 @@ def config_logger():
     """
     logging.basicConfig(
         level=LOGGER_LEVEL,
-        format='%(asctime)s - %(levelname)s - %(message)s',
-        datefmt='%Y-%m-%d %H:%M:%S'
+        format="%(asctime)s - %(levelname)s - %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S",
     )
 
 config_logger()
-logger = logging.getLogger(__name__)
+logger: logging.Logger = logging.getLogger(__name__)
 
-
-
-def connect_with_role(user, password, account, role) -> snowflake.connector.SnowflakeConnection:
+def connect_with_role(user: str, password: str, account: str, role: str) -> snowflake.connector.SnowflakeConnection:
     """Create a Snowflake connection using the specified credentials and role.
 
     Args:
@@ -77,11 +72,10 @@ def connect_with_role(user, password, account, role) -> snowflake.connector.Snow
         password=password,
         account=account,
         role=role,
-        autocommit=True
+        autocommit=True,
     )
 
-
-def use_context(cur, WH_NAME, DW_NAME, RAW_SCHEMA):
+def use_context(cur: snowflake.connector.cursor.SnowflakeCursor, WH_NAME: str, DW_NAME: str, RAW_SCHEMA: str) -> None:
     """Set the Snowflake session context: warehouse, database and schema.
 
     Args:
@@ -94,17 +88,15 @@ def use_context(cur, WH_NAME, DW_NAME, RAW_SCHEMA):
         SystemExit: Exits the process on any exception when setting the context.
     """
     logger.debug(f"⚙️ Configuration du contexte: WH={WH_NAME}, DB={DW_NAME}, SCHEMA={RAW_SCHEMA}")
-    try :
+    try:
         cur.execute(f"USE WAREHOUSE {WH_NAME}")
         cur.execute(f"USE DATABASE {DW_NAME}")
         cur.execute(f"USE SCHEMA {RAW_SCHEMA}")
     except Exception as e:
-        logger.critical(f"❌ Erreur : Relancer l'étape Snowflake Infra Init")
+        logger.critical("❌ Erreur : Relancer l'étape Snowflake Infra Init")
         sys.exit(1)
 
-
-
-def run_sql_file(cur, filepath):
+def run_sql_file(cur: snowflake.connector.cursor.SnowflakeCursor, filepath: Path | str) -> None:
     """Execute SQL statements from a file using VAR_PLACEHOLDER placeholders.
 
     The function:
@@ -127,12 +119,11 @@ def run_sql_file(cur, filepath):
         sql = f.read()
         keys = re.findall(r"(\w+)_PLACEHOLDER", sql)
         variables = {k: globals().get(k, f"<{k}_NOT_FOUND>") for k in keys}
-        logger.debug(f"🔎 Variables détectées dans {filepath.name}: {sorted(set(keys))}")
+        logger.debug(f"🔎 Variables détectées dans {Path(filepath).name}: {sorted(set(keys))}")
         for key, value in variables.items():
             sql = sql.replace(f"{key}_PLACEHOLDER", str(value))
-        
         masked_vars = {k: "*****" if "PASSWORD" in k.upper() else v for k, v in variables.items()}
-        logger.debug(f"🧱 Variables utilisées : {dict(sorted(masked_vars.items()))}")
+        logger.debug(f"Variables utilisées : {dict(sorted(masked_vars.items()))}")
 
         for statement in sql.split(";"):
             statement = statement.strip()
