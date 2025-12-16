@@ -1,4 +1,6 @@
 site_name: NYC Taxi Data Pipeline
+site_url: https://eliasmez.github.io/nyc-taxi-pipeline/ 
+
 theme:
   name: material
   features:
@@ -10,18 +12,49 @@ theme:
 
 plugins:
   - search
+  - i18n:
+      languages:
+        - locale: en
+          name: English
+          build: true
+          default: true
+        - locale: fr
+          name: Français
+          build: true
+        - locale: es
+          name: Español
+          build: true
+        - locale: zh
+          name: 中文
+          build: true
   - mkdocstrings:
       handlers:
         python:
+          paths: [../]
           options:
             docstring_style: google
             show_source: true
             show_root_heading: true
             heading_level: 3
 
+extra:
+  alternate:
+    - name: English
+      link: /
+      lang: en
+    - name: Français
+      link: /fr/
+      lang: fr
+    - name: Español
+      link: /es/
+      lang: es
+    - name: 中文
+      link: /zh/
+      lang: zh   
+
 nav:
-  - 🚕 Accueil: index.md
+  - 🚕 Home: index.md
   - 🏛️ Architecture: architecture.md
   - 📈 Governance: governance.md
-  - 🚀 Exécution: execution.md
+  - 🚀 Execution: execution.md
   - 📚 Docstrings: docstrings.md

@@ -5,6 +5,7 @@ __pycache__/
 *.pyc
 dbt.log
 memo.txt
+nyc_taxi.egg-info/
 
 # fichiers générés par dbt
 target/
