@@ -1,13 +1,12 @@
+from snowflake.connector.cursor import SnowflakeCursor
 import snowflake_ingestion.functions as functions
+
 functions.config_logger()
 logger = functions.logging.getLogger(__name__)
 
-
 SQL_DIR = functions.SQL_BASE_DIR / "init"
 
-
-
-def setup_data_warehouse(cur):
+def setup_data_warehouse(cur: SnowflakeCursor) -> None:
     """Create the data warehouse, database, and schemas in Snowflake.
 
     Args:
@@ -18,8 +17,7 @@ def setup_data_warehouse(cur):
     functions.run_sql_file(cur, sql_file)
     logger.info("✅ Warehouse et schémas créés")
 
-
-def create_roles_and_user(cur):
+def create_roles_and_user(cur: SnowflakeCursor) -> None:
     """Create the DBT role and user in Snowflake.
 
     Args:
@@ -30,8 +28,7 @@ def create_roles_and_user(cur):
     functions.run_sql_file(cur, sql_file)
     logger.info("✅ Rôle et utilisateur créés")
 
-
-def grant_privileges(cur):
+def grant_privileges(cur: SnowflakeCursor) -> None:
     """Grant required privileges to the TRANSFORMER role in Snowflake.
 
     Args:
@@ -42,20 +39,19 @@ def grant_privileges(cur):
     functions.run_sql_file(cur, sql_file)
     logger.info("✅ Privilèges attribués")
 
-
-def main():
+def main() -> None:
     """Main initialization process for the Snowflake environment.
 
     Establishes connections with appropriate roles (SYSADMIN, SECURITYADMIN)
     and executes setup steps in order.
     """
     try:
-        conn = functions.connect_with_role(functions.USER, functions.PASSWORD, functions.ACCOUNT, 'SYSADMIN')
+        conn = functions.connect_with_role(functions.USER, functions.PASSWORD, functions.ACCOUNT, "SYSADMIN")
         with conn.cursor() as cur:
             setup_data_warehouse(cur)
         conn.close()
 
-        conn = functions.connect_with_role(functions.USER, functions.PASSWORD, functions.ACCOUNT, 'SECURITYADMIN')
+        conn = functions.connect_with_role(functions.USER, functions.PASSWORD, functions.ACCOUNT, "SECURITYADMIN")
         with conn.cursor() as cur:
             create_roles_and_user(cur)
             grant_privileges(cur)
