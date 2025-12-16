@@ -2,6 +2,116 @@
 
 <!-- version list -->
 
+## v2.0.0 (2025-12-14)
+
+### Bug Fixes
+
+- **dbt**: Correction dim time trasnfo
+  ([`abcea47`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/abcea474efafdce680f9b4633a84b43ba53ee254))
+
+- **dbt**: Lintage sql
+  ([`b5a4697`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/b5a4697b00215899040016b93b6e796816e1bb96))
+
+- **dtb**: Correction jour semaine
+  ([`c971a4d`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/c971a4db6e23c0aa83769a8b2acda173d5385cf3))
+
+- **release**: Correction token
+  ([`2416681`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/2416681f11bfbc085fc92de11b04cf9689c7a7f9))
+
+- **snowflake**: Correction pipeline load and tests
+  ([`dcb25e5`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/dcb25e5d509f1c0e48ee1fb9ba8217251f530119))
+
+- **workflow**: Correction token retour ancien token
+  ([`9fe4193`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/9fe41935bfd0c728e33df7003f049ff2e1b222ec))
+
+### Chores
+
+- **pytest**: Correction import
+  ([`8f38348`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/8f383485d59daf38fe6e282ac0fa7a15d386caec))
+
+- **pytest**: Correction import
+  ([`99ecef3`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/99ecef3eae967e4fc23ade261708528ea7e0a073))
+
+- **snowflake**: Ajout id table raw et sequence
+  ([`c5c5b10`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/c5c5b103a196e4144cab4a03c421ac58969e5245))
+
+- **workflow**: Modif token par defaut release
+  ([`2b6bf89`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/2b6bf89fc3770d4fe004dcfd16dcc624c8b2b191))
+
+- **workflow**: Update version 3.10 release
+  ([`d9ccfdf`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/d9ccfdfa88d6685134fa386bdb4d9dd692c0e6e7))
+
+### Continuous Integration
+
+- **codeQL**: Ajout package security-extended
+  ([`904237e`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/904237ecb86105ccee1d72840358ff3d533e1040))
+
+- **codeQL**: Correction security import * et autres
+  ([`ca3dd99`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/ca3dd99446dbaa736f2da6415c21c9e1dadaa7e0))
+
+### Documentation
+
+- Ajout des docstrings et doctest
+  ([`7496b77`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/7496b77655b67d6af03c3025d3997a221daedff7))
+
+- **dbt**: Ajout description yml
+  ([`f934827`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/f934827317df56636af18ef03fb2620f8157f430))
+
+- **dbt**: Personnalisation de dbt docs overview
+  ([`1bb23d2`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/1bb23d25d84d0cb1145795528348fa88611a87d9))
+
+- **mkdocs**: Ajout des docstrings dans mkdocs
+  ([`3b723de`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/3b723dea53d346321316b815a3bdc52e0c1c0c90))
+
+- **mkdocs**: Mise à jour mkdocs
+  ([`d4e88f6`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/d4e88f6e885cde2e4c5c275ab2737547ed88ab45))
+
+- **mkdocs**: Mise à jour mkdocs
+  ([`d2422d2`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/d2422d2f7dfc609006236880c9082fddfb394465))
+
+- **README**: Adaptations
+  ([`8000787`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/8000787c5b55f87744a86b89aac352970304c1d9))
+
+- **README**: Adaptations
+  ([`5d27a30`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/5d27a30eb6ddcb137eb652380fc65373074afa24))
+
+- **README**: Update README.md
+  ([`fd6baff`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/fd6baffcd1fa3bb8a1d2a512aca9829592ae4912))
+
+### Features
+
+- Ajouter modèles dimensions et marts d'analyse
+  ([`7249e26`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/7249e2611414deb268f6b55063f9e460520b0e0f))
+
+- **pytests**: Ajout des tests pytest et modifs noms de fichiers
+  ([`472c5b5`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/472c5b5ec8b6457a00ba0233bc8d6b696c0c4305))
+
+- **workflow**: Ajout de l'automatisation du deploiement mkdocs
+  ([`ad77dde`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/ad77dde2c79f78efbe611d2e574cf845bddd6c76))
+
+- **workflow**: Automatisation deployment dbt docs
+  ([`3cfaf7d`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/3cfaf7d733ca4b81855aecd896b72ba3f943953d))
+
+- **workflow**: Automatisation fix lintage dbt sql
+  ([`2700a70`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/2700a70426351fe8811a3b364b561d0b3baeed7b))
+
+- **workflow**: Variabilisation du timezone
+  ([`932d614`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/932d6144c21f24a41aaad9377528da2597515108))
+
+### Refactoring
+
+- **stage**: Modif temp_file
+  ([`8ab1ab7`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/8ab1ab71e1c399286be847a97e1752db785a8172))
+
+- **workflow**: Séparation de la logique de test du code du workflow principal
+  ([`214cd7d`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/214cd7df6d322b9af0951acbe2d02aba4f563645))
+
+### Testing
+
+- **pytest**: Ajout des tests complets
+  ([`4fd68c9`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/4fd68c9510cf6de6d1796903ec19b1d1b128e74e))
+
+
 ## v1.6.0 (2025-11-11)
 
 ### Chores
