@@ -1,5 +1,4 @@
 site_name: NYC Taxi Data Pipeline
-site_name: NYC Taxi Data Pipeline
 site_author: "Mezine Elias"
 site_url: https://eliasmez.github.io/nyc-taxi-pipeline/
 repo_url: https://github.com/EliasMez/nyc-taxi-pipeline/
@@ -10,6 +9,7 @@ theme:
   name: material
   features:
     - navigation.tabs
+    - navigation.tabs.sticky
     - navigation.sections
     - toc.integrate
     - search.suggest
@@ -26,29 +26,17 @@ plugins:
         - locale: fr
           name: Français
           build: true
-          nav:
-            - 🚕 Accueil: index.md
-            - 🏛️ Architecture: architecture.md
-            - 📈 Gouvernance: governance.md
-            - 🚀 Exécution: execution.md
-            - 📚 Docstrings: docstrings.md
         - locale: es
           name: Español
           build: true
-          nav:
-            - 🚕 Inicio: index.md
-            - 🏛️ Arquitectura: architecture.md
-            - 📈 Gobernanza: governance.md
-            - 🚀 Ejecución: execution.md
-            - 📚 Docstrings: docstrings.md
         - locale: zh
           name: 中文
           build: true
           nav:
-            - 🚕 主页: index.md
-            - 🏛️ 架构: architecture.md
-            - 📈 治理: governance.md
-            - 🚀 执行: execution.md
+            - 🚕 主页: index.zh.md
+            - 🏛️ 架构: architecture.zh.md
+            - 📈 治理: governance.zh.md
+            - 🚀 执行: execution.zh.md
             - 📚 文档字符串: docstrings.md
   - search
   - mkdocstrings:
@@ -59,6 +47,7 @@ plugins:
             show_source: true
             show_root_heading: true
             heading_level: 3
+
 
 nav:
   - 🚕 Accueil: index.md
