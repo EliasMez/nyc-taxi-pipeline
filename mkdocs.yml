@@ -50,6 +50,10 @@ plugins:
             - 📈 治理: governance.md
             - 🚀 执行: execution.md
             - 📚 文档字符串: docstrings.md
+        - locale: "null"
+          name: "dbt docs"
+          build: false
+          fixed_link: https://eliasmez.github.io/nyc-taxi-pipeline/dbt/
   - search
   - mkdocstrings:
       handlers:
