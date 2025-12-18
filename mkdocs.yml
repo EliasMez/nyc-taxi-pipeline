@@ -76,6 +76,7 @@ plugins:
 
 
 extra:
+  generator: false
   social:
     - icon: fontawesome/brands/linkedin
       link: https://www.linkedin.com/in/elias-mezine-598a89210/
