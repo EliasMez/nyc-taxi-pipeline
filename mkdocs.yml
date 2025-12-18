@@ -97,7 +97,20 @@ extra:
       link: https://www.linkedin.com/in/elias-mezine-598a89210/
     - icon: fontawesome/brands/github
       link: https://github.com/EliasMez/
-  
+  analytics:
+    provider: google
+    property: G-2HYW7TB2WR
+    feedback:
+      title: Was this page helpful?
+      ratings:
+        - icon: material/emoticon-happy-outline
+          name: This page was helpful
+          data: 1
+          note: Thanks for your feedback!
+        - icon: material/emoticon-sad-outline
+          name: This page could be improved
+          data: 0
+          note: Thanks for your feedback!
 
 nav:
   - 🚕 Accueil: index.md
