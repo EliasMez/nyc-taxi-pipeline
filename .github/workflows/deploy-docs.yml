@@ -33,8 +33,8 @@ jobs:
       - name: Install MkDocs
         run: pip install mkdocs mkdocs-material mkdocstrings-python mkdocs-static-i18n mkdocs-git-revision-date-localized-plugin
 
-      - name: Deploy MkDocs to gh-pages
-        run: mkdocs gh-deploy --force
+      - name: Build MkDocs site
+        run: mkdocs build
 
       - name: Install dbt
         run: pip install dbt-core dbt-snowflake
@@ -45,10 +45,15 @@ jobs:
       - name: Generate dbt docs
         run: dbt docs generate --project-dir dbt_transformations/NYC_Taxi_dbt --profiles-dir dbt_transformations
 
-      - name: Deploy dbt docs to gh-pages branch
+      - name: Copy dbt docs to site folder
+        run: |
+          mkdir -p site/dbt/
+          cp -r dbt_transformations/NYC_Taxi_dbt/target/* site/dbt/
+
+      - name: Deploy Docs to gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: dbt_transformations/NYC_Taxi_dbt/target
-          destination_dir: dbt
+          publish_dir: site
+          force_orphan: true
