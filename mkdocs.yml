@@ -133,7 +133,9 @@ extra:
       analytics:
         name: "Google Analytics"
         checked: true
-      github: false
+      github:
+        name: "GitHub"
+        checked: true
 
 
 copyright: >
