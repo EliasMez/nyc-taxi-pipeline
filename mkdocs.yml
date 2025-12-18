@@ -5,6 +5,13 @@ site_url: https://eliasmez.github.io/nyc-taxi-pipeline/
 repo_url: https://github.com/EliasMez/nyc-taxi-pipeline/
 repo_name: nyc-taxi-pipeline
 use_directory_urls: true
+docs_dir: "docs/"
+
+site_description: >
+  A data pipeline for NYC Taxi data, using Snowflake, dbt, and GitHub Actions.
+  This project automates the ingestion, transformation, and governance of NYC Taxi datasets.
+  Explore the architecture, execution workflows, and data governance practices.
+
 
 theme:
   name: material
@@ -14,6 +21,7 @@ theme:
     - toc.integrate
     - search.suggest
     - search.highlight
+
 
 plugins:
   - i18n:
@@ -63,6 +71,17 @@ plugins:
             show_source: true
             show_root_heading: true
             heading_level: 3
+  - git-revision-date-localized:
+      enable_creation_date: true
+
+
+extra:
+  social:
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/elias-mezine-598a89210/
+    - icon: fontawesome/brands/github
+      link: https://github.com/EliasMez/
+  
 
 nav:
   - 🚕 Accueil: index.md

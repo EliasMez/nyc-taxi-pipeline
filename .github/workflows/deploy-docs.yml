@@ -1,4 +1,4 @@
-name: Deploy dbt Docs
+name: Deploy Docs
 
 on:
   pull_request:
@@ -31,7 +31,7 @@ jobs:
           python-version: '3.10'
 
       - name: Install MkDocs
-        run: pip install mkdocs mkdocs-material mkdocstrings-python mkdocs-static-i18n
+        run: pip install mkdocs mkdocs-material mkdocstrings-python mkdocs-static-i18n mkdocs-git-revision-date-localized-plugin
 
       - name: Deploy MkDocs to gh-pages
         run: mkdocs gh-deploy --force
