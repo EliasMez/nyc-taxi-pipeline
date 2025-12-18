@@ -90,6 +90,14 @@ plugins:
       enable_creation_date: true
 
 
+nav:
+  - 🚕 Accueil: index.md
+  - 🏛️ Architecture: architecture.md
+  - 📈 Governance: governance.md
+  - 🚀 Execution: execution.md
+  - 📚 Docstrings: docstrings.md
+  
+
 extra:
   generator: false
   social:
@@ -111,10 +119,25 @@ extra:
           name: This page could be improved
           data: 0
           note: Thanks for your feedback!
+  consent:
+    title: Cookie consent
+    description: >-
+      This site uses Google Analytics to understand how visitors use the documentation.
+      It collects anonymous data about page visits and interactions to help us improve the content.
+      You can accept or decline this analytics tracking below.
+    actions:
+      - accept
+      - manage
+      - reject
+    cookies:
+      analytics:
+        name: "Google Analytics"
+        checked: true
+      github: false
 
-nav:
-  - 🚕 Accueil: index.md
-  - 🏛️ Architecture: architecture.md
-  - 📈 Governance: governance.md
-  - 🚀 Execution: execution.md
-  - 📚 Docstrings: docstrings.md
+
+copyright: >
+  Copyright &copy; 2025 -
+  <a href="#__consent" data-md-color-scheme="slate">Change cookie settings</a>
+
+
