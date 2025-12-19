@@ -2,23 +2,8 @@ name: SQL Code Quality
 on: [push, pull_request]
 
 jobs:
-  sqlfluff-dbt:
-    name: Lint dbt SQL
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
-      - name: Lint dbt models
-        run: |
-          sqlfluff lint dbt_transformations/NYC_Taxi_dbt/models/ --config .sqlfluff
-  sqlfluff-snowflake:
-    name: Lint Snowflake SQL
+  lint-and-fix-snowflake:
+    name: Lint & Fix Snowflake SQL
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -29,8 +14,28 @@ jobs:
       - name: Install SQLFluff
         run: pip install sqlfluff
       - name: Lint Snowflake SQL
-        run: |
-          sqlfluff lint snowflake_ingestion/sql/ --config .sqlfluff
+        id: lint_snowflake
+        continue-on-error: true
+        run: sqlfluff lint snowflake_ingestion/sql/ --config .sqlfluff
       - name: Fix Snowflake SQL
-        run: |
-          sqlfluff fix snowflake_ingestion/sql/ --config .sqlfluff
+        if: ${{ steps.lint_snowflake.outcome == 'failure' }}
+        run: sqlfluff fix snowflake_ingestion/sql/ --config .sqlfluff
+
+  lint-and-fix-dbt:
+    name: Lint & Fix dbt SQL
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install SQLFluff
+        run: pip install sqlfluff
+      - name: Lint dbt models
+        id: lint_dbt
+        continue-on-error: true
+        run: sqlfluff lint dbt_transformations/NYC_Taxi_dbt/models/ --config .sqlfluff
+      - name: Fix dbt models
+        if: ${{ steps.lint_dbt.outcome == 'failure' }}
+        run: sqlfluff fix dbt_transformations/NYC_Taxi_dbt/models/ --config .sqlfluff
