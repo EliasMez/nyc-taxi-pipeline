@@ -1,13 +1,14 @@
 name: Deploy Docs
-
 on:
-  pull_request:
-    branches: main
   push:
-    branches: main
+    branches: [ main ]
+  pull_request:
+    types: [closed]
+    branches: [ main ]
 
 jobs:
   build-and-deploy:
+    if: github.event_name == 'push' || github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -21,35 +22,26 @@ jobs:
       RAW_SCHEMA: ${{ vars.RAW_SCHEMA || 'SCHEMA_RAW' }}
       STAGING_SCHEMA: ${{ vars.STAGING_SCHEMA || 'STAGING' }}
       FINAL_SCHEMA: ${{ vars.FINAL_SCHEMA || 'FINAL' }}
-
     steps:
       - uses: actions/checkout@v3
-
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
-
       - name: Install MkDocs
         run: pip install mkdocs mkdocs-material mkdocstrings-python mkdocs-static-i18n mkdocs-git-revision-date-localized-plugin
-
       - name: Build MkDocs site
         run: mkdocs build
-
       - name: Install dbt
         run: pip install dbt-core dbt-snowflake
-
       - name: Install dbt Dependencies
         run: dbt deps --project-dir dbt_transformations/NYC_Taxi_dbt --profiles-dir dbt_transformations
-
       - name: Generate dbt docs
         run: dbt docs generate --project-dir dbt_transformations/NYC_Taxi_dbt --profiles-dir dbt_transformations
-
       - name: Copy dbt docs to site folder
         run: |
           mkdir -p site/dbt/
           cp -r dbt_transformations/NYC_Taxi_dbt/target/* site/dbt/
-
       - name: Deploy Docs to gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
