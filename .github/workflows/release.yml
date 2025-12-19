@@ -1,11 +1,8 @@
 name: Release
 on:
   push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+    branches: [ main ]
+
 jobs:
   release:
     name: Release
@@ -16,20 +13,16 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.GH_RELEASE_TOKEN }}
-
       - name: Setup Python
         uses: actions/setup-python@v6
         with:
           python-version: "3.10"
-
       - name: Install python-semantic-release
         run: pip install python-semantic-release
-
       - name: Configure Git
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
       - name: Run Python Semantic Release
         env:
           GH_TOKEN: ${{ secrets.GH_RELEASE_TOKEN }}

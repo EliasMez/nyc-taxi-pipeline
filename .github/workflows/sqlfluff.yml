@@ -1,5 +1,10 @@
 name: SQL Code Quality
-on: [push, pull_request]
+on:
+  push:
+    branches: [ dev ]
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [ main ]
 
 jobs:
   lint-and-fix-snowflake:
@@ -20,7 +25,6 @@ jobs:
       - name: Fix Snowflake SQL
         if: ${{ steps.lint_snowflake.outcome == 'failure' }}
         run: sqlfluff fix snowflake_ingestion/sql/ --config .sqlfluff
-
   lint-and-fix-dbt:
     name: Lint & Fix dbt SQL
     runs-on: ubuntu-latest
