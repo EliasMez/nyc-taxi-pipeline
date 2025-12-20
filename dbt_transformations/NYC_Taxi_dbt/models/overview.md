@@ -1,106 +1,76 @@
 {% docs __overview__ %}
-# NYC Taxi Data Pipeline - Documentation dbt
+# NYC Taxi Data Pipeline - dbt Documentation
 
-Bienvenue dans la documentation dbt du projet **NYC Taxi Data Pipeline**.
-Ce projet a pour objectif de transformer les données brutes de la TLC (Taxi & Limousine Commission de New York) en tables analytiques prêtes pour l’analyse et le reporting.
-- 📚 [Documentation globale du projet](https://eliasmez.github.io/nyc-taxi-pipeline/)
-- 💻 [Code source du projet](https://github.com/EliasMez/nyc-taxi-pipeline/)
+Welcome to the dbt documentation for the **NYC Taxi Data Pipeline** project.
+This project aims to transform raw data from the NYC TLC (Taxi & Limousine Commission) into analytical tables ready for analysis and reporting.
+- 📚 [Global Project Documentation](https://eliasmez.github.io/nyc-taxi-pipeline/)
+- 💻 [Project Source Code](https://github.com/EliasMez/nyc-taxi-pipeline/)
 
+## Role of dbt
 
+The dbt workflow transforms data from the **raw layer** to the **staging layer**, which contains:
+- The imported seed `taxi_zone_lookup`
+- The `stg_taxi_trips` table containing cleaned raw data
+- The intermediate table `int_trip_metrics` for calculated metrics
 
-## Rôle de dbt
-
-Le workflow dbt transforme les données de la **couche raw** vers la **couche staging** qui contient :
-- Le seed `taxi_zone_lookup` importé
-- La table `stg_taxi_trips` des données brutes nettoyées
-- La table intermédiaire `int_trip_metrics` de métriques calculées
-
-puis vers la **couche finale** qui contient :
+and then to the **final layer**, which contains:
 - **Dimensions**
-- **Faits**  
-- **Marts analytiques**
+- **Fact Tables**
+- **Analytical Marts**
 
-Chaque modèle dbt est documenté ici, avec son emplacement dans le pipeline, sa description, et son lien avec les autres modèles.
+Each dbt model is documented here, including its position in the pipeline, its description, and its relationships with other models.
 
+## Navigating the Documentation
 
+- **Project Tab**: Explore the structure of your dbt project and access the documentation for each model.
+- **Database Tab**: Visualize the relationships between tables, facts, and dimensions as in a database explorer.
+- **Graph Exploration**: View the dependency graph to follow model lineage by clicking the icon located in the **bottom right corner of the screen**.
 
-## Navigation dans la documentation
-
-- **Project Tab** : explorez la structure de votre projet dbt et accédez à la documentation de chaque modèle  
-- **Database Tab** : visualisez les relations entre tables/faits/dimensions comme dans un explorateur de base de données  
-- **Graph Exploration** : consultez le graphe de dépendances pour suivre le lineage des modèles en cliquant sur l’icône située **en bas à droite de l’écran**
-
-Pour plus d’informations sur dbt et son fonctionnement, consultez [la documentation officielle de dbt](https://docs.getdbt.com/).
+For more information about dbt and its operation, consult [the official dbt documentation](https://docs.getdbt.com/).
 
 ---
-
 {% enddocs %}
-
-
-
-
 
 {% docs __source_raw__ %}
+## Data Source – Raw
 
-## Source de données – Raw
+The source data comes from **TLC Trip Record Data** (New York City Taxi & Limousine Commission).
 
-Les données sources proviennent du **TLC Trip Record Data** (New York City Taxi & Limousine Commission).
+It notably contains:
+- Pick-up and drop-off dates and times
+- GPS locations of trips
+- Distances traveled
+- Detailed fares and payment types
+- Number of passengers
 
-Elles contiennent notamment :
-- Dates et heures de prise en charge et de dépose  
-- Localisations GPS des trajets  
-- Distances parcourues  
-- Tarifs détaillés et types de paiement  
-- Nombre de passagers
-
-Les données sont collectées par des fournisseurs technologiques autorisés et fournies à la TLC.  
-La TLC ne garantit pas l’exactitude des données.
-
+The data is collected by authorized technology providers and provided to the TLC.
+The TLC does not guarantee the accuracy of the data.
 {% enddocs %}
-
-
 
 {% docs __dbt_utils__ %}
-
 ## dbt_utils
 
-Le package **dbt_utils** est utilisé dans ce projet **pour ses macros de test avancées**, notamment `accepted_range` qui vérifie que les valeurs d'une colonne sont dans une plage attendue.
-
+The **dbt_utils** package is used in this project **for its advanced testing macros**, notably `accepted_range`, which checks that the values of a column fall within an expected range.
 {% enddocs %}
-
-
 
 {% docs __dbt_expectations__ %}
-
 ## dbt_expectations
 
-Le package **dbt_expectations** est utilisé pour implémenter des tests de qualité de données avancés.
+The **dbt_expectations** package is used to implement advanced data quality tests.
 
-Il permet notamment de :
-- Vérifier la complétude des données
-- Contrôler les valeurs attendues
-- Détecter les anomalies statistiques
-- Renforcer la fiabilité des modèles analytiques
+It notably allows for:
+- Verifying data completeness
+- Controlling expected values
+- Detecting statistical anomalies
+- Reinforcing the reliability of analytical models
 
-Ces tests assurent la qualité des dimensions, faits et marts produits.
-
+These tests ensure the quality of the produced dimensions, facts, and marts.
 {% enddocs %}
-
-
 
 {% docs __dbt_date__ %}
-
 ## dbt_date
 
-Le package **dbt_date** fournit des macros pour la manipulation des dates et des périodes temporelles.
+The **dbt_date** package provides macros for date and time period manipulation.
 
-Les dimensions date et time sont construites manuellement à partir des timestamps des données sources afin de refléter uniquement les valeurs réellement observées.
-
-Le package dbt_date est installé mais non utilisé ici — la logique est implémentée en SQL pur car elle répond aux besoins des marts temporels (daily, weekly, monthly, hourly, yearly) sans nécessiter de calendrier complet artificiel.
-
+In this project, the date and time dimensions are built manually from source data timestamps to reflect only the values actually observed. The logic is implemented in pure SQL as it meets the needs of the temporal marts (daily, weekly, monthly, hourly, yearly) without requiring a full artificial calendar.
 {% enddocs %}
-
-
-
-
-
