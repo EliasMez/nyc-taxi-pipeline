@@ -2,6 +2,27 @@
 
 <!-- version list -->
 
+## v2.1.1 (2025-12-20)
+
+### Bug Fixes
+
+- **workflow**: Fetch tag release
+  ([`ee7f680`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/ee7f68092612e8f6260feb2af635716335afc981))
+
+### Chores
+
+- **snowflake**: Suppression import inutils
+  ([`1a167af`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/1a167af4e1361cbbd0234a0af71fe3cdcd5ab0dd))
+
+### Documentation
+
+- **dbt**: Traduction overview en anglais
+  ([`6b04090`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/6b0409032a118b48cd4308dd9f0b6b5c064e6ab4))
+
+- **README**: Reduction readme
+  ([`811ac3d`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/811ac3de599603888245756f0499a5227b122436))
+
+
 ## v2.1.0 (2025-12-20)
 
 ### Bug Fixes
