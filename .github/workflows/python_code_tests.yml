@@ -1,9 +1,10 @@
 name: Python Code Tests
 on:
   push:
-    branches: [dev, main]
+    branches: [ dev ]
   pull_request:
-    branches: [dev, main]
+    types: [opened, synchronize, reopened]
+    branches: [ main ]
 
 jobs:
   python-tests:
@@ -23,16 +24,12 @@ jobs:
       USER_DEV: ${{ vars.USER_DEV || 'USER_DEV' }}
       METADATA_TABLE: ${{ vars.METADATA_TABLE || 'FILE_LOADING_METADATA' }}
       RAW_TABLE: ${{ vars.RAW_TABLE || 'YELLOW_TAXI_TRIPS_RAW' }}
-
-
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v4
         with:
           python-version: '3.10'
-      
       - name: Install dependencies
         run: pip install -r requirements.txt
-        
       - name: Run Python Tests
         run: pytest snowflake_ingestion/tests/ -v
