@@ -1,4 +1,3 @@
-from typing import Any
 import snowflake.connector
 import os
 import sys

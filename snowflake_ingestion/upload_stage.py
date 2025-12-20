@@ -1,4 +1,3 @@
-from typing import Any
 import requests
 import tempfile
 from snowflake.connector.cursor import SnowflakeCursor
