@@ -2,6 +2,42 @@
 
 <!-- version list -->
 
+## v2.1.0 (2025-12-20)
+
+### Bug Fixes
+
+- **docs**: Ajout du typing dans les fonctions python
+  ([`4589a5f`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/4589a5fabcd7392fa76b78c6eb4dd1d4c4c851e5))
+
+- **workflow**: Correction deployment workflow sequentiel
+  ([`6bd4c70`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/6bd4c708f43d2af41109403e2ff82288c7109f3b))
+
+### Documentation
+
+- **mkdocs**: Traduction bar de nav horizontal
+  ([`8533ca7`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/8533ca7576a252ed00394ca5e57cef664d76c589))
+
+### Features
+
+- **analytics**: Connexion a google analytics
+  ([`17573fd`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/17573fdf03fc3f7530e0c311557630747b3b6b91))
+
+- **docs**: Ajout bouton luminosité mkdocs
+  ([`a4c4b35`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/a4c4b35903b6b6fa6144febf52395c96a8ddeea1))
+
+- **docs**: Ajout de dbt link dans la liste deroulante
+  ([`74a2075`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/74a2075e6900ff0e2c739c3a705d9571d5afce6b))
+
+- **docs**: Ajout des .md multilangues et metadata
+  ([`5e3f9ce`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/5e3f9ce94dc64bec9f194a48ebe20394c34e5429))
+
+- **docs**: Ajout des cookies
+  ([`e894656`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/e894656501dfe9c8419c5eda2aa2390ae55b78b8))
+
+- **docs**: Ajout reseaux et description docs
+  ([`47d45ed`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/47d45edbeab5d559a9843f5e10dd1e893bf232a9))
+
+
 ## v2.0.0 (2025-12-14)
 
 ### Bug Fixes
