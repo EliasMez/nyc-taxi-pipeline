@@ -1,7 +1,7 @@
 name: "CodeQL Security Scan"
 on:
   push:
-    branches: [ dev ]
+    branches: [ dev, main ]
   pull_request:
     types: [opened, synchronize, reopened]
     branches: [ main ]
