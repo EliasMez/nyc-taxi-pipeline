@@ -2,6 +2,23 @@
 
 <!-- version list -->
 
+## v2.1.2 (2025-12-21)
+
+### Bug Fixes
+
+- **workflow**: Ajout du declenchement de codeql sur push main en plus de on pr main pour declencher
+  la maj du scan sur la branche par defaut
+  ([`6f1a083`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/6f1a083d0d9eeb025d1d4b2718cfee8dd3edb94f))
+
+### Chores
+
+- **deps**: Bump filelock from 3.20.0 to 3.20.1
+  ([`1537b88`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/1537b88173bebdf534e2f640114712e45de47e33))
+
+- **deps**: Bump urllib3 from 2.5.0 to 2.6.0
+  ([`c8e615e`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/c8e615ee07bd30b977d7e5e6fba717b293b24148))
+
+
 ## v2.1.1 (2025-12-20)
 
 ### Bug Fixes
