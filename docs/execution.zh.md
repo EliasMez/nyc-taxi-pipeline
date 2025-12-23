@@ -36,6 +36,7 @@
 | `STAGING_SCHEMA` | 已清理数据模式 | `STAGING` |
 | `FINAL_SCHEMA` | 最终数据模式 | `FINAL` |
 | `PARQUET_FORMAT` | Parquet 文件格式 | `PARQUET_FORMAT` |
+| `COMPUTE_SIZE` | 数据仓库的计算能力 | `X-SMALL` |
 | `ROLE_TRANSFORMER` | 转换角色 | `TRANSFORMER` |
 | `USER_DEV` | 开发用户 | `USER_DEV` |
 | `METADATA_TABLE` | 元数据表 | `FILE_LOADING_METADATA` |

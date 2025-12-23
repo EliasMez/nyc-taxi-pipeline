@@ -36,6 +36,7 @@
 | `STAGING_SCHEMA` | Esquema de datos limpiados | `STAGING` |
 | `FINAL_SCHEMA` | Esquema de datos finales | `FINAL` |
 | `PARQUET_FORMAT` | Formato de archivo Parquet | `PARQUET_FORMAT` |
+| `COMPUTE_SIZE` | Potencia de cálculo del almacén de datos | `X-SMALL` |
 | `ROLE_TRANSFORMER` | Rol para las transformaciones | `TRANSFORMER` |
 | `USER_DEV` | Usuario de desarrollo | `USER_DEV` |
 | `METADATA_TABLE` | Tabla de metadatos | `FILE_LOADING_METADATA` |

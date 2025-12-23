@@ -21,6 +21,7 @@ METADATA_TABLE: str = os.getenv("METADATA_TABLE")
 
 PARQUET_FORMAT: str = os.getenv("PARQUET_FORMAT")
 ID_SEQUENCE: str = os.getenv("ID_SEQUENCE")
+COMPUTE_SIZE: str = os.getenv("COMPUTE_SIZE")
 
 ROLE_TRANSFORMER: str = os.getenv("ROLE_TRANSFORMER")
 USER_DEV: str = os.getenv("USER_DEV")
