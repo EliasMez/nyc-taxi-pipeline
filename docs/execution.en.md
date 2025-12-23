@@ -36,6 +36,7 @@
 | `STAGING_SCHEMA` | Cleaned data schema | `STAGING` |
 | `FINAL_SCHEMA` | Final data schema | `FINAL` |
 | `PARQUET_FORMAT` | Parquet file format | `PARQUET_FORMAT` |
+| `COMPUTE_SIZE` | Computing power of the data warehouse | `X-SMALL` |
 | `ROLE_TRANSFORMER` | Role for transformations | `TRANSFORMER` |
 | `USER_DEV` | Development user | `USER_DEV` |
 | `METADATA_TABLE` | Metadata table | `FILE_LOADING_METADATA` |
