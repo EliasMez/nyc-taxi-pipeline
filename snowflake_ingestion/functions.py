@@ -14,7 +14,11 @@ PASSWORD: str = os.getenv("SNOWFLAKE_PASSWORD")
 
 WH_NAME: str = os.getenv("WH_NAME")
 DW_NAME: str = os.getenv("DW_NAME")
+
 RAW_SCHEMA: str = os.getenv("RAW_SCHEMA")
+STAGING_SCHEMA: str = os.getenv("STAGING_SCHEMA")
+FINAL_SCHEMA: str = os.getenv("FINAL_SCHEMA")
+
 RAW_TABLE: str = os.getenv("RAW_TABLE")
 METADATA_TABLE: str = os.getenv("METADATA_TABLE")
 

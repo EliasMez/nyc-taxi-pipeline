@@ -14,6 +14,10 @@ jobs:
       SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
       SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
       SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+      USER_DEV: ${{ vars.USER_DEV || 'USER_DEV' }}
+      USER_BI: ${{ vars.USER_BI || 'USER_BI' }}
+      USER_DS: ${{ vars.USER_DS || 'USER_DS' }}
+      USER_MC: ${{ vars.USER_MC || 'USER_MC' }}
       SCRAPING_YEAR: ${{ vars.SCRAPING_YEAR }}
       LOGGER_LEVEL: ${{ vars.LOGGER_LEVEL || 'INFO' }}
       WH_NAME: ${{ vars.WH_NAME || 'NYC_WH' }}
@@ -28,10 +32,6 @@ jobs:
       ROLE_BI_ANALYST: ${{ vars.ROLE_BI_ANALYST || 'BI_ANALYST' }}
       ROLE_DATA_SCIENTIST: ${{ vars.ROLE_DATA_SCIENTIST || 'DATA_SCIENTIST' }}
       ROLE_MART_CONSUMER: ${{ vars.ROLE_MART_CONSUMER || 'MART_CONSUMER' }}
-      USER_DEV: ${{ vars.USER_DEV || 'USER_DEV' }}
-      USER_BI: ${{ vars.USER_BI || 'USER_BI' }}
-      USER_DS: ${{ vars.USER_DS || 'USER_DS' }}
-      USER_MC: ${{ vars.USER_MC || 'USER_MC' }}
       PASSWORD_DEV: ${{ secrets.PASSWORD_DEV }}
       PASSWORD_BI: ${{ secrets.PASSWORD_BI }}
       PASSWORD_DS: ${{ secrets.PASSWORD_DS }}
