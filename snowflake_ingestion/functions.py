@@ -11,7 +11,6 @@ load_dotenv()
 ACCOUNT: str = os.getenv("SNOWFLAKE_ACCOUNT")
 USER: str = os.getenv("SNOWFLAKE_USER")
 PASSWORD: str = os.getenv("SNOWFLAKE_PASSWORD")
-PASSWORD_DEV: str = os.getenv("PASSWORD_DEV")
 
 WH_NAME: str = os.getenv("WH_NAME")
 DW_NAME: str = os.getenv("DW_NAME")
@@ -24,7 +23,19 @@ ID_SEQUENCE: str = os.getenv("ID_SEQUENCE")
 COMPUTE_SIZE: str = os.getenv("COMPUTE_SIZE")
 
 ROLE_TRANSFORMER: str = os.getenv("ROLE_TRANSFORMER")
+ROLE_BI_ANALYST: str = os.getenv("ROLE_BI_ANALYST")
+ROLE_DATA_SCIENTIST: str = os.getenv("ROLE_DATA_SCIENTIST")
+ROLE_MART_CONSUMER: str = os.getenv("ROLE_MART_CONSUMER")
+
 USER_DEV: str = os.getenv("USER_DEV")
+USER_BI_ANALYST: str = os.getenv("USER_BI_ANALYST")
+USER_DATA_SCIENTIST: str = os.getenv("USER_DATA_SCIENTIST")
+USER_MART_CONSUMER: str = os.getenv("USER_MART_CONSUMER")
+
+PASSWORD_DEV: str = os.getenv("PASSWORD_DEV")
+PASSWORD_BI: str = os.getenv("PASSWORD_BI")
+PASSWORD_DS: str = os.getenv("PASSWORD_DS")
+PASSWORD_MC: str = os.getenv("PASSWORD_MC")
 
 SCRAPING_YEAR: str = os.getenv("SCRAPING_YEAR")
 TIMEZONE: str = os.getenv("TIMEZONE")
