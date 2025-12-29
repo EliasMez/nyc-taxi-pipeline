@@ -111,6 +111,7 @@ def use_context(cur: snowflake.connector.cursor.SnowflakeCursor, WH_NAME: str, D
         logger.critical("❌ Erreur : Relancer l'étape Snowflake Infra Init")
         sys.exit(1)
 
+
 def run_sql_file(cur: snowflake.connector.cursor.SnowflakeCursor, filepath: Path | str) -> None:
     """Execute SQL statements from a file using VAR_PLACEHOLDER placeholders.
 
@@ -132,7 +133,7 @@ def run_sql_file(cur: snowflake.connector.cursor.SnowflakeCursor, filepath: Path
     """
     with open(filepath, "r") as f:
         sql = f.read()
-        keys = re.findall(r"(\w+)_PLACEHOLDER", sql)
+        keys = re.findall(r'(?:SCHEMA_)?(\w+)_PLACEHOLDER', sql)
         variables = {k: globals().get(k, f"<{k}_NOT_FOUND>") for k in keys}
         logger.debug(f"🔎 Variables détectées dans {Path(filepath).name}: {sorted(set(keys))}")
         for key, value in variables.items():
