@@ -68,7 +68,7 @@ def copy_file_to_table_and_count(cur: SnowflakeCursor, filename: str, table_sche
                 '{filename}'
             FROM '@~/{filename}'
         )
-        FILE_FORMAT=(FORMAT_NAME='{functions.DW_NAME}.{functions.RAW_SCHEMA}.{functions.PARQUET_FORMAT}')
+        FILE_FORMAT=(FORMAT_NAME='{functions.DW_NAME}.SCHEMA_{functions.RAW_SCHEMA}.{functions.PARQUET_FORMAT}')
         FORCE = TRUE
     """
     cur.execute(copy_sql)

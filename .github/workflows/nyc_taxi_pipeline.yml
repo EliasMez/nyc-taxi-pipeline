@@ -22,7 +22,7 @@ jobs:
       LOGGER_LEVEL: ${{ vars.LOGGER_LEVEL || 'INFO' }}
       WH_NAME: ${{ vars.WH_NAME || 'NYC_WH' }}
       DW_NAME: ${{ vars.DW_NAME || 'NYC_TAXI_DW' }}
-      RAW_SCHEMA: ${{ vars.RAW_SCHEMA || 'SCHEMA_RAW' }}
+      RAW_SCHEMA: ${{ vars.RAW_SCHEMA || 'RAW' }}
       STAGING_SCHEMA: ${{ vars.STAGING_SCHEMA || 'STAGING' }}
       FINAL_SCHEMA: ${{ vars.FINAL_SCHEMA || 'FINAL' }}
       PARQUET_FORMAT: ${{ vars.PARQUET_FORMAT || 'PARQUET_FORMAT' }}

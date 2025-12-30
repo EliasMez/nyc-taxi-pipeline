@@ -3,6 +3,6 @@ version: 2
 sources:
   - name: raw
     database: NYC_TAXI_DW
-    schema: "{{ env_var('RAW_SCHEMA') }}"
+    schema: "SCHEMA_{{ env_var('RAW_SCHEMA') }}"
     tables:
-      - name: YELLOW_TAXI_TRIPS_RAW
+      - name: "{{ env_var('RAW_TABLE') }}"

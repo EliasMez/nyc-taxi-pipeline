@@ -102,11 +102,11 @@ def use_context(cur: snowflake.connector.cursor.SnowflakeCursor, WH_NAME: str, D
     Raises:
         SystemExit: Exits the process on any exception when setting the context.
     """
-    logger.debug(f"⚙️ Configuration du contexte: WH={WH_NAME}, DB={DW_NAME}, SCHEMA={RAW_SCHEMA}")
+    logger.debug(f"⚙️ Configuration du contexte: WH={WH_NAME}, DB={DW_NAME}, SCHEMA=SCHEMA_{RAW_SCHEMA}")
     try:
         cur.execute(f"USE WAREHOUSE {WH_NAME}")
         cur.execute(f"USE DATABASE {DW_NAME}")
-        cur.execute(f"USE SCHEMA {RAW_SCHEMA}")
+        cur.execute(f"USE SCHEMA SCHEMA_{RAW_SCHEMA}")
     except Exception as e:
         logger.critical("❌ Erreur : Relancer l'étape Snowflake Infra Init")
         sys.exit(1)
