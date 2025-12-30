@@ -6,3 +6,26 @@ sources:
     schema: "SCHEMA_{{ env_var('RAW_SCHEMA') }}"
     tables:
       - name: "{{ env_var('RAW_TABLE') }}"
+      - name: "taxi_zone_raw"
+        description: "Reference table for NYC taxi zones (LocationID, Borough, Zone, Service Zone). Loaded from TLC lookup CSV."
+        columns:
+          - name: LocationID
+            description: "Unique identifier for the taxi zone."
+            tests:
+              - not_null
+              - unique
+          - name: Borough
+            description: "Borough where the zone is located."
+            tests:
+              - not_null
+          - name: Zone
+            description: "Name of the taxi zone/neighborhood."
+            tests:
+              - not_null
+          - name: service_zone
+            description: "Service zone classification for fare calculation."
+            tests:
+              - not_null
+              - accepted_values:
+                  arguments:
+                    values: ["EWR", "Boro Zone", "Yellow Zone", "Airports", "N/A"]

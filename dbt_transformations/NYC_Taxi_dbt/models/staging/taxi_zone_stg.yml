@@ -1,0 +1,36 @@
+version: 2
+models:
+  - name: taxi_zone_stg
+    description: "Cleaned staging table for NYC taxi zone reference data loaded from TLC lookup table."
+    tests:
+      - dbt_expectations.expect_table_row_count_to_equal:
+          arguments:
+            value: 265
+    columns:
+      - name: locationid
+        description: "Unique identifier for the taxi zone (primary key). Must be a positive integer."
+        tests:
+          - not_null
+          - unique
+          - dbt_utils.accepted_range:
+              arguments:
+                column_name: locationid
+                min_value: 1
+      - name: borough
+        description: "Borough where the zone is located (e.g., Manhattan, Queens, Brooklyn, Bronx, Staten Island, EWR, Unknown, N/A)."
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["Manhattan", "Queens", "Brooklyn", "Bronx", "Staten Island", "EWR", "Unknown", "N/A"]
+      - name: zone
+        description: "Name of the taxi zone/neighborhood (e.g., Central Park, Astoria, JFK Airport)."
+        tests:
+          - not_null
+      - name: service_zone
+        description: "Service zone classification for fare calculation (EWR, Boro Zone, Yellow Zone, Airports, N/A)."
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["EWR", "Boro Zone", "Yellow Zone", "Airports", "N/A"]
