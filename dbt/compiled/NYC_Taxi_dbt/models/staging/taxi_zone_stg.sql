@@ -1,0 +1,2 @@
+SELECT *
+FROM NYC_TAXI_DW.SCHEMA_SCHEMA_RAW.taxi_zone_raw
