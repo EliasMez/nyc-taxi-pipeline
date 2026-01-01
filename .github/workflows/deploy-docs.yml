@@ -39,7 +39,7 @@ jobs:
           mkdir -p site/dbt/
           cp -r dbt_transformations/NYC_Taxi_dbt/target/* site/dbt/
       - name: Deploy Docs to gh-pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
