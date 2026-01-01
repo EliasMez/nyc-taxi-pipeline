@@ -10,23 +10,33 @@ def test_get_scraping_year_with_valid_env():
         result = scrape.get_scraping_year()
         assert result == 2023
 
-def test_get_scraping_year_with_empty_env():
+def test_get_scraping_year_with_empty_env_eraly_month():
     with patch('snowflake_ingestion.scrape_links.functions.SCRAPING_YEAR', ''):
-        with patch('snowflake_ingestion.scrape_links.current_month', 2):
+        with patch('snowflake_ingestion.scrape_links.current_month', 1):
             result = scrape.get_scraping_year()
             expected = scrape.current_year - 1
             assert result == expected
 
-def test_get_scraping_year_with_empty_env_early_month():
+def test_get_scraping_year_with_empty_env_late_month():
     with patch('snowflake_ingestion.scrape_links.functions.SCRAPING_YEAR', ''):
-        with patch('snowflake_ingestion.scrape_links.current_month', 5):
+        with patch('snowflake_ingestion.scrape_links.current_month', 4):
             result = scrape.get_scraping_year()
             expected = scrape.current_year
             assert result == expected
 
+def test_get_scraping_year_with_invalid_env_early_month():
+    with patch('snowflake_ingestion.scrape_links.functions.SCRAPING_YEAR', 'invalid'):
+        with patch('snowflake_ingestion.scrape_links.current_month', 3):
+            with patch('snowflake_ingestion.scrape_links.logger') as mock_logger:
+                result = scrape.get_scraping_year()
+                expected = scrape.current_year -1
+                assert result == expected
+                mock_logger.error.assert_called_once()
+
 def test_get_scraping_year_with_invalid_env_late_month():
     with patch('snowflake_ingestion.scrape_links.functions.SCRAPING_YEAR', 'invalid'):
-        with patch('snowflake_ingestion.scrape_links.logger') as mock_logger:  # CHANGEMENT ICI
+        with patch('snowflake_ingestion.scrape_links.current_month', 12):
+            with patch('snowflake_ingestion.scrape_links.logger') as mock_logger:
                 result = scrape.get_scraping_year()
                 expected = scrape.current_year
                 assert result == expected
@@ -60,7 +70,7 @@ def test_get_parquet_links_success():
     with patch('snowflake_ingestion.scrape_links.requests.get') as mock_get:
         with patch('snowflake_ingestion.scrape_links.html.fromstring') as mock_fromstring:
             with patch('snowflake_ingestion.scrape_links.get_xpath', return_value="//a[@title='Yellow Taxi Trip Records']"):
-                with patch('snowflake_ingestion.scrape_links.logger') as mock_logger:  # CHANGEMENT ICI
+                with patch('snowflake_ingestion.scrape_links.logger') as mock_logger:
                     mock_get.return_value = mock_response
                     mock_fromstring.return_value = mock_tree
                     
@@ -73,7 +83,7 @@ def test_get_parquet_links_success():
 def test_setup_meta_table():
     mock_cursor = Mock()
     with patch('snowflake_ingestion.scrape_links.functions.run_sql_file') as mock_run_sql:
-        with patch('snowflake_ingestion.scrape_links.logger') as mock_logger:  # CHANGEMENT ICI
+        with patch('snowflake_ingestion.scrape_links.logger') as mock_logger:
             scrape.setup_meta_table(mock_cursor)
             mock_run_sql.assert_called_once_with(mock_cursor, scrape.SQL_DIR / "setup_meta_table.sql")
             mock_logger.info.assert_any_call("📋 Vérification/Création de la table de metadata")
@@ -90,7 +100,7 @@ def test_main_with_new_files():
             with patch('snowflake_ingestion.scrape_links.setup_meta_table'):
                 with patch('snowflake_ingestion.scrape_links.get_parquet_links') as mock_links:
                     with patch('snowflake_ingestion.scrape_links.functions.run_sql_file'):
-                        with patch('snowflake_ingestion.scrape_links.logger') as mock_logger:  # CHANGEMENT ICI
+                        with patch('snowflake_ingestion.scrape_links.logger') as mock_logger:
                             
                             mock_links.return_value = [
                                 "https://example.com/yellow_tripdata_2023-01.parquet",
@@ -114,7 +124,7 @@ def test_main_without_new_files():
             with patch('snowflake_ingestion.scrape_links.setup_meta_table'):
                 with patch('snowflake_ingestion.scrape_links.get_parquet_links') as mock_links:
                     with patch('snowflake_ingestion.scrape_links.functions.run_sql_file'):
-                        with patch('snowflake_ingestion.scrape_links.logger') as mock_logger:  # CHANGEMENT ICI
+                        with patch('snowflake_ingestion.scrape_links.logger') as mock_logger:
                             mock_links.return_value = ["https://example.com/yellow_tripdata_2023-01.parquet"]
                             scrape.main()
                             mock_logger.info.assert_any_call("📎 1 lien trouvé")

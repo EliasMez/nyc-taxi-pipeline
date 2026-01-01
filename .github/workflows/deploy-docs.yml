@@ -18,6 +18,7 @@ jobs:
       RAW_SCHEMA: ${{ vars.RAW_SCHEMA || 'SCHEMA_RAW' }}
       STAGING_SCHEMA: ${{ vars.STAGING_SCHEMA || 'STAGING' }}
       FINAL_SCHEMA: ${{ vars.FINAL_SCHEMA || 'FINAL' }}
+      STAGING_TABLE: ${{ vars.STAGING_TABLE || 'YELLOW_TAXI_TRIPS_STG' }}
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python
