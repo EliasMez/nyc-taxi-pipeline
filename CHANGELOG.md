@@ -2,6 +2,48 @@
 
 <!-- version list -->
 
+## v2.2.0 (2026-01-01)
+
+### Bug Fixes
+
+- **snowflake**: Evolution de run_sql pour prendre en compte schema_
+  ([`a41cef8`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/a41cef866e374e6c67cf7899edfcd6a4d790b443))
+
+- **tests**: Correction pyhon tests et sqlfluff lintage
+  ([`9ef3ee9`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/9ef3ee97421427c9cd97c6b05c3f2a9aaa0fe874))
+
+### Chores
+
+- **workflow**: Ajout des roles metiers dans les variables d'environnements et secrets du workflow
+  ([`9c1cb88`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/9c1cb88685475d8a410080f2eed42b963951b9bf))
+
+### Documentation
+
+- **mkdocs**: Adaptation de mkdocs a l'ajout des roles et users metier
+  ([`9af6c52`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/9af6c52eaaed4b5eeca5dce6af48ecdc5e79c126))
+
+### Features
+
+- **snowflake**: Ajout des roles metier dans le sql
+  ([`f3c5c01`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/f3c5c01c896ca625731febc3d3905c4790563e37))
+
+- **workflow**: Variabilisation de COMPUTE_SIZE du warehouse
+  ([`7a7cbe7`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/7a7cbe70172d2d19bbad1cf8608b4be1e93cca25))
+
+### Refactoring
+
+- **dbt**: Ingestion taxi_zone dans source
+  ([`a62be65`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/a62be654ce96ab107aa3d0217dc2dc0c8ed0aeb1))
+
+- **env**: Supresion SCHEMA_ devant RAW
+  ([`bfb7c4d`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/bfb7c4dbc2629b3dfaa7aa982d06b63f1260c4fd))
+
+### Testing
+
+- **dbt**: Ajout description et tests dim_date et dim_time
+  ([`0daff0f`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/0daff0ff84c562a02087aba42b32c0672143f5bf))
+
+
 ## v2.1.2 (2025-12-21)
 
 ### Bug Fixes
