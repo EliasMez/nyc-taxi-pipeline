@@ -14,18 +14,28 @@ jobs:
       SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
       SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
       SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
-      PASSWORD_DEV: ${{ secrets.PASSWORD_DEV }}
+      USER_DEV: ${{ vars.USER_DEV || 'USER_DEV' }}
+      USER_BI: ${{ vars.USER_BI || 'USER_BI' }}
+      USER_DS: ${{ vars.USER_DS || 'USER_DS' }}
+      USER_MC: ${{ vars.USER_MC || 'USER_MC' }}
       SCRAPING_YEAR: ${{ vars.SCRAPING_YEAR }}
       LOGGER_LEVEL: ${{ vars.LOGGER_LEVEL || 'INFO' }}
       WH_NAME: ${{ vars.WH_NAME || 'NYC_WH' }}
       DW_NAME: ${{ vars.DW_NAME || 'NYC_TAXI_DW' }}
-      RAW_SCHEMA: ${{ vars.RAW_SCHEMA || 'SCHEMA_RAW' }}
+      RAW_SCHEMA: ${{ vars.RAW_SCHEMA || 'RAW' }}
       STAGING_SCHEMA: ${{ vars.STAGING_SCHEMA || 'STAGING' }}
       FINAL_SCHEMA: ${{ vars.FINAL_SCHEMA || 'FINAL' }}
       PARQUET_FORMAT: ${{ vars.PARQUET_FORMAT || 'PARQUET_FORMAT' }}
       ID_SEQUENCE: ${{ vars.ID_SEQUENCE || 'TRIP_ID_SEQ' }}
+      COMPUTE_SIZE: ${{ vars.COMPUTE_SIZE || 'X-SMALL' }}
       ROLE_TRANSFORMER: ${{ vars.ROLE_TRANSFORMER || 'TRANSFORMER' }}
-      USER_DEV: ${{ vars.USER_DEV || 'USER_DEV' }}
+      ROLE_BI_ANALYST: ${{ vars.ROLE_BI_ANALYST || 'BI_ANALYST' }}
+      ROLE_DATA_SCIENTIST: ${{ vars.ROLE_DATA_SCIENTIST || 'DATA_SCIENTIST' }}
+      ROLE_MART_CONSUMER: ${{ vars.ROLE_MART_CONSUMER || 'MART_CONSUMER' }}
+      PASSWORD_DEV: ${{ secrets.PASSWORD_DEV }}
+      PASSWORD_BI: ${{ secrets.PASSWORD_BI }}
+      PASSWORD_DS: ${{ secrets.PASSWORD_DS }}
+      PASSWORD_MC: ${{ secrets.PASSWORD_MC }}
       METADATA_TABLE: ${{ vars.METADATA_TABLE || 'FILE_LOADING_METADATA' }}
       RAW_TABLE: ${{ vars.RAW_TABLE || 'YELLOW_TAXI_TRIPS_RAW' }}
       STAGING_TABLE: ${{ vars.STAGING_TABLE || 'YELLOW_TAXI_TRIPS_STG' }}

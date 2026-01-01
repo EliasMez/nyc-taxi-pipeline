@@ -24,27 +24,10 @@
 | `SNOWFLAKE_PASSWORD` | Snowflake user password |
 | `SNOWFLAKE_ACCOUNT` | Snowflake account identifier |
 | `PASSWORD_DEV` | Development user password |
-<br>
-
-3. **Customize the OPTIONAL variables:** `Settings` > `Secrets and variables` > `Actions` > `Variables` > `New repository variables` <br>
-
-| Variable | Description | Default Value |
-|----------|-------------|-------------------|
-| `WH_NAME` | Data warehouse name | `NYC_WH` |
-| `DW_NAME` | Database name | `NYC_TAXI_DW` |
-| `RAW_SCHEMA` | Raw data schema | `RAW` |
-| `STAGING_SCHEMA` | Cleaned data schema | `STAGING` |
-| `FINAL_SCHEMA` | Final data schema | `FINAL` |
-| `PARQUET_FORMAT` | Parquet file format | `PARQUET_FORMAT` |
-| `ROLE_TRANSFORMER` | Role for transformations | `TRANSFORMER` |
-| `USER_DEV` | Development user | `USER_DEV` |
-| `METADATA_TABLE` | Metadata table | `FILE_LOADING_METADATA` |
-| `RAW_TABLE` | Raw data table | `YELLOW_TAXI_TRIPS_RAW` |
-| `STAGING_TABLE` | Staging table | `YELLOW_TAXI_TRIPS_STG` |
-| `LOGGER_LEVEL` | Logging level | `INFO` |
-| `SCRAPING_YEAR` | Scraping start date (>2000 and <current year)| current year |
-| `TIMEZONE` | Timezone defining the offset from UTC | `UTC` |
-| `GH_RELEASE_TOKEN` | GitHub token for automatic versioning (required only if using the Release workflow) | ⚠️ not defined |
+| `PASSWORD_BI` | BI Analyst user password |
+| `PASSWORD_DS` | Data Scientist user password |
+| `PASSWORD_MC` | Mart Consumer user password |
+| `GH_RELEASE_TOKEN` | GitHub token for automatic versioning (required only if using the Release workflow) |
 <br>
 
 ⚠️ **Release Workflow (Semantic Release)**
@@ -60,6 +43,33 @@ If you do not need automatic code versioning: `Actions` → `Release` → **Disa
 3. Add it as a secret: `Settings` → `Secrets and variables` → `Actions` → **New repository secret**
    - Name: `GH_RELEASE_TOKEN`
    - Value: *your token*
+<br>
+
+3. **Customize the OPTIONAL variables:** `Settings` > `Secrets and variables` > `Actions` > `Variables` > `New repository variables` <br>
+
+| Variable | Description | Default Value |
+|----------|-------------|-------------------|
+| `WH_NAME` | Data warehouse name | `NYC_WH` |
+| `DW_NAME` | Database name | `NYC_TAXI_DW` |
+| `RAW_SCHEMA` | Raw data schema | `RAW` |
+| `STAGING_SCHEMA` | Cleaned data schema | `STAGING` |
+| `FINAL_SCHEMA` | Final data schema | `FINAL` |
+| `PARQUET_FORMAT` | Parquet file format | `PARQUET_FORMAT` |
+| `COMPUTE_SIZE` | Computing power of the data warehouse | `X-SMALL` |
+| `ROLE_TRANSFORMER` | Role for transformations | `TRANSFORMER` |
+| `ROLE_BI_ANALYST` | BI Analyst role name | `ROLE_BI_ANALYST` |
+| `ROLE_DATA_SCIENTIST` | Data Scientist role name | `ROLE_DATA_SCIENTIST` |
+| `ROLE_MART_CONSUMER` | Mart Consumer role name | `ROLE_MART_CONSUMER` |
+| `USER_DEV` | Development user | `USER_DEV` |
+| `USER_BI_ANALYST` | BI Analyst username | `USER_BI_ANALYST` |
+| `USER_DATA_SCIENTIST` | Data Scientist username | `USER_DATA_SCIENTIST` |
+| `USER_MART_CONSUMER` | Mart Consumer username | `USER_MART_CONSUMER` |
+| `METADATA_TABLE` | Metadata table | `FILE_LOADING_METADATA` |
+| `RAW_TABLE` | Raw data table | `YELLOW_TAXI_TRIPS_RAW` |
+| `STAGING_TABLE` | Staging table | `YELLOW_TAXI_TRIPS_STG` |
+| `LOGGER_LEVEL` | Logging level | `INFO` |
+| `SCRAPING_YEAR` | Scraping start date (>2000 and <current year)| current year |
+| `TIMEZONE` | Timezone defining the offset from UTC | `UTC` |
 <br>
 
 ## 🔧 Quick Troubleshooting

@@ -24,27 +24,10 @@
 | `SNOWFLAKE_PASSWORD` | Contraseña del usuario de Snowflake |
 | `SNOWFLAKE_ACCOUNT` | Identificador de la cuenta de Snowflake |
 | `PASSWORD_DEV` | Contraseña del usuario de desarrollo |
-<br>
-
-3. **Personaliza las variables OPCIONALES:** `Settings` > `Secrets and variables` > `Actions` > `Variables` > `New repository variables` <br>
-
-| Variable | Descripción | Valor por Defecto |
-|----------|-------------|-------------------|
-| `WH_NAME` | Nombre del almacén de datos | `NYC_WH` |
-| `DW_NAME` | Nombre de la base de datos | `NYC_TAXI_DW` |
-| `RAW_SCHEMA` | Esquema de datos crudos | `RAW` |
-| `STAGING_SCHEMA` | Esquema de datos limpiados | `STAGING` |
-| `FINAL_SCHEMA` | Esquema de datos finales | `FINAL` |
-| `PARQUET_FORMAT` | Formato de archivo Parquet | `PARQUET_FORMAT` |
-| `ROLE_TRANSFORMER` | Rol para las transformaciones | `TRANSFORMER` |
-| `USER_DEV` | Usuario de desarrollo | `USER_DEV` |
-| `METADATA_TABLE` | Tabla de metadatos | `FILE_LOADING_METADATA` |
-| `RAW_TABLE` | Tabla de datos crudos | `YELLOW_TAXI_TRIPS_RAW` |
-| `STAGING_TABLE` | Tabla de staging | `YELLOW_TAXI_TRIPS_STG` |
-| `LOGGER_LEVEL` | Nivel de registro | `INFO` |
-| `SCRAPING_YEAR` | Fecha de inicio del scraping (>2000 y <año actual)| año actual |
-| `TIMEZONE` | Zona horaria que define el desplazamiento respecto a UTC | `UTC` |
-| `GH_RELEASE_TOKEN` | Token de GitHub para el versionado automático (necesario solo si usa el workflow Release) | ⚠️ no definido |
+| `PASSWORD_BI` | Contraseña de usuario Analista BI |
+| `PASSWORD_DS` | Contraseña de usuario Científico de Datos |
+| `PASSWORD_MC` | Contraseña de usuario Consumidor de Marts |
+| `GH_RELEASE_TOKEN` | Token de GitHub para el versionado automático (necesario solo si usa el workflow Release) |
 <br>
 
 ⚠️ **Workflow de Lanzamiento (Semantic Release)**
@@ -60,6 +43,33 @@ Si no necesita el versionado automático de código: `Actions` → `Release` →
 3. Añádelo como secreto: `Settings` → `Secrets and variables` → `Actions` → **New repository secret**
    - Nombre: `GH_RELEASE_TOKEN`
    - Valor: *su token*
+<br>
+
+3. **Personaliza las variables OPCIONALES:** `Settings` > `Secrets and variables` > `Actions` > `Variables` > `New repository variables` <br>
+
+| Variable | Descripción | Valor por Defecto |
+|----------|-------------|-------------------|
+| `WH_NAME` | Nombre del almacén de datos | `NYC_WH` |
+| `DW_NAME` | Nombre de la base de datos | `NYC_TAXI_DW` |
+| `RAW_SCHEMA` | Esquema de datos crudos | `RAW` |
+| `STAGING_SCHEMA` | Esquema de datos limpiados | `STAGING` |
+| `FINAL_SCHEMA` | Esquema de datos finales | `FINAL` |
+| `PARQUET_FORMAT` | Formato de archivo Parquet | `PARQUET_FORMAT` |
+| `COMPUTE_SIZE` | Potencia de cálculo del almacén de datos | `X-SMALL` |
+| `ROLE_TRANSFORMER` | Rol para las transformaciones | `TRANSFORMER` |
+| `ROLE_BI_ANALYST` | Nombre del rol Analista BI | `ROLE_BI_ANALYST` |
+| `ROLE_DATA_SCIENTIST` | Nombre del rol Científico de Datos | `ROLE_DATA_SCIENTIST` |
+| `ROLE_MART_CONSUMER` | Nombre del rol Consumidor de Marts | `ROLE_MART_CONSUMER` |
+| `USER_DEV` | Usuario de desarrollo | `USER_DEV` |
+| `USER_BI_ANALYST` | Nombre de usuario Analista BI | `USER_BI_ANALYST` |
+| `USER_DATA_SCIENTIST` | Nombre de usuario Científico de Datos | `USER_DATA_SCIENTIST` |
+| `USER_MART_CONSUMER` | Nombre de usuario Consumidor de Marts | `USER_MART_CONSUMER` |
+| `METADATA_TABLE` | Tabla de metadatos | `FILE_LOADING_METADATA` |
+| `RAW_TABLE` | Tabla de datos crudos | `YELLOW_TAXI_TRIPS_RAW` |
+| `STAGING_TABLE` | Tabla de staging | `YELLOW_TAXI_TRIPS_STG` |
+| `LOGGER_LEVEL` | Nivel de registro | `INFO` |
+| `SCRAPING_YEAR` | Fecha de inicio del scraping (>2000 y <año actual)| año actual |
+| `TIMEZONE` | Zona horaria que define el desplazamiento respecto a UTC | `UTC` |
 <br>
 
 ## 🔧 Solución Rápida de Problemas

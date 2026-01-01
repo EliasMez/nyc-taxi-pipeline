@@ -65,12 +65,12 @@ def test_use_context(mocker):
     """
     mock_cursor = Mock()
     with patch.object(mock_cursor, 'execute') as mock_execute:
-        use_context(mock_cursor, "WH", "DB", "SCHEMA")
+        use_context(mock_cursor, "WH", "DB", "TEST")
         assert mock_execute.call_count == 3
         calls = [call[0][0] for call in mock_execute.call_args_list]
         assert "USE WAREHOUSE WH" in calls
         assert "USE DATABASE DB" in calls  
-        assert "USE SCHEMA SCHEMA" in calls
+        assert "USE SCHEMA SCHEMA_TEST" in calls
 
 
 def test_use_context_exception():
