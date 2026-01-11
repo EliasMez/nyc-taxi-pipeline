@@ -20,43 +20,44 @@ vars:
 models:
   NYC_Taxi_dbt:
     staging:
+      +materialized: table
+      +transient: true
+      +schema: "{{ env_var('STAGING_SCHEMA') }}"
+      +on_schema_change: fail
+      
       int_trip_metrics:
         +materialized: view
         +unique_key: trip_id
-        +schema: "{{ env_var('STAGING_SCHEMA') }}"
-        +on_schema_change: fail
       yellow_taxi_trips_stg:
         +materialized: incremental
         +unique_key: trip_id
-        +schema: "{{ env_var('STAGING_SCHEMA') }}"
-        +on_schema_change: fail
-        +alias: "{{ env_var('STAGING_TABLE') }}" 
+        +alias: "{{ env_var('STAGING_TABLE') }}"
       taxi_zone_stg:
         +materialized: table
         +unique_key: locationid
-        +schema: "{{ env_var('STAGING_SCHEMA') }}"
-        +on_schema_change: fail
+        +transient: false  # Surcharge: rendue permanente
+
     final:
+      +materialized: table
+      +transient: false
+      +schema: "{{ env_var('FINAL_SCHEMA') }}"
+      
       fact_trips:
         +materialized: incremental
         +unique_key: trip_id
-        +schema: "{{ env_var('FINAL_SCHEMA') }}"
       dim_locations:
         +materialized: table
         +unique_key: location_id
-        +schema: "{{ env_var('FINAL_SCHEMA') }}"
       dim_time:
         +materialized: table
         +unique_key: time_key
-        +schema: "{{ env_var('FINAL_SCHEMA') }}"
       dim_date:
         +materialized: table
         +unique_key: date_key
-        +schema: "{{ env_var('FINAL_SCHEMA') }}"
+
     marts:
       +materialized: view
       +schema: "{{ env_var('FINAL_SCHEMA') }}"
-
 
 seeds:
   NYC_Taxi_dbt:
