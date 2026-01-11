@@ -86,3 +86,24 @@ Monthly execution data ingestion pipeline:
   Automatic versioning, changelog generation, and release publishing via Python Semantic Release on every push or pull request to `main`.
 - **SQL Code Quality**
   Automatic linting of SQL code (dbt models and Snowflake scripts) with SQLFluff on every push or pull request to `dev` and `main`.
+
+
+## Data Modeling
+
+This table documents **how the data is stored**.
+
+| Table Name             | Schema        | Table Type  | Materialization |
+| :--------------------- | :------------ | :---------- | :-------------- |
+| FILE_LOADING_METADATA  | `SCHEMA_RAW`  | Transient   | Table           |
+| YELLOW_TAXI_TRIPS_RAW  | `SCHEMA_RAW`  | Transient   | Incremental     |
+| TAXI_ZONE_LOOKUP       | `SCHEMA_RAW`  | Permanent   | Table           |
+| TAXI_ZONE_STG          | `SCHEMA_STG`  | Permanent   | Table           |
+| YELLOW_TAXI_TRIPS_STG  | `SCHEMA_STG`  | Transient   | Incremental     |
+| int_trip_metrics       | `SCHEMA_STG`  |             | View            |
+| fact_trips             | `SCHEMA_FINAL`| Permanent   | Incremental     |
+| dim_locations          | `SCHEMA_FINAL`| Permanent   | Table           |
+| dim_time               | `SCHEMA_FINAL`| Permanent   | Table           |
+| dim_date               | `SCHEMA_FINAL`| Permanent   | Table           |
+| marts                  | `SCHEMA_FINAL`|             | View            |
+
+Details available in the <a href="https://eliasmez.github.io/nyc-taxi-pipeline/dbt">📚 Online <strong>dbt</strong> documentation</a>

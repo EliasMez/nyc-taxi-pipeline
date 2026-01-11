@@ -81,3 +81,24 @@ Pipeline d'ingestion exécuté mensuellement :
 - **Python Code Tests** <br> Exécution des tests unitaires Pytest sur chaque push ou pull request vers `dev` et `main`.
 - **Release** <br> Versioning automatique, génération du changelog et publication des releases via Python Semantic Release sur chaque push ou pull request vers `main`.
 - **SQL Code Quality** <br> Linting automatique du code SQL (modèles dbt et scripts Snowflake) avec SQLFluff sur chaque push ou pull request vers `dev` et `main`.
+
+
+## Modélisation des Données
+
+Le tableau documente **comment les données sont stockées**.
+
+| Nom de la table         | Schéma        | Type de table | Matérialisation |
+| :---------------------- | :------------ | :------------ | :-------------- |
+| FILE_LOADING_METADATA   | `SCHEMA_RAW`  | Transitoire   | Table           |
+| YELLOW_TAXI_TRIPS_RAW   | `SCHEMA_RAW`  | Transitoire   | Incremental     |
+| TAXI_ZONE_LOOKUP        | `SCHEMA_RAW`  | Permanente    | Table           |
+| TAXI_ZONE_STG           | `SCHEMA_STG`  | Permanente    | Table           |
+| YELLOW_TAXI_TRIPS_STG   | `SCHEMA_STG`  | Transitoire   | Incremental     |
+| int_trip_metrics        | `SCHEMA_STG`  |               | Vue             |
+| fact_trips              | `SCHEMA_FINAL`| Permanente    | Incremental     |
+| dim_locations           | `SCHEMA_FINAL`| Permanente    | Table           |
+| dim_time                | `SCHEMA_FINAL`| Permanente    | Table           |
+| dim_date                | `SCHEMA_FINAL`| Permanente    | Table           |
+| marts                   | `SCHEMA_FINAL`|               | Vue             |
+
+details disponibles dans la <a href="https://eliasmez.github.io/nyc-taxi-pipeline/dbt">📚 Documentation <strong>dbt</strong> en ligne</a>

@@ -87,3 +87,24 @@ nyc-taxi-pipeline/
 - **SQL 代码质量**
   使用 SQLFluff 对 SQL 代码（dbt 模型和 Snowflake 脚本）进行自动 linting，每次推送或拉取请求到 `dev` 和 `main` 时执行。
 ``
+
+
+## 数据建模 (Data Modeling)
+
+此表记录了**数据的存储方式**。
+
+| 表名称                    | 模式             | 表类型    | 物化方式  |
+| :----------------------- | :---------------| :------- | :--------|
+| FILE_LOADING_METADATA    | `SCHEMA_RAW`    | 瞬态表    | 表       |
+| YELLOW_TAXI_TRIPS_RAW    | `SCHEMA_RAW`    | 瞬态表    | 增量      |
+| TAXI_ZONE_LOOKUP         | `SCHEMA_RAW`    | 永久表    | 表       |
+| TAXI_ZONE_STG            | `SCHEMA_STG`    | 永久表    | 表       |
+| YELLOW_TAXI_TRIPS_STG    | `SCHEMA_STG`    | 瞬态表    | 增量      |
+| int_trip_metrics         | `SCHEMA_STG`    |          | 视图      |
+| fact_trips               | `SCHEMA_FINAL`  | 永久表    | 增量      |
+| dim_locations            | `SCHEMA_FINAL`  | 永久表    | 表        |
+| dim_time                 | `SCHEMA_FINAL`  | 永久表    | 表        |
+| dim_date                 | `SCHEMA_FINAL`  | 永久表    | 表        |
+| marts                    | `SCHEMA_FINAL`  |          | 视图      |
+
+详细内容可查阅 <a href="https://eliasmez.github.io/nyc-taxi-pipeline/dbt">📚 在线 <strong>dbt</strong> 文档</a>

@@ -70,7 +70,27 @@ If you do not need automatic code versioning: `Actions` → `Release` → **Disa
 | `LOGGER_LEVEL` | Logging level | `INFO` |
 | `SCRAPING_YEAR` | Scraping start date (>2000 and <current year)| current year |
 | `TIMEZONE` | Timezone defining the offset from UTC | `UTC` |
+| `RETENTION_DAYS` | Retention period for table change history (Time Travel) (0-90) | `1` |
 <br>
+
+⚠️ **Important considerations regarding `RETENTION_DAYS`:**
+*   Not applicable to **Temporary tables** (deleted at the end of a session).
+*   **Fail-safe** is a protection period that begins after Time Travel expires. It is not affected by this setting.
+
+**Error behavior and limits**
+*   ⚠️ **Automatic capping (transient tables)**: Any `RETENTION_DAYS` value > 1 is treated as **1 day**.
+*   ❌ **Limit exceeded error**: Any `RETENTION_DAYS` value exceeding the **allowed limit** for the account and table type will generate an error.
+
+### **Standard Account**
+*   **Transient and permanent tables**: `RETENTION_DAYS` = **0 or 1 day**.
+*   **Fail-safe**: Fixed **7 days** after Time Travel.
+
+### **Enterprise, Business Critical, and Virtual Private Snowflake Accounts**
+*   **Transient tables**: `RETENTION_DAYS` = **0 or 1 day**.
+*   **Permanent tables**: `RETENTION_DAYS` = **0 to 90 days**.
+*   **Fail-safe**: **7 days** after Time Travel. Can be **extended up to 90 days** via a specific contract with Snowflake.
+<br>
+
 
 ## 🔧 Quick Troubleshooting
 - Snowflake connection failure: Check GitHub secrets

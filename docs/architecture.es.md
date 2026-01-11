@@ -86,3 +86,24 @@ Pipeline de ingestión de datos ejecutado mensualmente:
   Versionado automático, generación de changelog y publicación de releases mediante Python Semantic Release en cada push o pull request a `main`.
 - **Calidad de Código SQL**
   Linting automático del código SQL (modelos dbt y scripts de Snowflake) con SQLFluff en cada push o pull request a `dev` y `main`.
+
+
+## Modelado de Datos (Data Modeling)
+
+Esta tabla documenta **cómo se almacenan los datos**.
+
+| Nombre de la Tabla      | Esquema       | Tipo de Tabla | Materialización |
+| :---------------------- | :------------ | :------------ | :-------------- |
+| FILE_LOADING_METADATA   | `SCHEMA_RAW`  | Transitoria   | Tabla           |
+| YELLOW_TAXI_TRIPS_RAW   | `SCHEMA_RAW`  | Transitoria   | Incremental     |
+| TAXI_ZONE_LOOKUP        | `SCHEMA_RAW`  | Permanente    | Tabla           |
+| TAXI_ZONE_STG           | `SCHEMA_STG`  | Permanente    | Tabla           |
+| YELLOW_TAXI_TRIPS_STG   | `SCHEMA_STG`  | Transitoria   | Incremental     |
+| int_trip_metrics        | `SCHEMA_STG`  |               | Vista           |
+| fact_trips              | `SCHEMA_FINAL`| Permanente    | Incremental     |
+| dim_locations           | `SCHEMA_FINAL`| Permanente    | Tabla           |
+| dim_time                | `SCHEMA_FINAL`| Permanente    | Tabla           |
+| dim_date                | `SCHEMA_FINAL`| Permanente    | Tabla           |
+| marts                   | `SCHEMA_FINAL`|               | Vista           |
+
+Detalles disponibles en la <a href="https://eliasmez.github.io/nyc-taxi-pipeline/dbt">📚 Documentación en línea de <strong>dbt</strong></a>

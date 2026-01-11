@@ -70,7 +70,27 @@ Si no necesita el versionado automático de código: `Actions` → `Release` →
 | `LOGGER_LEVEL` | Nivel de registro | `INFO` |
 | `SCRAPING_YEAR` | Fecha de inicio del scraping (>2000 y <año actual)| año actual |
 | `TIMEZONE` | Zona horaria que define el desplazamiento respecto a UTC | `UTC` |
+| `RETENTION_DAYS` | Período de retención del historial de cambios de tablas (Time Travel) (0-90) | `1` |
 <br>
+
+⚠️ **Consideraciones importantes sobre `RETENTION_DAYS`:**
+*   No aplicable a las **Tablas temporales** (eliminadas al final de una sesión).
+*   **Fail-safe** es un período de protección que comienza después de que expire Time Travel. No se ve afectado por esta configuración.
+
+📌 **Comportamiento de errores y límites**
+*   ⚠️ **Limitación automática (tablas transitorias)**: Cualquier valor de `RETENTION_DAYS` > 1 se trata como **1 día**.
+*   ❌ **Error de límite excedido**: Cualquier valor de `RETENTION_DAYS` que exceda el **límite permitido** para el tipo de cuenta y tabla generará un error.
+
+### **Cuenta Estándar**
+*   **Tablas transitorias y permanentes**: `RETENTION_DAYS` = **0 o 1 día**.
+*   **Fail-safe**: **7 días** fijos después de Time Travel.
+
+### **Cuentas Enterprise, Business Critical y Virtual Private Snowflake**
+*   **Tablas transitorias**: `RETENTION_DAYS` = **0 o 1 día**.
+*   **Tablas permanentes**: `RETENTION_DAYS` = **0 a 90 días**.
+*   **Fail-safe**: **7 días** después de Time Travel. Se puede **extender hasta 90 días** mediante un contrato específico con Snowflake.
+<br>
+
 
 ## 🔧 Solución Rápida de Problemas
 - Fallo de conexión con Snowflake: Verificar los secretos de GitHub
