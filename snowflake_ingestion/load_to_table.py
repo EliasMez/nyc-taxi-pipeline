@@ -19,7 +19,7 @@ def create_table(cur: SnowflakeCursor) -> List[Tuple[str, str]]:
     Returns:
         list: The table schema detected from staged files
     """
-    logger.info(f"📋 Vérification/Création dynamique de la table {functions.RAW_TABLE}")
+    logger.info(f"📋 Dynamic verification/creation of table {functions.RAW_TABLE}")
     functions.run_sql_file(cur, SQL_DIR / "detect_file_schema_stage.sql")
     schema = cur.fetchall()
     seen = set()
@@ -29,18 +29,18 @@ def create_table(cur: SnowflakeCursor) -> List[Tuple[str, str]]:
             seen.add(col_name.lower())
             table_schema.append((col_name, col_type))
     if len(table_schema) == 0:
-        logger.warning("⚠️  Aucune donnée dans le STAGE")
+        logger.warning("⚠️  No data in STAGE")
         return table_schema
     functions.run_sql_file(cur, SQL_DIR / "create_sequence.sql")
 
     columns = [f"TRIP_ID NUMBER"] + [f"{col_name} {col_type}" for col_name, col_type in table_schema]
     if len(columns) != 0:
-        create_sql = f"CREATE TABLE IF NOT EXISTS {functions.RAW_TABLE} ({', '.join(columns)})"
+        create_sql = f"CREATE TRANSIENT TABLE IF NOT EXISTS {functions.RAW_TABLE} ({', '.join(columns)})"
         cur.execute(create_sql)
         functions.run_sql_file(cur, SQL_DIR / "add_filename_to_raw_table.sql")
-        logger.info(f"✅ Table {functions.RAW_TABLE} prête")
+        logger.info(f"✅ Table {functions.RAW_TABLE} ready")
     else:
-        logger.warning(f"⚠️  Aucune donnée dans le STAGE")
+        logger.warning(f"⚠️  No data in STAGE")
     return table_schema
 
 def copy_file_to_table_and_count(cur: SnowflakeCursor, filename: str, table_schema: List[Tuple[str, str]]) -> int:
@@ -56,7 +56,7 @@ def copy_file_to_table_and_count(cur: SnowflakeCursor, filename: str, table_sche
     Returns:
         int: Number of rows inserted into the RAW table.
     """
-    logger.info(f"🚀 Chargement de {filename} dans {functions.RAW_TABLE}...")
+    logger.info(f"🚀 Loading {filename} into {functions.RAW_TABLE}...")
     column_names = [col[0].replace("airport_fee", "Airport_fee") for col in table_schema]
     select_columns = [f"$1:{col_name}" for col_name in column_names]
     copy_sql = f"""
@@ -77,8 +77,8 @@ def copy_file_to_table_and_count(cur: SnowflakeCursor, filename: str, table_sche
         rows_loaded = result[3]
     else:
         rows_loaded = 0
-    s = "s" if rows_loaded >= 2 else ""
-    logger.info(f"✅ {filename} chargé ({rows_loaded} ligne{s})")
+    s = functions.plural_suffix(rows_loaded)
+    logger.info(f"✅ {filename} loaded ({rows_loaded} row{s})")
     return rows_loaded
 
 def update_metadata(cur: SnowflakeCursor, filename: str, rows_loaded: int) -> None:
@@ -96,7 +96,7 @@ def update_metadata(cur: SnowflakeCursor, filename: str, rows_loaded: int) -> No
         """,
         (rows_loaded, filename),
     )
-    logger.debug(f"🚀 Chargement de {functions.METADATA_TABLE}")
+    logger.debug(f"🚀 Loading {functions.METADATA_TABLE}")
 
 def cleanup_stage_file(cur: SnowflakeCursor, filename: str) -> None:
     """Remove the processed file from the Snowflake stage.
@@ -105,7 +105,7 @@ def cleanup_stage_file(cur: SnowflakeCursor, filename: str) -> None:
         filename (str): Name of the file to delete from the stage.
     """
     cur.execute(f"REMOVE @~/{filename}")
-    logger.info(f"✅ {filename} supprimé du stage")
+    logger.info(f"✅ {filename} removed from stage")
 
 def handle_loading_error(cur: SnowflakeCursor, filename: str, error: Exception) -> None:
     """Handle errors occurring during file loading into the RAW table.
@@ -117,8 +117,8 @@ def handle_loading_error(cur: SnowflakeCursor, filename: str, error: Exception) 
         filename (str): Name of the file that failed to load.
         error (Exception): Exception raised during the loading process.
     """
-    logger.error(f"❌ Erreur de chargement {filename}: {error}")
-    logger.debug(f"🚀 Chargement de {functions.METADATA_TABLE}")
+    logger.error(f"❌ Loading error {filename}: {error}")
+    logger.debug(f"🚀 Loading {functions.METADATA_TABLE}")
     cur.execute(
         f"UPDATE {functions.METADATA_TABLE} SET load_status='FAILED_LOAD' WHERE file_name=%s",
         (filename,),
@@ -134,7 +134,7 @@ def main() -> None:
         functions.use_context(cur, functions.WH_NAME, functions.DW_NAME, functions.RAW_SCHEMA)
         table_schema = create_table(cur)
         
-        logger.info("🔍 Analyse des fichiers dans le STAGE")
+        logger.info("🔍 Analyzing files in STAGE")
         functions.run_sql_file(cur, SQL_DIR / "select_filename_from_meta_staged.sql")
         staged_files = cur.fetchall()
 

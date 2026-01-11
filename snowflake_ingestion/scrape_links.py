@@ -34,17 +34,17 @@ def get_scraping_year() -> int:
         try:
             int_year = int(functions.SCRAPING_YEAR)
         except ValueError:
-            logger.error(f"\"SCRAPING_YEAR = {functions.SCRAPING_YEAR}\" n'est pas une année valide !")
-            logger.warning(f"L'année du scraping a été réinitialisée à {default_year}")
+            logger.error(f"\"SCRAPING_YEAR = {functions.SCRAPING_YEAR}\" is not a valid year!")
+            logger.warning(f"Scraping year has been reset to {default_year}")
             return default_year
 
         if int_year < 2009 or int_year > current_year:
             logger.error(
-                f"\"SCRAPING_YEAR = {functions.SCRAPING_YEAR}\" l'année du scraping doit être compris entre 2009 et {current_year} inclus!"
+                f"\"SCRAPING_YEAR = {functions.SCRAPING_YEAR}\" scraping year must be between 2009 and {current_year} inclusive!"
             )
-            logger.warning(f"L'année du scraping a été réinitialisée à {default_year}")
+            logger.warning(f"Scraping year has been reset to {default_year}")
             return default_year
-        logger.info(f"Les fichiers seront scrapés à partir de l'année {default_year}")
+        logger.info(f"Files will be scraped from year {default_year}")
         return int_year
 
 def get_xpath() -> str:
@@ -69,7 +69,7 @@ def get_parquet_links() -> List[str]:
     Returns:
         list[str]: List of Parquet file URLs.
     """
-    logger.info("🌐 Début du scraping des données NYC Taxi")
+    logger.info("🌐 Starting NYC Taxi data scraping")
     response = requests.get(scraping_url)
     tree = html.fromstring(response.content)
     xpath_query = get_xpath()
@@ -88,10 +88,10 @@ def setup_meta_table(cur: SnowflakeCursor) -> None:
     Args:
         cur (snowflake.connector.cursor.SnowflakeCursor): Active Snowflake cursor.
     """
-    logger.info("📋 Vérification/Création de la table de metadata")
+    logger.info("📋 Verification/Creation of metadata table")
     sql_file = SQL_DIR / "setup_meta_table.sql"
     functions.run_sql_file(cur, sql_file)
-    logger.info("✅ Table de metadata prête")
+    logger.info("✅ Metadata table ready")
 
 def main() -> None:
     """Main scraping and metadata update workflow.
@@ -110,8 +110,8 @@ def main() -> None:
         setup_meta_table(cur)
 
         links = get_parquet_links()
-        s = "s" if len(links) >= 2 else ""
-        logger.info(f"📎 {len(links)} lien{s} trouvé{s}")
+        s = functions.plural_suffix(len(links))
+        logger.info(f"📎 {len(links)} link{s} found")
         new_file_detected: bool = False
 
         for url in links:
@@ -121,7 +121,7 @@ def main() -> None:
                 (filename,),
             )
             if not cur.fetchone():
-                logger.info(f"➕ Nouveau fichier détecté : {filename}")
+                logger.info(f"➕ New file detected : {filename}")
                 new_file_detected = True
 
                 parts = (
@@ -132,7 +132,7 @@ def main() -> None:
                 year = int(parts[0]) if len(parts) > 0 else None
                 month = int(parts[1]) if len(parts) > 1 else None
 
-                logger.debug(f"🚀 Chargement de {functions.METADATA_TABLE}")
+                logger.debug(f"🚀 Loading {functions.METADATA_TABLE}")
                 cur.execute(
                     f"""
                     INSERT INTO {functions.METADATA_TABLE}
@@ -142,10 +142,10 @@ def main() -> None:
                     (url, filename, year, month),
                 )
             else:
-                logger.info(f"⏭️  {filename} déjà référencé")
+                logger.info(f"⏭️  {filename} already referenced")
 
             if not new_file_detected:
-                logger.debug("🔍 Analyse des fichiers SCRAPED")
+                logger.debug("🔍 Analyzing SCRAPED files")
                 functions.run_sql_file(cur, SQL_DIR / "count_new_files.sql")
                 if cur.fetchone()[0] > 0:
                     new_file_detected = True
@@ -153,9 +153,9 @@ def main() -> None:
     conn.close()
 
     if not new_file_detected:
-        logger.warning("⚠️  Aucun nouveau fichier à charger.")
+        logger.warning("⚠️  No new files to load.")
 
-    logger.info("✅ Scraping terminé")
+    logger.info("✅ Scraping completed")
 
 if __name__ == "__main__":
     if functions.LOGGER_LEVEL == "DEBUG":
