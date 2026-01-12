@@ -43,6 +43,7 @@ PASSWORD_MC: str = os.getenv("PASSWORD_MC")
 
 SCRAPING_YEAR: str = os.getenv("SCRAPING_YEAR")
 TIMEZONE: str = os.getenv("TIMEZONE")
+RETENTION_TIME: int = os.getenv("RETENTION_TIME")
 LOGGER_LEVEL: int = getattr(logging, os.getenv("LOGGER_LEVEL"))
 
 SQL_BASE_DIR: Path = Path("snowflake_ingestion") / "sql"
@@ -145,3 +146,31 @@ def run_sql_file(cur: snowflake.connector.cursor.SnowflakeCursor, filepath: Path
             statement = statement.strip()
             if statement:
                 cur.execute(statement)
+
+
+def plural_suffix(count: int) -> str:
+    """Return 's' if count is greater than or equal to 2, else return an empty string.
+
+    Args:
+        count (int): The number of items.
+
+    Returns:
+        str: 's' if count >= 2, else ''.
+
+    Examples:
+        >>> plural_suffix(0)
+        ''
+        >>> plural_suffix(1)
+        ''
+        >>> plural_suffix(2)
+        's'
+        >>> plural_suffix(3)
+        's'
+    """
+    return "s" if count >= 2 else ""
+
+
+if __name__ == "__main__":
+    if LOGGER_LEVEL == "DEBUG":
+        import doctest
+        doctest.testmod(verbose=True)

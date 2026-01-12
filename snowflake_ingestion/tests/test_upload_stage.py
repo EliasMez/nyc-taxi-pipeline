@@ -1,5 +1,5 @@
 import pytest
-from unittest.mock import Mock, patch, MagicMock
+from unittest.mock import Mock, patch, MagicMock, call
 import sys
 import os
 import requests
@@ -8,9 +8,9 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 import snowflake_ingestion.upload_stage as stage
 
 def test_download_and_upload_file_success():
-    """Test unitaire de download_and_upload_file en cas de succès.
-    Vérifie que la fonction télécharge le fichier depuis l'URL, l'upload vers Snowflake
-    via PUT, et nettoie automatiquement le fichier temporaire.
+    """Unit test for download_and_upload_file in case of success.
+    Verifies that the function downloads the file from the URL, uploads it to Snowflake
+    via PUT, and automatically cleans up the temporary file.
     """
     mock_cursor = Mock()
     mock_response = Mock()
@@ -25,7 +25,7 @@ def test_download_and_upload_file_success():
     
     with patch('snowflake_ingestion.upload_stage.requests.get', return_value=mock_response):
         with patch('snowflake_ingestion.upload_stage.tempfile.NamedTemporaryFile') as mock_tempfile:
-            with patch('snowflake_ingestion.upload_stage.logger') as mock_logger:  # CHANGEMENT ICI
+            with patch('snowflake_ingestion.upload_stage.logger') as mock_logger:
                 mock_tempfile.return_value = mock_temp_file
                 stage.download_and_upload_file(mock_cursor, "http://example.com/test.parquet", "test.parquet")
                 
@@ -33,14 +33,13 @@ def test_download_and_upload_file_success():
                 mock_temp_file.write.assert_called_once_with(b"fake parquet content")
                 mock_temp_file.flush.assert_called_once()
                 mock_cursor.execute.assert_called_once_with("PUT 'file:///tmp/tempfile_123.parquet' @~/test.parquet AUTO_COMPRESS=FALSE")
-                mock_logger.info.assert_any_call("📥 Téléchargement de test.parquet...")
-                mock_logger.info.assert_any_call("📤 Upload vers Snowflake...")
-                mock_logger.info.assert_any_call("✅ test.parquet uploadé et fichier temporaire nettoyé")
-
+                mock_logger.info.assert_any_call("📥 Downloading test.parquet...")
+                mock_logger.info.assert_any_call("📤 Uploading to Snowflake...")
+                mock_logger.info.assert_any_call("✅ test.parquet uploaded and temporary file cleaned")
 
 def test_download_and_upload_file_http_error():
-    """Test unitaire de download_and_upload_file en cas d'erreur HTTP.
-    Vérifie que la fonction lève une exception quand le téléchargement HTTP échoue.
+    """Unit test for download_and_upload_file in case of HTTP error.
+    Verifies that the function raises an exception when the HTTP download fails.
     """
     mock_cursor = Mock()
     mock_response = Mock()
@@ -48,14 +47,13 @@ def test_download_and_upload_file_http_error():
     
     with patch('snowflake_ingestion.upload_stage.requests.get', return_value=mock_response):
         with patch('snowflake_ingestion.upload_stage.tempfile.NamedTemporaryFile'):
-            with patch('snowflake_ingestion.upload_stage.logger'):  # CHANGEMENT ICI
+            with patch('snowflake_ingestion.upload_stage.logger'):
                 with pytest.raises(requests.HTTPError):
                     stage.download_and_upload_file(mock_cursor, "http://example.com/test.parquet", "test.parquet")
 
-
 def test_download_and_upload_file_snowflake_error():
-    """Test unitaire de download_and_upload_file en cas d'erreur Snowflake.
-    Vérifie que la fonction lève une exception quand l'upload vers Snowflake échoue.
+    """Unit test for download_and_upload_file in case of Snowflake error.
+    Verifies that the function raises an exception when the Snowflake upload fails.
     """
     mock_cursor = Mock()
     mock_response = Mock()
@@ -70,15 +68,14 @@ def test_download_and_upload_file_snowflake_error():
     
     with patch('snowflake_ingestion.upload_stage.requests.get', return_value=mock_response):
         with patch('snowflake_ingestion.upload_stage.tempfile.NamedTemporaryFile', return_value=mock_temp_file):
-            with patch('snowflake_ingestion.upload_stage.logger'):  # CHANGEMENT ICI
+            with patch('snowflake_ingestion.upload_stage.logger'):
                 mock_cursor.execute.side_effect = Exception("Snowflake PUT failed")       
                 with pytest.raises(Exception, match="Snowflake PUT failed"):
                     stage.download_and_upload_file(mock_cursor, "http://example.com/test.parquet", "test.parquet")
 
-
 def test_download_and_upload_file_tempfile_error():
-    """Test unitaire de download_and_upload_file en cas d'erreur de création du fichier temporaire.
-    Vérifie que la fonction lève une exception quand la création du fichier temporaire échoue.
+    """Unit test for download_and_upload_file in case of temporary file creation error.
+    Verifies that the function raises an exception when temporary file creation fails.
     """
     mock_cursor = Mock()
     mock_response = Mock()
@@ -87,17 +84,15 @@ def test_download_and_upload_file_tempfile_error():
     
     with patch('snowflake_ingestion.upload_stage.requests.get', return_value=mock_response):
         with patch('snowflake_ingestion.upload_stage.tempfile.NamedTemporaryFile') as mock_tempfile:
-            with patch('snowflake_ingestion.upload_stage.logger'):  # CHANGEMENT ICI
+            with patch('snowflake_ingestion.upload_stage.logger'):
                 mock_tempfile.side_effect = OSError("Cannot create temp file")
-                
                 with pytest.raises(OSError, match="Cannot create temp file"):
                     stage.download_and_upload_file(mock_cursor, "http://example.com/test.parquet", "test.parquet")
 
-
 def test_main_with_files():
-    """Test unitaire de main avec des fichiers à uploader.
-    Vérifie que la fonction récupère les fichiers scraped, les télécharge,
-    les upload vers Snowflake et met à jour le statut dans les métadonnées.
+    """Unit test for the main function with files to upload.
+    Verifies that the function retrieves the scraped files, downloads them,
+    uploads them to Snowflake and updates the status in the metadata.
     """
     mock_conn = MagicMock()
     mock_cursor = MagicMock()
@@ -111,21 +106,20 @@ def test_main_with_files():
     with patch('snowflake_ingestion.upload_stage.functions.connect_with_role', return_value=mock_conn):
         with patch('snowflake_ingestion.upload_stage.functions.use_context'):
             with patch('snowflake_ingestion.upload_stage.functions.run_sql_file'):
-                with patch('snowflake_ingestion.upload_stage.download_and_upload_file') as mock_download:  
-                    with patch('snowflake_ingestion.upload_stage.logger') as mock_logger:  # CHANGEMENT ICI
+                with patch('snowflake_ingestion.upload_stage.download_and_upload_file') as mock_download:
+                    with patch('snowflake_ingestion.upload_stage.logger') as mock_logger:
                         stage.main()
-                        mock_logger.info.assert_any_call("📦 2 fichiers à uploader")
-                        mock_logger.info.assert_any_call("✅ file1.parquet uploadé")
-                        mock_logger.info.assert_any_call("✅ file2.parquet uploadé")
+                        mock_logger.info.assert_any_call("📦 2 files to upload")
+                        mock_logger.info.assert_any_call("✅ file1.parquet uploaded")
+                        mock_logger.info.assert_any_call("✅ file2.parquet uploaded")
                         update_calls = [call for call in mock_cursor.execute.call_args_list 
                                       if 'UPDATE' in str(call[0][0]) and 'STAGED' in str(call[0][0])]
                         assert len(update_calls) == 2
 
-
 def test_main_with_upload_error():
-    """Test unitaire de main avec erreur d'upload.
-    Vérifie que la fonction gère correctement les erreurs d'upload en mettant
-    à jour le statut FAILED_STAGE.
+    """Unit test for the main function with upload error.
+    Verifies that the function correctly handles upload errors by updating
+    the status to FAILED_STAGE.
     """
     mock_conn = MagicMock()
     mock_cursor = MagicMock()
@@ -136,20 +130,18 @@ def test_main_with_upload_error():
         with patch('snowflake_ingestion.upload_stage.functions.use_context'):
             with patch('snowflake_ingestion.upload_stage.functions.run_sql_file'):
                 with patch('snowflake_ingestion.upload_stage.download_and_upload_file') as mock_download:
-                    with patch('snowflake_ingestion.upload_stage.logger') as mock_logger:  # CHANGEMENT ICI
+                    with patch('snowflake_ingestion.upload_stage.logger') as mock_logger:
                         mock_download.side_effect = Exception("Upload failed")
                         stage.main()
-
-                        mock_logger.error.assert_called_with("❌ Erreur upload file1.parquet: Upload failed")
+                        mock_logger.error.assert_called_with("❌ Upload error file1.parquet: Upload failed")
                         update_calls = [call for call in mock_cursor.execute.call_args_list 
                                       if 'FAILED_STAGE' in str(call[0][0])]
                         assert len(update_calls) == 1
 
-
 def test_main_file_processing_flow():
-    """Test unitaire du flux complet de traitement des fichiers.
-    Vérifie l'ordre des opérations : connexion DB, récupération métadonnées,
-    téléchargement, upload, mise à jour statut.
+    """Unit test for the complete file processing flow.
+    Verifies the order of operations: DB connection, metadata retrieval,
+    download, upload, status update.
     """
     mock_conn = MagicMock()
     mock_cursor = MagicMock()
@@ -168,20 +160,16 @@ def test_main_file_processing_flow():
         with patch('snowflake_ingestion.upload_stage.functions.use_context'):
             with patch('snowflake_ingestion.upload_stage.functions.run_sql_file'):
                 with patch('snowflake_ingestion.upload_stage.download_and_upload_file'):
-                    with patch('snowflake_ingestion.upload_stage.logger'):  # CHANGEMENT ICI
-                        
+                    with patch('snowflake_ingestion.upload_stage.logger'):
                         stage.main()
-
                         staged_updates = []
                         for args, kwargs in execute_calls:
                             if len(args) > 0 and 'UPDATE' in args[0] and 'STAGED' in args[0]:
                                 staged_updates.append((args, kwargs))
-                        
                         assert len(staged_updates) == 1
                         update_args = staged_updates[0][0]
                         assert len(update_args) >= 2
                         assert update_args[1] == ('test.parquet',)
-
 
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])

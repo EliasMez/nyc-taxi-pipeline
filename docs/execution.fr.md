@@ -72,6 +72,26 @@ Si vous n’avez pas besoin du versionnement automatique de code : `Actions` →
 | `LOGGER_LEVEL` | Niveau de logging | `INFO` |
 | `SCRAPING_YEAR` | Date de début du scraping (>2000 et <année courante)| année courante |
 | `TIMEZONE` | Fuseau horaire qui définit le décalage horaire par rapport à UTC | `UTC` |
+| `RETENTION_DAYS` | Durée de conservation de l'historique des modifications des tables (Time Travel) (0-90) | `1` |
+<br>
+
+⚠️ Considérations importantes concernant RETENTION_DAYS:
+Non applicable sur les **Tables temporaires** (supprimées en fin de session).
+**Fail-safe** est une période de protection qui commence après l'expiration du Time Travel.
+Elle n'est pas affectée par ce paramètre.
+
+**Comportement des erreurs et plafonds**
+*   ⚠️ **Plafonnement automatique (tables transitoires)** : Toute valeur de `RETENTION_DAYS` > 1 est traitée comme **1 jour**.
+*   ❌ **Erreur de dépassement de limite** : Toute valeur de `RETENTION_DAYS` dépassant la **limite autorisée** pour le type de compte et de table génère une erreur.
+
+**Compte Standard**
+*   **Tables transitoires et permanentes** : `RETENTION_DAYS` = **0 ou 1 jour**.
+*   **Fail-safe** : **7 jours** fixe après Time Travel.
+
+**Comptes Enterprise, Business Critical et Virtual Private Snowflake**
+*   **Tables transitoires** : `RETENTION_DAYS` = **0 ou 1 jour**.
+*   **Tables permanentes** : `RETENTION_DAYS` = **0 à 90 jours**.
+*   **Fail-safe** : **7 jours** après Time Travel. Peut être **étendu jusqu'à 90 jours** via un contrat spécifique avec Snowflake.
 <br>
 
 

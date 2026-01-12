@@ -40,6 +40,7 @@ jobs:
       RAW_TABLE: ${{ vars.RAW_TABLE || 'YELLOW_TAXI_TRIPS_RAW' }}
       STAGING_TABLE: ${{ vars.STAGING_TABLE || 'YELLOW_TAXI_TRIPS_STG' }}
       TIMEZONE: ${{ vars.TIMEZONE || 'UTC' }}
+      RETENTION_TIME: ${{ vars.RETENTION_TIME || '1' }}
       AWS_EC2_METADATA_DISABLED: true
       
     
