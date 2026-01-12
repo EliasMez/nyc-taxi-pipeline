@@ -29,10 +29,10 @@ def setup_data_warehouse(cur: SnowflakeCursor) -> None:
     Args:
         cur (snowflake.connector.cursor.SnowflakeCursor): Active Snowflake cursor.
     """
-    logger.info("🏗️  Création du warehouse, base et schémas...")
+    logger.info("🏗️  Creating warehouse, database and schemas...")
     sql_file = SQL_DIR / "setup_data_warehouse.sql"
     functions.run_sql_file(cur, sql_file)
-    logger.info("✅ Warehouse et schémas créés")
+    logger.info("✅ Warehouse and schemas created")
 
 def create_roles_and_user(cur: SnowflakeCursor) -> None:
     """Create the DBT role and user in Snowflake.
@@ -40,10 +40,10 @@ def create_roles_and_user(cur: SnowflakeCursor) -> None:
     Args:
         cur (snowflake.connector.cursor.SnowflakeCursor): Active Snowflake cursor.
     """
-    logger.info("🔐 Création du rôle et de l'utilisateur DBT...")
+    logger.info("🔐 Creating roles and users...")
     sql_file = SQL_DIR / "create_roles_and_user.sql"
     functions.run_sql_file(cur, sql_file)
-    logger.info("✅ Rôle et utilisateur créés")
+    logger.info("✅ Roles and users created")
 
 def grant_privileges(cur: SnowflakeCursor) -> None:
     """Grant required privileges to the TRANSFORMER role in Snowflake.
@@ -51,10 +51,10 @@ def grant_privileges(cur: SnowflakeCursor) -> None:
     Args:
         cur (snowflake.connector.cursor.SnowflakeCursor): Active Snowflake cursor.
     """
-    logger.info("🔑 Attribution des privilèges au rôle TRANSFORMER...")
+    logger.info("🔑 Granting privileges to the roles...")
     sql_file = SQL_DIR / "grant_privileges.sql"
     functions.run_sql_file(cur, sql_file)
-    logger.info("✅ Privilèges attribués")
+    logger.info("✅ Privileges granted")
 
 def main() -> None:
     """Main initialization process for the Snowflake environment.
@@ -79,7 +79,7 @@ def main() -> None:
             grant_privileges(cur)
         conn.close()
 
-        logger.info("🎯 Initialisation complète terminée avec succès !")
+        logger.info("🎯 Complete initialization finished successfully!")
     except Exception as e:
         logger.error(e)
 

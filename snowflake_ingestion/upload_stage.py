@@ -25,15 +25,15 @@ def download_and_upload_file(cur: SnowflakeCursor, file_url: str, filename: str)
         requests.HTTPError: If the HTTP request fails (non-200 status code).
         snowflake.connector.errors.Error: If the Snowflake PUT command fails.
     """
-    logger.info(f"📥 Téléchargement de {filename}...")
+    logger.info(f"📥 Downloading {filename}...")
     response = requests.get(file_url)
     response.raise_for_status()
     with tempfile.NamedTemporaryFile(suffix=".parquet", delete=True) as tmp_file:
         tmp_file.write(response.content)
         tmp_file.flush()
-        logger.info("📤 Upload vers Snowflake...")
+        logger.info("📤 Uploading to Snowflake...")
         cur.execute(f"PUT 'file://{tmp_file.name}' @~/{filename} AUTO_COMPRESS=FALSE")
-    logger.info(f"✅ {filename} uploadé et fichier temporaire nettoyé")
+    logger.info(f"✅ {filename} uploaded and temporary file cleaned")
 
 def main() -> None:
     """Main staging process for Parquet files.
@@ -51,28 +51,28 @@ def main() -> None:
 
     with conn.cursor() as cur:
         functions.use_context(cur, functions.WH_NAME, functions.DW_NAME, functions.RAW_SCHEMA)
-        logger.debug("📥 Récupération des URLs et noms des fichiers scrappés")
+        logger.debug("📥 Retrieving scraped file URLs and names")
         functions.run_sql_file(cur, SQL_DIR / "select_file_url_name_from_meta_scraped.sql")
         scraped_files = cur.fetchall()
         scraped_files_count: int = len(scraped_files)
 
         if scraped_files_count == 0:
-            logger.warning("⚠️  Aucun fichier à uploader")
+            logger.warning("⚠️  No files to upload")
         else:
-            logger.info(f"📦 {scraped_files_count} fichiers à uploader")
+            logger.info(f"📦 {scraped_files_count} files to upload")
 
         for file_url, filename in scraped_files:
             try:
                 download_and_upload_file(cur, file_url, filename)
-                logger.info(f"✅ {filename} uploadé")
+                logger.info(f"✅ {filename} uploaded")
                 cur.execute(
                     f"UPDATE {functions.METADATA_TABLE} SET load_status='STAGED' WHERE file_name=%s",
                     (filename,),
                 )
-                logger.debug(f"🚀 Chargement de {functions.METADATA_TABLE}")
+                logger.debug(f"🚀 Loading {functions.METADATA_TABLE}")
             except Exception as e:
-                logger.error(f"❌ Erreur upload {filename}: {e}")
-                logger.debug(f"🚀 Chargement de {functions.METADATA_TABLE}")
+                logger.error(f"❌ Upload error {filename}: {e}")
+                logger.debug(f"🚀 Loading {functions.METADATA_TABLE}")
                 cur.execute(
                     f"UPDATE {functions.METADATA_TABLE} SET load_status='FAILED_STAGE' WHERE file_name=%s",
                     (filename,),
