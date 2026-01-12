@@ -90,9 +90,9 @@ Le tableau documente **comment les données sont stockées**.
 | Nom de la table         | Schéma        | Type de table | Matérialisation |
 | :---------------------- | :------------ | :------------ | :-------------- |
 | FILE_LOADING_METADATA   | `SCHEMA_RAW`  | Transitoire   | Table           |
-| YELLOW_TAXI_TRIPS_RAW   | `SCHEMA_RAW`  | Transitoire   | Incremental     |
+| YELLOW_TAXI_TRIPS_RAW   | `SCHEMA_RAW`  | Permanente    | Incremental     |
 | TAXI_ZONE_LOOKUP        | `SCHEMA_RAW`  | Permanente    | Table           |
-| TAXI_ZONE_STG           | `SCHEMA_STG`  | Permanente    | Table           |
+| TAXI_ZONE_STG           | `SCHEMA_STG`  | Transitoire   | Table           |
 | YELLOW_TAXI_TRIPS_STG   | `SCHEMA_STG`  | Transitoire   | Incremental     |
 | int_trip_metrics        | `SCHEMA_STG`  |               | Vue             |
 | fact_trips              | `SCHEMA_FINAL`| Permanente    | Incremental     |

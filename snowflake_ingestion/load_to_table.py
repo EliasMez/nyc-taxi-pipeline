@@ -35,7 +35,7 @@ def create_table(cur: SnowflakeCursor) -> List[Tuple[str, str]]:
 
     columns = [f"TRIP_ID NUMBER"] + [f"{col_name} {col_type}" for col_name, col_type in table_schema]
     if len(columns) != 0:
-        create_sql = f"CREATE TRANSIENT TABLE IF NOT EXISTS {functions.RAW_TABLE} ({', '.join(columns)})"
+        create_sql = f"CREATE TABLE IF NOT EXISTS {functions.RAW_TABLE} ({', '.join(columns)})"
         cur.execute(create_sql)
         functions.run_sql_file(cur, SQL_DIR / "add_filename_to_raw_table.sql")
         logger.info(f"✅ Table {functions.RAW_TABLE} ready")

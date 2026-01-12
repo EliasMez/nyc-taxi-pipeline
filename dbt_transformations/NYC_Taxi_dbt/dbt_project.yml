@@ -31,11 +31,12 @@ models:
       yellow_taxi_trips_stg:
         +materialized: incremental
         +unique_key: trip_id
+        +transient: true
         +alias: "{{ env_var('STAGING_TABLE') }}"
       taxi_zone_stg:
         +materialized: table
         +unique_key: locationid
-        +transient: false  # Surcharge: rendue permanente
+        +transient: true
 
     final:
       +materialized: table
@@ -62,7 +63,7 @@ models:
 seeds:
   NYC_Taxi_dbt:
     taxi_zone_lookup:
-      +materialized: seed
+      +materialized: table
       +unique_key: locationid
       +schema: "{{ env_var('RAW_SCHEMA') }}"
       +alias: "taxi_zone_raw"
