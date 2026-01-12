@@ -2,6 +2,40 @@
 
 <!-- version list -->
 
+## v3.0.0 (2026-01-12)
+
+### Bug Fixes
+
+- **dbt**: Corriger les types de table pour STG et FINAL
+  ([`f94f872`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/f94f872980b63ad44183f65d94c3196cdc286d1c))
+
+- **snowflake**: Tables RAW PERMANENT to TRANSIENT et traduction des logs en anglais
+  ([`f3270c7`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/f3270c75c570e08aba58d165397a47f41d33df8d))
+
+- **sql**: Correction lintage
+  ([`f189b09`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/f189b0932faa49ccca17cd20a01a407fb6da014c))
+
+### Documentation
+
+- **mkdocs**: Ajout retention et types de tables dans mkdocs
+  ([`61c15de`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/61c15de617a673f0703b22723faa34950e5c21e4))
+
+### Features
+
+- **snowflake**: Mise en place de la retention
+  ([`b4fc639`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/b4fc6390332120531f6bca17e74148f87bf9086d))
+
+### Testing
+
+- **snowflake**: Correction tests et traduction en anglais des docstrings et logs
+  ([`6c12103`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/6c1210358efb7a8331a47ce6076e738275b90659))
+
+### Breaking Changes
+
+- **dbt**: Certaines tables des schémas 'STAGING' et 'FINAL' ont changé de type
+  (TRANSIENT/PERMANENT). Vérifiez votre configuration.
+
+
 ## v2.2.0 (2026-01-01)
 
 ### Bug Fixes
