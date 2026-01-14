@@ -1,1 +1,1 @@
-snowflake_ingestion/sql/init/create_backup.sql
+snowflake_ingestion/sql/backup/create_and_set_backup.sql
