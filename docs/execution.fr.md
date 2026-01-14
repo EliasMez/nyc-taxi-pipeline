@@ -73,6 +73,10 @@ Si vous n’avez pas besoin du versionnement automatique de code : `Actions` →
 | `SCRAPING_YEAR` | Date de début du scraping (>2000 et <année courante)| année courante |
 | `TIMEZONE` | Fuseau horaire qui définit le décalage horaire par rapport à UTC | `UTC` |
 | `RETENTION_DAYS` | Durée de conservation de l'historique des modifications des tables (Time Travel) (0-90) | `1` |
+| `FULL_BACKUP_POLICY_DAYS` | Durée de conservation des sauvegardes complètes de la base de données | `180` |
+| `RAW_TABLE_BACKUP_POLICY_DAYS` | Durée de conservation des sauvegardes de la table RAW | `730` |
+| `FINAL_SCHEMA_BACKUP_POLICY_DAYS` | Durée de conservation des sauvegardes du schéma FINAL | `90` |
+
 <br>
 
 ⚠️ Considérations importantes concernant RETENTION_DAYS:

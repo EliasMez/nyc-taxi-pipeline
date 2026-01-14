@@ -49,7 +49,6 @@ nyc-taxi-pipeline/
             ├── final/
             └── marts/
 ```
-<br>
 
 ## 📊 Processing Flow
 
@@ -71,6 +70,8 @@ Monthly execution data ingestion pipeline:
    dbt transformations (STAGING then FINAL).
 6. **Run dbt Tests**
    Execution of dbt tests to validate models.
+7. **Backup Policy**  
+   Automatic configuration of backup policies for the database, RAW table, and FINAL schema.
 
 ### Quality Pipelines
 

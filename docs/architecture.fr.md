@@ -49,8 +49,6 @@ nyc-taxi-pipeline/
       ├── final/
       └── marts/
 ```
-<br>
-
 
 ## 📊 Flux de traitement
 
@@ -72,6 +70,8 @@ Pipeline d'ingestion exécuté mensuellement :
    Transformations dbt (STAGING puis FINAL).
 6. **Run dbt Tests**  
    Exécution des tests dbt pour valider les modèles.
+7. **Backup Policy**  
+   Configuration automatique des politiques de sauvegarde pour la base, table RAW et schéma FINAL.
    
 ### Pipelines Qualité
 

@@ -71,6 +71,9 @@
 | `SCRAPING_YEAR` | 抓取开始日期 (>2000 且 <当前年份)| 当前年份 |
 | `TIMEZONE` | 定义与 UTC 偏移的时区 | `UTC` |
 | `RETENTION_DAYS` | 表更改历史（时光旅行）的保留期 (0-90) | `1` |
+| `FULL_BACKUP_POLICY_DAYS` | 完整数据库备份保留时长 | `180` |
+| `RAW_TABLE_BACKUP_POLICY_DAYS` | RAW表备份保留时长 | `730` |
+| `FINAL_SCHEMA_BACKUP_POLICY_DAYS` | FINAL模式备份保留时长 | `90` |
 <br>
 
 ⚠️ **关于 `RETENTION_DAYS` 的重要注意事项：**

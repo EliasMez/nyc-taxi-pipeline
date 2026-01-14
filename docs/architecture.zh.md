@@ -49,7 +49,6 @@ nyc-taxi-pipeline/
             ├── final/
             └── marts/
 ```
-<br>
 
 ## 📊 数据处理流程
 
@@ -71,7 +70,9 @@ nyc-taxi-pipeline/
    执行 dbt 转换（STAGING 然后是 FINAL）。
 6. **运行 dbt 测试**
    执行 dbt 测试以验证模型。
-
+7. **备份策略**  
+   自动配置数据库、RAW表和FINAL模式的备份策略。
+   
 ### 质量流程
 
 - **CodeQL 安全扫描**

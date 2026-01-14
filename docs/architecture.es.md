@@ -49,7 +49,6 @@ nyc-taxi-pipeline/
             ├── final/
             └── marts/
 ```
-<br>
 
 ## 📊 Flujo de Procesamiento
 
@@ -71,7 +70,9 @@ Pipeline de ingestión de datos ejecutado mensualmente:
    Transformaciones dbt (STAGING luego FINAL).
 6. **Ejecución de Pruebas dbt**
    Ejecución de pruebas dbt para validar los modelos.
-
+7. **Política de Copias de Seguridad**  
+   Configuración automática de políticas de respaldo para la base de datos, tabla RAW y esquema FINAL.
+   
 ### Pipelines de Calidad
 
 - **CodeQL Security Scan**
