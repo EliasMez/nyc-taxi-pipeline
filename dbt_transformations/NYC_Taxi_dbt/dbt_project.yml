@@ -63,7 +63,7 @@ models:
 seeds:
   NYC_Taxi_dbt:
     taxi_zone_lookup:
-      +materialized: table
+      +materialized: seed
       +unique_key: locationid
       +schema: "{{ env_var('RAW_SCHEMA') }}"
       +alias: "taxi_zone_raw"
