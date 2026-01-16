@@ -15,9 +15,9 @@ jobs:
       SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
       SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
       USER_DEV: ${{ vars.USER_DEV || 'USER_DEV' }}
-      USER_BI: ${{ vars.USER_BI || 'USER_BI' }}
-      USER_DS: ${{ vars.USER_DS || 'USER_DS' }}
-      USER_MC: ${{ vars.USER_MC || 'USER_MC' }}
+      USER_BI_ANALYST: ${{ vars.USER_BI_ANALYST || 'USER_BI_ANALYST' }}
+      USER_DATA_SCIENTIST: ${{ vars.USER_DATA_SCIENTIST || 'USER_DATA_SCIENTIST' }}
+      USER_MART_CONSUMER: ${{ vars.USER_MART_CONSUMER || 'USER_MART_CONSUMER' }}
       SCRAPING_YEAR: ${{ vars.SCRAPING_YEAR }}
       LOGGER_LEVEL: ${{ vars.LOGGER_LEVEL || 'INFO' }}
       WH_NAME: ${{ vars.WH_NAME || 'NYC_WH' }}
