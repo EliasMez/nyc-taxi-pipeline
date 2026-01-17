@@ -55,7 +55,7 @@ def test_connect_with_role_parameters_passed_correctly():
 
 
 
-def test_use_context(mocker):
+def test_use_context(mocker: Mock):
     """Test unitaire de la fonction use_context.
     Vérifie que la fonction exécute les 3 commandes SQL attendues pour configurer
     le contexte Snowflake (warehouse, database, schema) dans le bon ordre.
