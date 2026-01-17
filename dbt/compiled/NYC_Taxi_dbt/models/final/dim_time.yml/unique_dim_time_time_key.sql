@@ -1,0 +1,14 @@
+
+    
+    
+
+select
+    time_key as unique_field,
+    count(*) as n_records
+
+from NYC_TAXI_DW.SCHEMA_FINAL.dim_time
+where time_key is not null
+group by time_key
+having count(*) > 1
+
+

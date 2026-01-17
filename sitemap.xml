@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <url>
+        <loc>https://eliasmez.github.io/nyc-taxi-pipeline/architecture/</loc>
+        <lastmod>2026-01-17</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://eliasmez.github.io/nyc-taxi-pipeline/architecture/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://eliasmez.github.io/nyc-taxi-pipeline/es/architecture/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://eliasmez.github.io/nyc-taxi-pipeline/fr/architecture/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://eliasmez.github.io/nyc-taxi-pipeline/zh/architecture/"/>
+    </url>
+    <url>
+        <loc>https://eliasmez.github.io/nyc-taxi-pipeline/docstrings/</loc>
+        <lastmod>2026-01-17</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://eliasmez.github.io/nyc-taxi-pipeline/docstrings/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://eliasmez.github.io/nyc-taxi-pipeline/es/docstrings/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://eliasmez.github.io/nyc-taxi-pipeline/fr/docstrings/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://eliasmez.github.io/nyc-taxi-pipeline/zh/docstrings/"/>
+    </url>
+    <url>
+        <loc>https://eliasmez.github.io/nyc-taxi-pipeline/execution/</loc>
+        <lastmod>2026-01-17</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://eliasmez.github.io/nyc-taxi-pipeline/execution/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://eliasmez.github.io/nyc-taxi-pipeline/es/execution/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://eliasmez.github.io/nyc-taxi-pipeline/fr/execution/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://eliasmez.github.io/nyc-taxi-pipeline/zh/execution/"/>
+    </url>
+    <url>
+        <loc>https://eliasmez.github.io/nyc-taxi-pipeline/governance/</loc>
+        <lastmod>2026-01-17</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://eliasmez.github.io/nyc-taxi-pipeline/governance/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://eliasmez.github.io/nyc-taxi-pipeline/es/governance/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://eliasmez.github.io/nyc-taxi-pipeline/fr/governance/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://eliasmez.github.io/nyc-taxi-pipeline/zh/governance/"/>
+    </url>
+    <url>
+        <loc>https://eliasmez.github.io/nyc-taxi-pipeline/</loc>
+        <lastmod>2026-01-17</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://eliasmez.github.io/nyc-taxi-pipeline/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://eliasmez.github.io/nyc-taxi-pipeline/es/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://eliasmez.github.io/nyc-taxi-pipeline/fr/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://eliasmez.github.io/nyc-taxi-pipeline/zh/"/>
+    </url>
+    <url>
+        <loc>https://eliasmez.github.io/nyc-taxi-pipeline/fr/architecture/</loc>
+        <lastmod>2026-01-17</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://eliasmez.github.io/nyc-taxi-pipeline/fr/architecture/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://eliasmez.github.io/nyc-taxi-pipeline/architecture/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://eliasmez.github.io/nyc-taxi-pipeline/es/architecture/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://eliasmez.github.io/nyc-taxi-pipeline/zh/architecture/"/>
+    </url>
+    <url>
+        <loc>https://eliasmez.github.io/nyc-taxi-pipeline/fr/docstrings/</loc>
+        <lastmod>2026-01-17</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://eliasmez.github.io/nyc-taxi-pipeline/fr/docstrings/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://eliasmez.github.io/nyc-taxi-pipeline/docstrings/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://eliasmez.github.io/nyc-taxi-pipeline/es/docstrings/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://eliasmez.github.io/nyc-taxi-pipeline/zh/docstrings/"/>
+    </url>
+    <url>
+        <loc>https://eliasmez.github.io/nyc-taxi-pipeline/fr/execution/</loc>
+        <lastmod>2026-01-17</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://eliasmez.github.io/nyc-taxi-pipeline/fr/execution/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://eliasmez.github.io/nyc-taxi-pipeline/execution/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://eliasmez.github.io/nyc-taxi-pipeline/es/execution/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://eliasmez.github.io/nyc-taxi-pipeline/zh/execution/"/>
+    </url>
+    <url>
+        <loc>https://eliasmez.github.io/nyc-taxi-pipeline/fr/governance/</loc>
+        <lastmod>2026-01-17</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://eliasmez.github.io/nyc-taxi-pipeline/fr/governance/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://eliasmez.github.io/nyc-taxi-pipeline/governance/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://eliasmez.github.io/nyc-taxi-pipeline/es/governance/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://eliasmez.github.io/nyc-taxi-pipeline/zh/governance/"/>
+    </url>
+    <url>
+        <loc>https://eliasmez.github.io/nyc-taxi-pipeline/fr/</loc>
+        <lastmod>2026-01-17</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://eliasmez.github.io/nyc-taxi-pipeline/fr/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://eliasmez.github.io/nyc-taxi-pipeline/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://eliasmez.github.io/nyc-taxi-pipeline/es/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://eliasmez.github.io/nyc-taxi-pipeline/zh/"/>
+    </url>
+    <url>
+        <loc>https://eliasmez.github.io/nyc-taxi-pipeline/es/architecture/</loc>
+        <lastmod>2026-01-17</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="es" href="https://eliasmez.github.io/nyc-taxi-pipeline/es/architecture/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://eliasmez.github.io/nyc-taxi-pipeline/architecture/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://eliasmez.github.io/nyc-taxi-pipeline/fr/architecture/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://eliasmez.github.io/nyc-taxi-pipeline/zh/architecture/"/>
+    </url>
+    <url>
+        <loc>https://eliasmez.github.io/nyc-taxi-pipeline/es/docstrings/</loc>
+        <lastmod>2026-01-17</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="es" href="https://eliasmez.github.io/nyc-taxi-pipeline/es/docstrings/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://eliasmez.github.io/nyc-taxi-pipeline/docstrings/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://eliasmez.github.io/nyc-taxi-pipeline/fr/docstrings/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://eliasmez.github.io/nyc-taxi-pipeline/zh/docstrings/"/>
+    </url>
+    <url>
+        <loc>https://eliasmez.github.io/nyc-taxi-pipeline/es/execution/</loc>
+        <lastmod>2026-01-17</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="es" href="https://eliasmez.github.io/nyc-taxi-pipeline/es/execution/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://eliasmez.github.io/nyc-taxi-pipeline/execution/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://eliasmez.github.io/nyc-taxi-pipeline/fr/execution/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://eliasmez.github.io/nyc-taxi-pipeline/zh/execution/"/>
+    </url>
+    <url>
+        <loc>https://eliasmez.github.io/nyc-taxi-pipeline/es/governance/</loc>
+        <lastmod>2026-01-17</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="es" href="https://eliasmez.github.io/nyc-taxi-pipeline/es/governance/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://eliasmez.github.io/nyc-taxi-pipeline/governance/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://eliasmez.github.io/nyc-taxi-pipeline/fr/governance/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://eliasmez.github.io/nyc-taxi-pipeline/zh/governance/"/>
+    </url>
+    <url>
+        <loc>https://eliasmez.github.io/nyc-taxi-pipeline/es/</loc>
+        <lastmod>2026-01-17</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="es" href="https://eliasmez.github.io/nyc-taxi-pipeline/es/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://eliasmez.github.io/nyc-taxi-pipeline/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://eliasmez.github.io/nyc-taxi-pipeline/fr/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://eliasmez.github.io/nyc-taxi-pipeline/zh/"/>
+    </url>
+    <url>
+        <loc>https://eliasmez.github.io/nyc-taxi-pipeline/zh/architecture/</loc>
+        <lastmod>2026-01-17</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://eliasmez.github.io/nyc-taxi-pipeline/zh/architecture/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://eliasmez.github.io/nyc-taxi-pipeline/architecture/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://eliasmez.github.io/nyc-taxi-pipeline/es/architecture/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://eliasmez.github.io/nyc-taxi-pipeline/fr/architecture/"/>
+    </url>
+    <url>
+        <loc>https://eliasmez.github.io/nyc-taxi-pipeline/zh/docstrings/</loc>
+        <lastmod>2026-01-17</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://eliasmez.github.io/nyc-taxi-pipeline/zh/docstrings/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://eliasmez.github.io/nyc-taxi-pipeline/docstrings/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://eliasmez.github.io/nyc-taxi-pipeline/es/docstrings/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://eliasmez.github.io/nyc-taxi-pipeline/fr/docstrings/"/>
+    </url>
+    <url>
+        <loc>https://eliasmez.github.io/nyc-taxi-pipeline/zh/execution/</loc>
+        <lastmod>2026-01-17</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://eliasmez.github.io/nyc-taxi-pipeline/zh/execution/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://eliasmez.github.io/nyc-taxi-pipeline/execution/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://eliasmez.github.io/nyc-taxi-pipeline/es/execution/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://eliasmez.github.io/nyc-taxi-pipeline/fr/execution/"/>
+    </url>
+    <url>
+        <loc>https://eliasmez.github.io/nyc-taxi-pipeline/zh/governance/</loc>
+        <lastmod>2026-01-17</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://eliasmez.github.io/nyc-taxi-pipeline/zh/governance/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://eliasmez.github.io/nyc-taxi-pipeline/governance/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://eliasmez.github.io/nyc-taxi-pipeline/es/governance/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://eliasmez.github.io/nyc-taxi-pipeline/fr/governance/"/>
+    </url>
+    <url>
+        <loc>https://eliasmez.github.io/nyc-taxi-pipeline/zh/</loc>
+        <lastmod>2026-01-17</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://eliasmez.github.io/nyc-taxi-pipeline/zh/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://eliasmez.github.io/nyc-taxi-pipeline/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://eliasmez.github.io/nyc-taxi-pipeline/es/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://eliasmez.github.io/nyc-taxi-pipeline/fr/"/>
+    </url>
+</urlset>
