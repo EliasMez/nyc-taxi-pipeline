@@ -2,6 +2,47 @@
 
 <!-- version list -->
 
+## v3.1.0 (2026-01-17)
+
+### Bug Fixes
+
+- **dbt**: Correction materialized: seed
+  ([`b830826`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/b830826bd6094a619193fa0dca42b6ae98fdcb7e))
+
+- **dbt**: Modif type de table
+  ([`1f88733`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/1f88733083c0a5bf6ebe781ac352e4be0be0ae86))
+
+- **snowflake**: Final backup policy correction
+  ([`074ab4f`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/074ab4ff8c8066b98cb16cd48eeb24646973c3c1))
+
+- **sql**: Correction lintage sqlfluff et ajout .benchmarks au .gitignore
+  ([`d4f0d85`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/d4f0d85175282bdb2acc851345583c58502434a7))
+
+- **sql**: Modification schema backup
+  ([`61d9299`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/61d9299e878dbbf81c86dfab3b9d9b82394dac02))
+
+- **workflow**: Correction sqlfluff affiche erreur lintage
+  ([`9fa2c95`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/9fa2c95d6575f65f6cd8120357d8de9a99ba1d5f))
+
+- **workflow**: Correction users variables name
+  ([`2e4c92b`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/2e4c92bedac32a9d1baf917c8937911968dfe433))
+
+### Documentation
+
+- **mkdocs**: Mise a jour de la doc ajout test docstrings et ajout variables
+  ([`f18f892`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/f18f89285d41f4cc97bb4b3d47abac6741b5c0b9))
+
+### Features
+
+- **snowflake**: Ajout du backup
+  ([`adc8a7d`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/adc8a7dff9953fbc8ddf59e264e8d4193b751bb9))
+
+### Testing
+
+- **snowflake**: Ajout des tests backup et correction import unused security
+  ([`d78bac2`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/d78bac252fb4674036a1016bae90be05785a02f3))
+
+
 ## v3.0.0 (2026-01-12)
 
 ### Bug Fixes
