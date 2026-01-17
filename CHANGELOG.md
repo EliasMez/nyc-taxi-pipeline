@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v3.1.1 (2026-01-17)
+
+### Bug Fixes
+
+- **mkdocs**: Correction tests docstrings paths
+  ([`5288c97`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/5288c975c38a44df3f48a5a4792b6b886615e2d2))
+
+
 ## v3.1.0 (2026-01-17)
 
 ### Bug Fixes
