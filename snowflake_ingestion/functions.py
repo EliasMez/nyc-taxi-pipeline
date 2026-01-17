@@ -44,8 +44,12 @@ PASSWORD_MC: str = os.getenv("PASSWORD_MC")
 SCRAPING_YEAR: str = os.getenv("SCRAPING_YEAR")
 TIMEZONE: str = os.getenv("TIMEZONE")
 RETENTION_TIME: int = os.getenv("RETENTION_TIME")
-LOGGER_LEVEL: int = getattr(logging, os.getenv("LOGGER_LEVEL"))
 
+FULL_BACKUP_POLICY_DAYS: int = os.getenv("FULL_BACKUP_POLICY_DAYS")
+RAW_TABLE_BACKUP_POLICY_DAYS: int = os.getenv("RAW_TABLE_BACKUP_POLICY_DAYS")
+FINAL_SCHEMA_BACKUP_POLICY_DAYS: int = os.getenv("FINAL_SCHEMA_BACKUP_POLICY_DAYS")
+
+LOGGER_LEVEL: int = getattr(logging, os.getenv("LOGGER_LEVEL"))
 SQL_BASE_DIR: Path = Path("snowflake_ingestion") / "sql"
 
 def config_logger() -> None:

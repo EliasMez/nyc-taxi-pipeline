@@ -71,6 +71,10 @@ Si no necesita el versionado automático de código: `Actions` → `Release` →
 | `SCRAPING_YEAR` | Fecha de inicio del scraping (>2000 y <año actual)| año actual |
 | `TIMEZONE` | Zona horaria que define el desplazamiento respecto a UTC | `UTC` |
 | `RETENTION_DAYS` | Período de retención del historial de cambios de tablas (Time Travel) (0-90) | `1` |
+| `FULL_BACKUP_POLICY_DAYS` | Duración de retención de copias de seguridad completas de la base de datos | `180` |
+| `RAW_TABLE_BACKUP_POLICY_DAYS` | Duración de retención de copias de seguridad de la tabla RAW | `730` |
+| `FINAL_SCHEMA_BACKUP_POLICY_DAYS` | Duración de retención de copias de seguridad del esquema FINAL | `90` |
+
 <br>
 
 ⚠️ **Consideraciones importantes sobre `RETENTION_DAYS`:**

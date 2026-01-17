@@ -49,7 +49,6 @@ nyc-taxi-pipeline/
             ├── final/
             └── marts/
 ```
-<br>
 
 ## 📊 Flujo de Procesamiento
 
@@ -71,7 +70,9 @@ Pipeline de ingestión de datos ejecutado mensualmente:
    Transformaciones dbt (STAGING luego FINAL).
 6. **Ejecución de Pruebas dbt**
    Ejecución de pruebas dbt para validar los modelos.
-
+7. **Política de Copias de Seguridad**  
+   Configuración automática de políticas de respaldo para la base de datos, tabla RAW y esquema FINAL.
+   
 ### Pipelines de Calidad
 
 - **CodeQL Security Scan**
@@ -95,9 +96,9 @@ Esta tabla documenta **cómo se almacenan los datos**.
 | Nombre de la Tabla      | Esquema       | Tipo de Tabla | Materialización |
 | :---------------------- | :------------ | :------------ | :-------------- |
 | FILE_LOADING_METADATA   | `SCHEMA_RAW`  | Transitoria   | Tabla           |
-| YELLOW_TAXI_TRIPS_RAW   | `SCHEMA_RAW`  | Transitoria   | Incremental     |
+| YELLOW_TAXI_TRIPS_RAW   | `SCHEMA_RAW`  | Permanente    | Incremental     |
 | TAXI_ZONE_LOOKUP        | `SCHEMA_RAW`  | Permanente    | Tabla           |
-| TAXI_ZONE_STG           | `SCHEMA_STG`  | Permanente    | Tabla           |
+| TAXI_ZONE_STG           | `SCHEMA_STG`  | Transitoria   | Tabla           |
 | YELLOW_TAXI_TRIPS_STG   | `SCHEMA_STG`  | Transitoria   | Incremental     |
 | int_trip_metrics        | `SCHEMA_STG`  |               | Vista           |
 | fact_trips              | `SCHEMA_FINAL`| Permanente    | Incremental     |

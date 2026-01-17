@@ -71,6 +71,9 @@ If you do not need automatic code versioning: `Actions` → `Release` → **Disa
 | `SCRAPING_YEAR` | Scraping start date (>2000 and <current year)| current year |
 | `TIMEZONE` | Timezone defining the offset from UTC | `UTC` |
 | `RETENTION_DAYS` | Retention period for table change history (Time Travel) (0-90) | `1` |
+| `FULL_BACKUP_POLICY_DAYS` | Full database backup retention duration | `180` |
+| `RAW_TABLE_BACKUP_POLICY_DAYS` | RAW table backup retention duration | `730` |
+| `FINAL_SCHEMA_BACKUP_POLICY_DAYS` | FINAL schema backup retention duration | `90` |
 <br>
 
 ⚠️ **Important considerations regarding `RETENTION_DAYS`:**

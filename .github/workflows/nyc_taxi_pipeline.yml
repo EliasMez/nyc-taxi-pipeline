@@ -15,9 +15,9 @@ jobs:
       SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
       SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
       USER_DEV: ${{ vars.USER_DEV || 'USER_DEV' }}
-      USER_BI: ${{ vars.USER_BI || 'USER_BI' }}
-      USER_DS: ${{ vars.USER_DS || 'USER_DS' }}
-      USER_MC: ${{ vars.USER_MC || 'USER_MC' }}
+      USER_BI_ANALYST: ${{ vars.USER_BI_ANALYST || 'USER_BI_ANALYST' }}
+      USER_DATA_SCIENTIST: ${{ vars.USER_DATA_SCIENTIST || 'USER_DATA_SCIENTIST' }}
+      USER_MART_CONSUMER: ${{ vars.USER_MART_CONSUMER || 'USER_MART_CONSUMER' }}
       SCRAPING_YEAR: ${{ vars.SCRAPING_YEAR }}
       LOGGER_LEVEL: ${{ vars.LOGGER_LEVEL || 'INFO' }}
       WH_NAME: ${{ vars.WH_NAME || 'NYC_WH' }}
@@ -41,6 +41,9 @@ jobs:
       STAGING_TABLE: ${{ vars.STAGING_TABLE || 'YELLOW_TAXI_TRIPS_STG' }}
       TIMEZONE: ${{ vars.TIMEZONE || 'UTC' }}
       RETENTION_TIME: ${{ vars.RETENTION_TIME || '1' }}
+      FULL_BACKUP_POLICY_DAYS: ${{ vars.FULL_BACKUP_POLICY_DAYS || '180' }}
+      RAW_TABLE_BACKUP_POLICY_DAYS: ${{ vars.RAW_TABLE_BACKUP_POLICY_DAYS || '730' }}
+      FINAL_SCHEMA_BACKUP_POLICY_DAYS: ${{ vars.FINAL_SCHEMA_BACKUP_POLICY_DAYS || '90' }}
       AWS_EC2_METADATA_DISABLED: true
       
     
@@ -89,3 +92,8 @@ jobs:
     - name: Run dbt Tests
       run: |
         dbt test --project-dir dbt_transformations/NYC_Taxi_dbt --profiles-dir dbt_transformations
+
+    - name: Set Backup
+      run: |
+        python -m snowflake_ingestion.backup_policy
+    

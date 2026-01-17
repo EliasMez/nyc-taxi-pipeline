@@ -6,6 +6,7 @@ __pycache__/
 dbt.log
 memo.txt
 nyc_taxi.egg-info/
+.benchmarks
 
 # fichiers générés par dbt
 target/

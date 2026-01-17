@@ -7,22 +7,6 @@ logger = functions.logging.getLogger(__name__)
 SQL_DIR = functions.SQL_BASE_DIR / "init"
 
 
-def set_data_retention(cur: SnowflakeCursor) -> None:
-    """Set the data retention period for the Snowflake account.
-
-    Checks if the account is Enterprise, then applies the retention time.
-    Logs the result in days, with pluralization handled automatically.
-
-    Args:
-        cur (snowflake.connector.cursor.SnowflakeCursor): Active Snowflake cursor.
-    """
-    logger.info("🏗️  Setting up data retention")
-    sql_file = SQL_DIR / "set_data_retention.sql"
-    functions.run_sql_file(cur, sql_file)
-    s = functions.plural_suffix(int(functions.RETENTION_TIME))
-    logger.info(f"✅ Data retention set to {functions.RETENTION_TIME} day{s}")
-
-
 def setup_data_warehouse(cur: SnowflakeCursor) -> None:
     """Create the data warehouse, database, and schemas in Snowflake.
 
@@ -56,6 +40,22 @@ def grant_privileges(cur: SnowflakeCursor) -> None:
     functions.run_sql_file(cur, sql_file)
     logger.info("✅ Privileges granted")
 
+def set_data_retention(cur: SnowflakeCursor) -> None:
+    """Set the data retention period for the Snowflake account.
+
+    Checks if the account is Enterprise, then applies the retention time.
+    Logs the result in days, with pluralization handled automatically.
+
+    Args:
+        cur (snowflake.connector.cursor.SnowflakeCursor): Active Snowflake cursor.
+    """
+    logger.info("🏗️  Setting up data retention")
+    sql_file = SQL_DIR / "set_data_retention.sql"
+    functions.run_sql_file(cur, sql_file)
+    s = functions.plural_suffix(int(functions.RETENTION_TIME))
+    logger.info(f"✅ Data retention set to {functions.RETENTION_TIME} day{s}")
+
+
 def main() -> None:
     """Main initialization process for the Snowflake environment.
 
@@ -63,11 +63,6 @@ def main() -> None:
     and executes setup steps in order.
     """
     try:
-        conn = functions.connect_with_role(functions.USER, functions.PASSWORD, functions.ACCOUNT, "ACCOUNTADMIN")
-        with conn.cursor() as cur:
-            set_data_retention(cur)
-        conn.close()
-
         conn = functions.connect_with_role(functions.USER, functions.PASSWORD, functions.ACCOUNT, "SYSADMIN")
         with conn.cursor() as cur:
             setup_data_warehouse(cur)
@@ -77,6 +72,11 @@ def main() -> None:
         with conn.cursor() as cur:
             create_roles_and_user(cur)
             grant_privileges(cur)
+        conn.close()
+
+        conn = functions.connect_with_role(functions.USER, functions.PASSWORD, functions.ACCOUNT, "ACCOUNTADMIN")
+        with conn.cursor() as cur:
+            set_data_retention(cur)
         conn.close()
 
         logger.info("🎯 Complete initialization finished successfully!")

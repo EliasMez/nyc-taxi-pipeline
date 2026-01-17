@@ -49,7 +49,6 @@ nyc-taxi-pipeline/
             ├── final/
             └── marts/
 ```
-<br>
 
 ## 📊 数据处理流程
 
@@ -71,7 +70,9 @@ nyc-taxi-pipeline/
    执行 dbt 转换（STAGING 然后是 FINAL）。
 6. **运行 dbt 测试**
    执行 dbt 测试以验证模型。
-
+7. **备份策略**  
+   自动配置数据库、RAW表和FINAL模式的备份策略。
+   
 ### 质量流程
 
 - **CodeQL 安全扫描**
@@ -96,9 +97,9 @@ nyc-taxi-pipeline/
 | 表名称                    | 模式             | 表类型    | 物化方式  |
 | :----------------------- | :---------------| :------- | :--------|
 | FILE_LOADING_METADATA    | `SCHEMA_RAW`    | 瞬态表    | 表       |
-| YELLOW_TAXI_TRIPS_RAW    | `SCHEMA_RAW`    | 瞬态表    | 增量      |
+| YELLOW_TAXI_TRIPS_RAW    | `SCHEMA_RAW`    | 永久表    | 增量      |
 | TAXI_ZONE_LOOKUP         | `SCHEMA_RAW`    | 永久表    | 表       |
-| TAXI_ZONE_STG            | `SCHEMA_STG`    | 永久表    | 表       |
+| TAXI_ZONE_STG            | `SCHEMA_STG`    | 瞬态表    | 表       |
 | YELLOW_TAXI_TRIPS_STG    | `SCHEMA_STG`    | 瞬态表    | 增量      |
 | int_trip_metrics         | `SCHEMA_STG`    |          | 视图      |
 | fact_trips               | `SCHEMA_FINAL`  | 永久表    | 增量      |

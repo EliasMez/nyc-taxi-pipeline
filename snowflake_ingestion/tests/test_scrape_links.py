@@ -7,13 +7,19 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 import snowflake_ingestion.scrape_links as scrape
 
 def test_get_scraping_year_with_valid_env():
-    """Unit test for get_scraping_year with a valid environment variable."""
+    """
+    Test that get_scraping_year correctly parses and returns a valid integer value from the SCRAPING_YEAR environment variable.
+    Verifies that when SCRAPING_YEAR is set to '2023', the function returns the integer 2023.
+    """
     with patch('snowflake_ingestion.scrape_links.functions.SCRAPING_YEAR', '2023'):
         result = scrape.get_scraping_year()
         assert result == 2023
 
 def test_get_scraping_year_with_empty_env_early_month():
-    """Unit test for get_scraping_year with empty env variable in early month."""
+    """
+    Test get_scraping_year behavior when SCRAPING_YEAR is empty and current month is early (January to March).
+    The function should default to the previous year since current year's data may not be fully available yet.
+    """
     with patch('snowflake_ingestion.scrape_links.functions.SCRAPING_YEAR', ''):
         with patch('snowflake_ingestion.scrape_links.current_month', 1):
             result = scrape.get_scraping_year()
@@ -21,7 +27,10 @@ def test_get_scraping_year_with_empty_env_early_month():
             assert result == expected
 
 def test_get_scraping_year_with_empty_env_late_month():
-    """Unit test for get_scraping_year with empty env variable in late month."""
+    """
+    Test get_scraping_year behavior when SCRAPING_YEAR is empty and current month is late (April to December).
+    The function should default to the current year for scraping operations.
+    """
     with patch('snowflake_ingestion.scrape_links.functions.SCRAPING_YEAR', ''):
         with patch('snowflake_ingestion.scrape_links.current_month', 4):
             result = scrape.get_scraping_year()
@@ -29,7 +38,10 @@ def test_get_scraping_year_with_empty_env_late_month():
             assert result == expected
 
 def test_get_scraping_year_with_invalid_env_early_month():
-    """Unit test for get_scraping_year with invalid env variable in early month."""
+    """
+    Test get_scraping_year behavior when SCRAPING_YEAR contains invalid non-numeric data in early months.
+    The function should log an error and default to the previous year while handling the invalid input gracefully.
+    """
     with patch('snowflake_ingestion.scrape_links.functions.SCRAPING_YEAR', 'invalid'):
         with patch('snowflake_ingestion.scrape_links.current_month', 3):
             with patch('snowflake_ingestion.scrape_links.logger') as mock_logger:
@@ -39,7 +51,10 @@ def test_get_scraping_year_with_invalid_env_early_month():
                 mock_logger.error.assert_called_once()
 
 def test_get_scraping_year_with_invalid_env_late_month():
-    """Unit test for get_scraping_year with invalid env variable in late month."""
+    """
+    Test get_scraping_year behavior when SCRAPING_YEAR contains invalid non-numeric data in late months.
+    The function should log an error and default to the current year while handling the invalid input gracefully.
+    """
     with patch('snowflake_ingestion.scrape_links.functions.SCRAPING_YEAR', 'invalid'):
         with patch('snowflake_ingestion.scrape_links.current_month', 12):
             with patch('snowflake_ingestion.scrape_links.logger') as mock_logger:
@@ -49,7 +64,10 @@ def test_get_scraping_year_with_invalid_env_late_month():
                 mock_logger.error.assert_called_once()
 
 def test_get_xpath():
-    """Unit test for get_xpath to verify the generated XPath expression."""
+    """
+    Test that get_xpath generates the correct XPath expression for locating Yellow Taxi Trip Records links.
+    The XPath should include both the scraping year and current year to capture relevant data files.
+    """
     with patch('snowflake_ingestion.scrape_links.get_scraping_year', return_value=2023):
         with patch('snowflake_ingestion.scrape_links.current_year', 2024):
             result = scrape.get_xpath()
@@ -57,7 +75,10 @@ def test_get_xpath():
             assert result == expected
 
 def test_get_parquet_links_success():
-    """Unit test for get_parquet_links with successful scraping."""
+    """
+    Test successful extraction of parquet file links from the NYC TLC website HTML content.
+    Verifies that only links with title 'Yellow Taxi Trip Records' are extracted and returned.
+    """
     mock_html_content = """
     <html>
         <a title="Yellow Taxi Trip Records" href="https://example.com/file1.parquet">Link1</a>
@@ -89,7 +110,10 @@ def test_get_parquet_links_success():
                     assert result == ["https://example.com/file1.parquet", "https://example.com/file2.parquet"]
 
 def test_setup_meta_table():
-    """Unit test for setup_meta_table to verify table creation."""
+    """
+    Test that setup_meta_table correctly executes the SQL script for creating or verifying the metadata table.
+    Verifies that the appropriate SQL file is executed and success/failure logs are recorded.
+    """
     mock_cursor = Mock()
     with patch('snowflake_ingestion.scrape_links.functions.run_sql_file') as mock_run_sql:
         with patch('snowflake_ingestion.scrape_links.logger') as mock_logger:
@@ -99,7 +123,10 @@ def test_setup_meta_table():
             mock_logger.info.assert_any_call("✅ Metadata table ready")
 
 def test_main_with_new_files():
-    """Unit test for main function when new files are detected."""
+    """
+    Test the main scraping workflow when new parquet files are detected that don't exist in the metadata table.
+    Verifies that new files trigger INSERT operations into the metadata table with appropriate logging.
+    """
     mock_conn = MagicMock()
     mock_cursor = MagicMock()
     mock_conn.cursor.return_value.__enter__.return_value = mock_cursor
@@ -124,7 +151,10 @@ def test_main_with_new_files():
                             mock_logger.info.assert_any_call("➕ New file detected : yellow_tripdata_2023-01.parquet")
 
 def test_main_without_new_files():
-    """Unit test for main function when no new files are found."""
+    """
+    Test the main scraping workflow when all discovered parquet files already exist in the metadata table.
+    Verifies that no INSERT operations occur and appropriate informational and warning logs are recorded.
+    """
     mock_conn = MagicMock()
     mock_cursor = MagicMock()
     mock_conn.cursor.return_value.__enter__.return_value = mock_cursor
@@ -144,7 +174,10 @@ def test_main_without_new_files():
                             mock_logger.warning.assert_called_with("⚠️  No new files to load.")
 
 def test_main_file_parsing():
-    """Unit test for main function to verify file parsing logic."""
+    """
+    Test that the main function correctly parses filename patterns to extract year and month components.
+    Verifies that URLs like 'yellow_tripdata_2023-07.parquet' are correctly parsed into (2023, 7) tuples.
+    """
     mock_conn = MagicMock()
     mock_cursor = MagicMock()
     mock_conn.cursor.return_value.__enter__.return_value = mock_cursor
