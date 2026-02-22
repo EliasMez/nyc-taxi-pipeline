@@ -24,3 +24,7 @@ site/
 
 # pytest
 .pytest_cache
+
+
+certif/
+images/
