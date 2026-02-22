@@ -2,6 +2,27 @@
 
 <!-- version list -->
 
+## v3.1.2 (2026-02-22)
+
+### Bug Fixes
+
+- **dbt**: Correction lineage
+  ([`3b81cd6`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/3b81cd6c3e8ab69e8f08efa90937223da8577225))
+
+### Chores
+
+- **.gitignore**: Ajout des dossiers de certif dans le .gitignore
+  ([`0642f66`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/0642f6605d1d7a88d4c167a764d43fce9217319d))
+
+### Documentation
+
+- **mkdocs**: Ajout gestion des accès, SLA, backup et modélisation (4 langues)
+  ([`6280220`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/62802207fda08110623b7f29c64fa82db7e65061))
+
+- **test**: Traduction en anglais de la doc non encore traduite test_function
+  ([`aa94fe1`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/aa94fe14bea3aecb9dfe4a24ea80f4221dac63b3))
+
+
 ## v3.1.1 (2026-01-17)
 
 ### Bug Fixes
