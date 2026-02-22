@@ -108,3 +108,15 @@ This table documents **how the data is stored**.
 | marts                  | `SCHEMA_FINAL`|             | View            |
 
 Details available in the <a href="https://eliasmez.github.io/nyc-taxi-pipeline/dbt">📚 Online <strong>dbt</strong> documentation</a>
+
+**Conceptual Data Model (CDM)**
+
+![NYC_TAXI_DW data warehouse CDM](images/final_snow_MCD.png)
+
+**Logical Data Model (LDM)**
+
+![NYC_TAXI_DW data warehouse LDM](images/final_snow_MLD.png)
+
+**Physical Data Model (PDM)**
+
+![NYC_TAXI_DW data warehouse PDM](images/final_snow_MPD.png)

@@ -1,2 +1,2 @@
 SELECT *
-FROM {{ source('raw', 'taxi_zone_raw') }}
+FROM {{ ref('taxi_zone_lookup') }}

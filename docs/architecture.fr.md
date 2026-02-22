@@ -102,3 +102,15 @@ Le tableau documente **comment les données sont stockées**.
 | marts                   | `SCHEMA_FINAL`|               | Vue             |
 
 details disponibles dans la <a href="https://eliasmez.github.io/nyc-taxi-pipeline/dbt">📚 Documentation <strong>dbt</strong> en ligne</a>
+
+**Modèle Conceptuel de Données (MCD)**
+
+![MCD de l'entrepôt NYC_TAXI_DW](images/final_snow_MCD.png)
+
+**Modèle Logique de Données (MLD)**
+
+![MLD de l'entrepôt NYC_TAXI_DW](images/final_snow_MLD.png)
+
+**Modèle Physique de Données (MPD)**
+
+![MPD de l'entrepôt NYC_TAXI_DW](images/final_snow_MPD.png)

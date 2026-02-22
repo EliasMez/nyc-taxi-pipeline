@@ -5,7 +5,6 @@ sources:
     database: NYC_TAXI_DW
     schema: "SCHEMA_{{ env_var('RAW_SCHEMA') }}"
     tables:
-      - name: "{{ env_var('RAW_TABLE') }}"
       - name: "taxi_zone_raw"
         description: "Reference table for NYC taxi zones (LocationID, Borough, Zone, Service Zone). Loaded from TLC lookup CSV."
         columns:
