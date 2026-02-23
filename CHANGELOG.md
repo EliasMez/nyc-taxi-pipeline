@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v3.1.4 (2026-02-23)
+
+### Bug Fixes
+
+- **dbt**: Ajout arguments imbriqués pour accepted_values (dépréciation dbt 1.11)
+  ([`11253e4`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/11253e4df1be28450dcc397beb441be406660a29))
+
+
 ## v3.1.3 (2026-02-23)
 
 ### Bug Fixes
