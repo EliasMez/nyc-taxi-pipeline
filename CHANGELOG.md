@@ -2,6 +2,19 @@
 
 <!-- version list -->
 
+## v3.1.3 (2026-02-23)
+
+### Bug Fixes
+
+- **sql**: Correction placeholder manquant sur REVOKE DATA_SCIENTIST
+  ([`f115cc5`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/f115cc51673f8464e1a54a21eef66d16b39ba598))
+
+### Refactoring
+
+- **dbt**: Suppression source raw.taxi_zone_raw (dead code)
+  ([`246973f`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/246973f01c2ac5bd121eb2371e3cb039a46f3736))
+
+
 ## v3.1.2 (2026-02-22)
 
 ### Bug Fixes
