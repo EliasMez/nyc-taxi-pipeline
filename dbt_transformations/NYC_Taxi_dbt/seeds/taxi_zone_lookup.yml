@@ -22,4 +22,5 @@ seeds:
         tests:
           - not_null
           - accepted_values:
-              values: ["EWR", "Boro Zone", "Yellow Zone", "Airports", "N/A"]
+              arguments:
+                values: ["EWR", "Boro Zone", "Yellow Zone", "Airports", "N/A"]
