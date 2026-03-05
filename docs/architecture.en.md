@@ -143,7 +143,7 @@ erDiagram
     FACT_TRIPS }o--|| DIM_LOCATIONS : "pickup / dropoff"
 ```
 
-## 📐 Slowly Changing Dimensions (SCD)
+## 📐 Slowly Changing Dimensions
 
 All 3 dimensions are **SCD Type 0**: no variation is expected.
 

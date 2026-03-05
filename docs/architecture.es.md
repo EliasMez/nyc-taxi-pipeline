@@ -143,7 +143,7 @@ erDiagram
     FACT_TRIPS }o--|| DIM_LOCATIONS : "pickup / dropoff"
 ```
 
-## 📐 Dimensiones de cambio lento (SCD)
+## 📐 Dimensiones de cambio lento
 
 Las 3 dimensiones son **SCD Tipo 0**: no se espera ninguna variación.
 

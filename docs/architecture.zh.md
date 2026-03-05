@@ -143,7 +143,7 @@ erDiagram
     FACT_TRIPS }o--|| DIM_LOCATIONS : "pickup / dropoff"
 ```
 
-## 📐 缓慢变化维度（SCD）
+## 📐 缓慢变化维度
 
 3 个维度均为 **SCD Type 0**：不预期任何变化。
 

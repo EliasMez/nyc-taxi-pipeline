@@ -137,7 +137,7 @@ erDiagram
     FACT_TRIPS }o--|| DIM_LOCATIONS : "pickup / dropoff"
 ```
 
-## 📐 Gestion des dimensions lentes (SCD)
+## 📐 Gestion des dimensions lentes
 
 Les 3 dimensions sont en **SCD Type 0** : aucune variation n'est attendue.
 
