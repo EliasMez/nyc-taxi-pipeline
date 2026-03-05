@@ -33,3 +33,6 @@ images/
 # scripts PDF locaux
 make_pdf_e5.sh
 make_pdf_e6.sh
+
+# Claude Code
+.claude/
