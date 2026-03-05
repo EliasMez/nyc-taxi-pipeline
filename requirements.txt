@@ -102,7 +102,7 @@ requests-toolbelt==1.0.0
 rich==14.2.0
 rpds-py==0.28.0
 s3transfer==0.14.0
-SecretStorage==3.4.0
+SecretStorage==3.5.0
 shellingham==1.5.4
 six==1.17.0
 smmap==5.0.2
