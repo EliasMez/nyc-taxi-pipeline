@@ -2,6 +2,36 @@
 
 <!-- version list -->
 
+## v3.1.5 (2026-03-05)
+
+### Bug Fixes
+
+- **tests**: Patch current_year in year-boundary-sensitive test
+  ([`be8ef2c`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/be8ef2cb4d29da7abefe92cee4de55d1891a53e8))
+
+### Chores
+
+- Add .claude to gitignore
+  ([`4536ff4`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/4536ff481b8699578e61b911058106710c84b9b5))
+
+### Documentation
+
+- **architecture**: Remove SCD acronym from section titles
+  ([`6f0c7be`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/6f0c7be924c7bdb6175ac37844e5d0917587a4c6))
+
+- **mkdocs**: Add mermaid ERD diagram to architecture page
+  ([`67f9c11`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/67f9c1149daeda0c2d81c4f79d759b6a8bdac48e))
+
+- **mkdocs**: Ajout dans mkdocs
+  ([`ccf83b1`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/ccf83b169fb53c01de77748e021f6133f6ee64ac))
+
+- **rapports**: Modification mineur affichage des rapports de certif
+  ([`dcf6fee`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/dcf6feedfe06ab0d36bdb78b108fbf4da49a0715))
+
+- **readme**: Add certification deliverables section
+  ([`7adf1d2`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/7adf1d21c87fd8b53da1ecd087054e4a1ad819c7))
+
+
 ## v3.1.4 (2026-02-23)
 
 ### Bug Fixes
