@@ -87,7 +87,6 @@ nyc-taxi-pipeline/
   通过 Python Semantic Release 自动进行版本控制、生成变更日志和发布版本，每次推送或拉取请求到 `main` 时触发。
 - **SQL 代码质量**
   使用 SQLFluff 对 SQL 代码（dbt 模型和 Snowflake 脚本）进行自动 linting，每次推送或拉取请求到 `dev` 和 `main` 时执行。
-```
 
 
 ## 数据建模 (Data Modeling)
@@ -110,17 +109,40 @@ nyc-taxi-pipeline/
 
 详细内容可查阅 <a href="https://eliasmez.github.io/nyc-taxi-pipeline/dbt">📚 在线 <strong>dbt</strong> 文档</a>
 
-**概念数据模型（CDM）**
+**星型模式（ERD）**
 
-![NYC_TAXI_DW 数据仓库 CDM](images/final_snow_MCD.png)
+```mermaid
+%%{init: {"themeVariables": {"fontSize": "10px"}}}%%
+erDiagram
+    FACT_TRIPS {
+        number surrogate_key PK
+        number date_id FK
+        number time_id FK
+        number location_id FK
+        float fare_amount
+        float trip_distance
+    }
+    DIM_DATE {
+        number date_id PK
+        int year
+        int month
+        int day_of_week
+    }
+    DIM_TIME {
+        number time_id PK
+        int hour
+        string period_of_day
+    }
+    DIM_LOCATIONS {
+        number location_id PK
+        string zone
+        string borough
+    }
+    FACT_TRIPS }o--|| DIM_DATE : "pickup / dropoff"
+    FACT_TRIPS }o--|| DIM_TIME : "pickup / dropoff"
+    FACT_TRIPS }o--|| DIM_LOCATIONS : "pickup / dropoff"
+```
 
-**逻辑数据模型（LDM）**
-
-![NYC_TAXI_DW 数据仓库 LDM](images/final_snow_MLD.png)
-
-**物理数据模型（PDM）**
-
-![NYC_TAXI_DW 数据仓库 PDM](images/final_snow_MPD.png)
 ## 📐 缓慢变化维度（SCD）
 
 3 个维度均为 **SCD Type 0**：不预期任何变化。

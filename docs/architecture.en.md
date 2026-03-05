@@ -109,17 +109,40 @@ This table documents **how the data is stored**.
 
 Details available in the <a href="https://eliasmez.github.io/nyc-taxi-pipeline/dbt">📚 Online <strong>dbt</strong> documentation</a>
 
-**Conceptual Data Model (CDM)**
+**Star Schema (ERD)**
 
-![NYC_TAXI_DW data warehouse CDM](images/final_snow_MCD.png)
+```mermaid
+%%{init: {"themeVariables": {"fontSize": "10px"}}}%%
+erDiagram
+    FACT_TRIPS {
+        number surrogate_key PK
+        number date_id FK
+        number time_id FK
+        number location_id FK
+        float fare_amount
+        float trip_distance
+    }
+    DIM_DATE {
+        number date_id PK
+        int year
+        int month
+        int day_of_week
+    }
+    DIM_TIME {
+        number time_id PK
+        int hour
+        string period_of_day
+    }
+    DIM_LOCATIONS {
+        number location_id PK
+        string zone
+        string borough
+    }
+    FACT_TRIPS }o--|| DIM_DATE : "pickup / dropoff"
+    FACT_TRIPS }o--|| DIM_TIME : "pickup / dropoff"
+    FACT_TRIPS }o--|| DIM_LOCATIONS : "pickup / dropoff"
+```
 
-**Logical Data Model (LDM)**
-
-![NYC_TAXI_DW data warehouse LDM](images/final_snow_MLD.png)
-
-**Physical Data Model (PDM)**
-
-![NYC_TAXI_DW data warehouse PDM](images/final_snow_MPD.png)
 ## 📐 Slowly Changing Dimensions (SCD)
 
 All 3 dimensions are **SCD Type 0**: no variation is expected.
