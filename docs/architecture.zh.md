@@ -110,17 +110,35 @@ nyc-taxi-pipeline/
 
 详细内容可查阅 <a href="https://eliasmez.github.io/nyc-taxi-pipeline/dbt">📚 在线 <strong>dbt</strong> 文档</a>
 
-**概念数据模型（CDM）**
+**星型模式（ERD）**
 
-![NYC_TAXI_DW 数据仓库 CDM](images/final_snow_MCD.png)
+```mermaid
+erDiagram
+    FACT_TRIPS {
+        number surrogate_key PK
+        number pickup_date_id FK
+        number dropoff_date_id FK
+        number pickup_time_id FK
+        number dropoff_time_id FK
+        number pickup_location_id FK
+        number dropoff_location_id FK
+        float fare_amount
+        float trip_distance
+    }
+    DIM_DATE {
+        number date_id PK
+    }
+    DIM_TIME {
+        number time_id PK
+    }
+    DIM_LOCATIONS {
+        number location_id PK
+    }
+    FACT_TRIPS }o--|| DIM_DATE : "pickup / dropoff"
+    FACT_TRIPS }o--|| DIM_TIME : "pickup / dropoff"
+    FACT_TRIPS }o--|| DIM_LOCATIONS : "pickup / dropoff"
+```
 
-**逻辑数据模型（LDM）**
-
-![NYC_TAXI_DW 数据仓库 LDM](images/final_snow_MLD.png)
-
-**物理数据模型（PDM）**
-
-![NYC_TAXI_DW 数据仓库 PDM](images/final_snow_MPD.png)
 ## 📐 缓慢变化维度（SCD）
 
 3 个维度均为 **SCD Type 0**：不预期任何变化。

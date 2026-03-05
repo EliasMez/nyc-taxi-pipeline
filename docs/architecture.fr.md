@@ -103,17 +103,35 @@ Le tableau documente **comment les données sont stockées**.
 
 details disponibles dans la <a href="https://eliasmez.github.io/nyc-taxi-pipeline/dbt">📚 Documentation <strong>dbt</strong> en ligne</a>
 
-**Modèle Conceptuel de Données (MCD)**
+**Schéma en étoile (ERD)**
 
-![MCD de l'entrepôt NYC_TAXI_DW](images/final_snow_MCD.png)
+```mermaid
+erDiagram
+    FACT_TRIPS {
+        number surrogate_key PK
+        number pickup_date_id FK
+        number dropoff_date_id FK
+        number pickup_time_id FK
+        number dropoff_time_id FK
+        number pickup_location_id FK
+        number dropoff_location_id FK
+        float fare_amount
+        float trip_distance
+    }
+    DIM_DATE {
+        number date_id PK
+    }
+    DIM_TIME {
+        number time_id PK
+    }
+    DIM_LOCATIONS {
+        number location_id PK
+    }
+    FACT_TRIPS }o--|| DIM_DATE : "pickup / dropoff"
+    FACT_TRIPS }o--|| DIM_TIME : "pickup / dropoff"
+    FACT_TRIPS }o--|| DIM_LOCATIONS : "pickup / dropoff"
+```
 
-**Modèle Logique de Données (MLD)**
-
-![MLD de l'entrepôt NYC_TAXI_DW](images/final_snow_MLD.png)
-
-**Modèle Physique de Données (MPD)**
-
-![MPD de l'entrepôt NYC_TAXI_DW](images/final_snow_MPD.png)
 ## 📐 Gestion des dimensions lentes (SCD)
 
 Les 3 dimensions sont en **SCD Type 0** : aucune variation n'est attendue.
