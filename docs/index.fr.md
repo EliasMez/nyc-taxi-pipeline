@@ -14,7 +14,7 @@ Ce workflow GitHub Actions automatise le pipeline de données de bout en bout, d
 Les données incluent :
 
 - Dates/heures de prise en charge et dépose
-- Localisations GPS des trajets
+- Zones de prise en charge et de dépose
 - Distances, tarifs détaillés, types de paiement
 - Nombre de passagers rapporté par le chauffeur
 

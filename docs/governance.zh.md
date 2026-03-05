@@ -6,9 +6,30 @@
 [![SQLFluff](https://img.shields.io/badge/SQLFluff-Linting-000000?logo=sqlfluff&logoColor=white)]()
 
 ## 📊 监控
-- GitHub Actions 中的详细日志。
-- 工作流失败或取消时的电子邮件警报。
-- 通过元数据表跟踪每个阶段的状态（*已抓取 / 已暂存 / 成功 / 失败*）。
+
+### 日志级别
+日志级别可通过 GitHub Actions 变量 `LOGGER_LEVEL` 配置（默认：`INFO`）。
+
+| 级别 | 用途 |
+|------|------|
+| `CRITICAL` | 不可恢复的系统故障 |
+| `ERROR` | 严重错误（连接、加载、无效值） |
+| `WARNING` | 非阻塞警报（无文件可加载、文件已引用） |
+| `INFO` | 进度信息（步骤开始/结束、加载的文件数和行数） |
+| `DEBUG` | 执行的 SQL 查询、元数据更新、OpenTelemetry 追踪 |
+
+日志可在 GitHub Actions 中查看。工作流失败或取消时发送电子邮件警报。
+
+### 摄取跟踪
+`FILE_LOADING_METADATA` 表在整个管道中跟踪每个文件的状态。
+
+| 状态 | 含义 |
+|------|------|
+| `SCRAPED` | 文件已检测，等待上传 |
+| `STAGED` | 文件已上传至 Stage |
+| `SUCCESS` | 加载成功 |
+| `FAILED_STAGE` | 上传至 Stage 失败 |
+| `FAILED_LOAD` | 加载到表失败 |
 
 ## ✅ 数据质量
 - **dbt** 测试确保数据的完整性、一致性和有效性。
@@ -78,9 +99,24 @@
 | 对象 | 频率 | 保留期 |
 |------|------|--------|
 | 完整数据库 `NYC_TAXI_DW` | 每月 | 180 天 |
-| 表 `YELLOW_TAXI_TRIPS_RAW` | 每月 | **730 天**（默认值） |
+| 表 `YELLOW_TAXI_TRIPS_RAW` | 每月 | **730 天** |
 | `FINAL` 模式 | 每月 | 90 天 |
 
 - **730 天**用于 RAW 表：如果 NYC TLC 网站不再保留历史记录，源数据将无法恢复。
+- **180 天**用于完整数据库：中间时长，覆盖多个分析周期，同时避免过高的存储成本。
 - **90 天**用于 FINAL 模式：可通过 dbt 从 RAW 重建。
 - 可通过变量 `RAW_TABLE_BACKUP_POLICY_DAYS`、`FULL_BACKUP_POLICY_DAYS`、`FINAL_SCHEMA_BACKUP_POLICY_DAYS` 配置保留期限。
+## 🔒 GDPR 合规
+
+### 个人数据处理
+
+| 处理 | 数据 | 目的 | 法律依据 | 保留期 |
+|-----|------|------|---------|--------|
+| 行程数据 | 无直接可识别数据* | 统计分析 | 合法利益 | 按备份策略 |
+| 位置信息 | 区域（LocationID）、时间戳 | 地理和时间分析 | 合法利益 | 按备份策略 |
+| 文档分析 | 通过 Google Analytics 的导航数据 | 受众衡量 | 同意 | 2 个月 |
+
+*NYC TLC 数据不包含姓名、驾照号码或地址。位置以区域表示，而非精确的 GPS 坐标。*
+
+### Cookies
+文档使用 **Google Analytics (GA4)**（明确同意后启用，保留 2 个月）和 **GitHub** 小部件（功能性 Cookie，不收集个人数据）。可随时通过页面底部的 *"Change cookie settings"* 修改选择。

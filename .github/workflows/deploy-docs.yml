@@ -22,6 +22,8 @@ jobs:
       STAGING_TABLE: ${{ vars.STAGING_TABLE || 'YELLOW_TAXI_TRIPS_STG' }}
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Set up Python
         uses: actions/setup-python@v4
         with:

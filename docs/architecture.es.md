@@ -98,9 +98,9 @@ Esta tabla documenta **cómo se almacenan los datos**.
 | FILE_LOADING_METADATA   | `SCHEMA_RAW`  | Transitoria   | Tabla           |
 | YELLOW_TAXI_TRIPS_RAW   | `SCHEMA_RAW`  | Permanente    | Incremental     |
 | TAXI_ZONE_LOOKUP        | `SCHEMA_RAW`  | Permanente    | Tabla           |
-| TAXI_ZONE_STG           | `SCHEMA_STG`  | Transitoria   | Tabla           |
-| YELLOW_TAXI_TRIPS_STG   | `SCHEMA_STG`  | Transitoria   | Incremental     |
-| int_trip_metrics        | `SCHEMA_STG`  |               | Vista           |
+| TAXI_ZONE_STG           | `SCHEMA_STAGING`  | Transitoria   | Tabla           |
+| YELLOW_TAXI_TRIPS_STG   | `SCHEMA_STAGING`  | Transitoria   | Incremental     |
+| int_trip_metrics        | `SCHEMA_STAGING`  |               | Vista           |
 | fact_trips              | `SCHEMA_FINAL`| Permanente    | Incremental     |
 | dim_locations           | `SCHEMA_FINAL`| Permanente    | Tabla           |
 | dim_time                | `SCHEMA_FINAL`| Permanente    | Tabla           |
@@ -120,3 +120,17 @@ Detalles disponibles en la <a href="https://eliasmez.github.io/nyc-taxi-pipeline
 **Modelo Físico de Datos (MPD)**
 
 ![MPD del almacén NYC_TAXI_DW](images/final_snow_MPD.png)
+## 📐 Dimensiones de cambio lento (SCD)
+
+Las 3 dimensiones son **SCD Tipo 0**: no se espera ninguna variación.
+
+| Dimensión | Tipo SCD | Justificación |
+|-----------|----------|---------------|
+| `dim_date` | Tipo 0 | Los atributos de una fecha nunca cambian |
+| `dim_time` | Tipo 0 | Los atributos de una hora nunca cambian |
+| `dim_locations` | Tipo 0 | El referencial de zonas NYC TLC es estable |
+
+Evoluciones posibles:
+
+- Corrección de nombre de zona → **SCD Tipo 1** (sobrescritura sin historial)
+- División de zona → **SCD Tipo 2** (nueva fila con `valid_from`, `valid_to`, `is_current`)

@@ -6,9 +6,30 @@
 [![SQLFluff](https://img.shields.io/badge/SQLFluff-Linting-000000?logo=sqlfluff&logoColor=white)]()
 
 ## 📊 Monitoring
-- Logs détaillés dans GitHub Actions.
-- Alertes e-mail en cas d'échec ou d'annulation du workflow.
-- Suivi de l'état via une table de métadonnées indiquant chaque étape (*scraped / staged / success / failed*).
+
+### Niveaux de logs
+Le niveau est configurable via la variable GitHub Actions `LOGGER_LEVEL` (défaut : `INFO`).
+
+| Niveau | Usage |
+|--------|-------|
+| `CRITICAL` | Défaillances système irrécupérables |
+| `ERROR` | Erreurs critiques (connexion, chargement, valeurs invalides) |
+| `WARNING` | Alertes non-bloquantes (aucun fichier à charger, fichier déjà référencé) |
+| `INFO` | Progression (début/fin d'étape, nombre de fichiers et de lignes chargées) |
+| `DEBUG` | Requêtes SQL exécutées, mises à jour des métadonnées, traces OpenTelemetry |
+
+Logs consultables dans GitHub Actions. Alertes e-mail en cas d'échec ou d'annulation du workflow.
+
+### Suivi de l'ingestion
+La table `FILE_LOADING_METADATA` suit l'état de chaque fichier tout au long du pipeline.
+
+| Statut | Signification |
+|--------|---------------|
+| `SCRAPED` | Fichier détecté, en attente d'upload |
+| `STAGED` | Fichier uploadé dans le stage |
+| `SUCCESS` | Chargement réussi |
+| `FAILED_STAGE` | Échec de l'upload vers le stage |
+| `FAILED_LOAD` | Échec du chargement en table |
 
 ## ✅ Qualité des données
 - Tests **dbt** garantissant l'intégrité, la cohérence et la validité des données.
@@ -78,9 +99,25 @@ Le **Time Travel Snowflake** (1 jour sur compte Standard) permet de récupérer 
 | Objet | Fréquence | Rétention |
 |-------|-----------|-----------|
 | Base complète `NYC_TAXI_DW` | Mensuelle | 180 jours |
-| Table `YELLOW_TAXI_TRIPS_RAW` | Mensuelle | **730 jours** (par défaut) |
+| Table `YELLOW_TAXI_TRIPS_RAW` | Mensuelle | **730 jours** |
 | Schéma `FINAL` | Mensuelle | 90 jours |
 
 - **730 jours** pour la table RAW : données sources potentiellement irremplaçables si le site NYC TLC ne conserve plus l'historique.
+- **180 jours** pour la base complète : durée intermédiaire couvrant plusieurs cycles d'analyse sans coût de stockage excessif.
 - **90 jours** pour le schéma FINAL : reconstructible depuis RAW via dbt.
 - Durées configurables via les variables `RAW_TABLE_BACKUP_POLICY_DAYS`, `FULL_BACKUP_POLICY_DAYS`, `FINAL_SCHEMA_BACKUP_POLICY_DAYS`.
+
+## 🔒 Conformité RGPD
+
+### Traitements de données personnelles
+
+| Traitement | Données | Finalité | Base légale | Rétention |
+|-----------|---------|----------|-------------|-----------|
+| Données de trajets | Aucune donnée directement identifiante* | Analyse statistique | Intérêt légitime | Selon politique de backup |
+| Localisations | Zones (LocationID), timestamps | Analyse géographique et temporelle | Intérêt légitime | Selon politique de backup |
+| Analytics documentation | Navigation via Google Analytics | Mesure d'audience | Consentement | 2 mois |
+
+*Les données NYC TLC ne contiennent ni nom, ni numéro de permis, ni adresse. Les localisations sont exprimées en zones, non en coordonnées GPS précises.*
+
+### Cookies
+La documentation utilise **Google Analytics (GA4)** après consentement explicite (rétention 2 mois) et un widget **GitHub** (fonctionnel, aucune donnée personnelle collectée). Le choix est modifiable à tout moment via *"Change cookie settings"* en pied de page.

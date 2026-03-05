@@ -15,7 +15,7 @@ This GitHub Actions workflow automates the end-to-end data pipeline, from initia
 The data includes:
 
 - Pickup and dropoff dates/times
-- GPS trip locations
+- Pickup and dropoff zones
 - Distances, detailed fares, payment types
 - Passenger count reported by the driver
 

@@ -59,7 +59,7 @@ Si vous n’avez pas besoin du versionnement automatique de code : `Actions` →
 | `PARQUET_FORMAT` | Format de fichier Parquet | `PARQUET_FORMAT` |
 | `COMPUTE_SIZE` | Puissance de calcul de l'entrepôt de données | `X-SMALL` |
 | `ROLE_TRANSFORMER` | Rôle pour les transformations | `TRANSFORMER` |
-| `ROLE_BI_ANALYST` || Nom du rôle Analyste BI | `ROLE_BI_ANALYST` |
+| `ROLE_BI_ANALYST` | Nom du rôle Analyste BI | `ROLE_BI_ANALYST` |
 | `ROLE_DATA_SCIENTIST` | Nom du rôle Data Scientist | `ROLE_DATA_SCIENTIST` |
 | `ROLE_MART_CONSUMER` | Nom du rôle Consommateur Mart | `ROLE_MART_CONSUMER` |
 | `USER_DEV` | Utilisateur de développement | `USER_DEV` |

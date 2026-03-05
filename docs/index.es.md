@@ -15,7 +15,7 @@ Este flujo de trabajo de GitHub Actions automatiza la canalización de datos de 
 Los datos incluyen:
 
 - Fechas/horas de recogida y entrega
-- Ubicaciones GPS de los viajes
+- Zonas de origen y destino
 - Distancias, tarifas detalladas, tipos de pago
 - Número de pasajeros reportado por el conductor
 

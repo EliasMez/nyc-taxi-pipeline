@@ -6,9 +6,30 @@
 [![SQLFluff](https://img.shields.io/badge/SQLFluff-Linting-000000?logo=sqlfluff&logoColor=white)]()
 
 ## 📊 Monitoring
-- Detailed logs in GitHub Actions.
-- Email alerts in case of workflow failure or cancellation.
-- Status tracking via a metadata table indicating each stage (*scraped / staged / success / failed*).
+
+### Log Levels
+The log level is configurable via the GitHub Actions variable `LOGGER_LEVEL` (default: `INFO`).
+
+| Level | Usage |
+|-------|-------|
+| `CRITICAL` | Unrecoverable system failures |
+| `ERROR` | Critical errors (connection, loading, invalid values) |
+| `WARNING` | Non-blocking alerts (no file to load, file already referenced) |
+| `INFO` | Progress (step start/end, number of files and rows loaded) |
+| `DEBUG` | SQL queries executed, metadata updates, OpenTelemetry traces |
+
+Logs viewable in GitHub Actions. Email alerts on workflow failure or cancellation.
+
+### Ingestion Tracking
+The `FILE_LOADING_METADATA` table tracks the status of each file throughout the pipeline.
+
+| Status | Meaning |
+|--------|---------|
+| `SCRAPED` | File detected, awaiting upload |
+| `STAGED` | File uploaded to stage |
+| `SUCCESS` | Load successful |
+| `FAILED_STAGE` | Upload to stage failed |
+| `FAILED_LOAD` | Table load failed |
 
 ## ✅ Data Quality
 - **dbt** tests ensuring data integrity, consistency, and validity.
@@ -78,9 +99,24 @@ Two monthly availability thresholds apply simultaneously:
 | Object | Frequency | Retention |
 |--------|-----------|-----------|
 | Full database `NYC_TAXI_DW` | Monthly | 180 days |
-| Table `YELLOW_TAXI_TRIPS_RAW` | Monthly | **730 days** (default) |
+| Table `YELLOW_TAXI_TRIPS_RAW` | Monthly | **730 days** |
 | `FINAL` schema | Monthly | 90 days |
 
 - **730 days** for the RAW table: source data potentially irreplaceable if the NYC TLC website no longer retains history.
+- **180 days** for the full database: intermediate duration covering several analysis cycles without excessive storage cost.
 - **90 days** for the FINAL schema: reconstructible from RAW via dbt.
 - Durations configurable via variables `RAW_TABLE_BACKUP_POLICY_DAYS`, `FULL_BACKUP_POLICY_DAYS`, `FINAL_SCHEMA_BACKUP_POLICY_DAYS`.
+## 🔒 GDPR Compliance
+
+### Personal Data Processing
+
+| Processing | Data | Purpose | Legal Basis | Retention |
+|-----------|------|---------|-------------|-----------|
+| Trip data | No directly identifying data* | Statistical analysis | Legitimate interest | Per backup policy |
+| Locations | Zones (LocationID), timestamps | Geographic and temporal analysis | Legitimate interest | Per backup policy |
+| Documentation analytics | Navigation via Google Analytics | Audience measurement | Consent | 2 months |
+
+*NYC TLC data contains no names, license numbers, or addresses. Locations are expressed as zones, not precise GPS coordinates.*
+
+### Cookies
+The documentation uses **Google Analytics (GA4)** after explicit consent (2-month retention) and a **GitHub** widget (functional cookie, no personal data collected). The choice can be changed at any time via *"Change cookie settings"* in the page footer.

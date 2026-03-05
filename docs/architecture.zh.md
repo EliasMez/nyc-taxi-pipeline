@@ -99,9 +99,9 @@ nyc-taxi-pipeline/
 | FILE_LOADING_METADATA    | `SCHEMA_RAW`    | 瞬态表    | 表       |
 | YELLOW_TAXI_TRIPS_RAW    | `SCHEMA_RAW`    | 永久表    | 增量      |
 | TAXI_ZONE_LOOKUP         | `SCHEMA_RAW`    | 永久表    | 表       |
-| TAXI_ZONE_STG            | `SCHEMA_STG`    | 瞬态表    | 表       |
-| YELLOW_TAXI_TRIPS_STG    | `SCHEMA_STG`    | 瞬态表    | 增量      |
-| int_trip_metrics         | `SCHEMA_STG`    |          | 视图      |
+| TAXI_ZONE_STG            | `SCHEMA_STAGING`    | 瞬态表    | 表       |
+| YELLOW_TAXI_TRIPS_STG    | `SCHEMA_STAGING`    | 瞬态表    | 增量      |
+| int_trip_metrics         | `SCHEMA_STAGING`    |          | 视图      |
 | fact_trips               | `SCHEMA_FINAL`  | 永久表    | 增量      |
 | dim_locations            | `SCHEMA_FINAL`  | 永久表    | 表        |
 | dim_time                 | `SCHEMA_FINAL`  | 永久表    | 表        |
@@ -121,3 +121,17 @@ nyc-taxi-pipeline/
 **物理数据模型（PDM）**
 
 ![NYC_TAXI_DW 数据仓库 PDM](images/final_snow_MPD.png)
+## 📐 缓慢变化维度（SCD）
+
+3 个维度均为 **SCD Type 0**：不预期任何变化。
+
+| 维度 | SCD 类型 | 理由 |
+|------|---------|------|
+| `dim_date` | Type 0 | 日期属性永不改变 |
+| `dim_time` | Type 0 | 时间属性永不改变 |
+| `dim_locations` | Type 0 | NYC TLC 区域参考数据稳定 |
+
+可能的演进：
+
+- 区域名称更正 → **SCD Type 1**（覆盖，无历史记录）
+- 区域拆分 → **SCD Type 2**（新增行，含 `valid_from`、`valid_to`、`is_current`）
