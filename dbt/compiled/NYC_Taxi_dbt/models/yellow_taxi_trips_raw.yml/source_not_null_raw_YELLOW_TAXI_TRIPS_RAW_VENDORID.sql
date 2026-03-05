@@ -1,0 +1,11 @@
+
+    
+    
+
+
+
+select VENDORID
+from NYC_TAXI_DW.SCHEMA_SCHEMA_RAW.YELLOW_TAXI_TRIPS_RAW
+where VENDORID is null
+
+
