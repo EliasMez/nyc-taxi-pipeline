@@ -55,13 +55,14 @@ def test_get_scraping_year_with_invalid_env_late_month():
     Test get_scraping_year behavior when SCRAPING_YEAR contains invalid non-numeric data in late months.
     The function should log an error and default to the current year while handling the invalid input gracefully.
     """
+    fixed_year = scrape.current_year
     with patch('snowflake_ingestion.scrape_links.functions.SCRAPING_YEAR', 'invalid'):
-        with patch('snowflake_ingestion.scrape_links.current_month', 12):
-            with patch('snowflake_ingestion.scrape_links.logger') as mock_logger:
-                result = scrape.get_scraping_year()
-                expected = scrape.current_year
-                assert result == expected
-                mock_logger.error.assert_called_once()
+        with patch('snowflake_ingestion.scrape_links.current_year', fixed_year):
+            with patch('snowflake_ingestion.scrape_links.current_month', 12):
+                with patch('snowflake_ingestion.scrape_links.logger') as mock_logger:
+                    result = scrape.get_scraping_year()
+                    assert result == fixed_year
+                    mock_logger.error.assert_called_once()
 
 def test_get_xpath():
     """
