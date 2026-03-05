@@ -67,7 +67,7 @@ more-itertools==10.8.0
 msgpack==1.1.2
 networkx==3.4.2
 opentelemetry-api==1.38.0
-opentelemetry-sdk==1.38.0
+opentelemetry-sdk==1.39.1
 opentelemetry-semantic-conventions==0.59b0
 orderly-set==5.5.0
 packaging==25.0
