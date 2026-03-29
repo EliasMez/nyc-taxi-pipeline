@@ -47,7 +47,7 @@ jinja2-simple-tags==0.6.1
 jmespath==1.0.1
 jsonschema==4.25.1
 jsonschema-specifications==2025.9.1
-keyring==25.6.0
+keyring==25.7.0
 leather==0.4.0
 lxml==6.0.2
 Markdown==3.10
