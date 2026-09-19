@@ -2,6 +2,19 @@
 
 <!-- version list -->
 
+## v3.1.6 (2026-09-19)
+
+### Bug Fixes
+
+- **scraping**: Add User-Agent header to bypass NYC 403
+  ([`0c37450`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/0c374501d8cdeefc76f6b68bb2de987670acf065))
+
+### Testing
+
+- **scraping**: Update tests to match curl_cffi usage
+  ([`7631216`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/7631216fcdba81bcfb5aa410adf56fc971a16724))
+
+
 ## v3.1.5 (2026-03-05)
 
 ### Bug Fixes
