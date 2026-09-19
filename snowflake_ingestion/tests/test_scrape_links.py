@@ -106,7 +106,7 @@ def test_get_parquet_links_success():
                     
                     result = scrape.get_parquet_links()
 
-                    mock_get.assert_called_once_with("https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page")
+                    mock_get.assert_called_once_with("https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page", impersonate="chrome")
                     mock_logger.info.assert_called_with("🌐 Starting NYC Taxi data scraping")
                     assert result == ["https://example.com/file1.parquet", "https://example.com/file2.parquet"]
 
