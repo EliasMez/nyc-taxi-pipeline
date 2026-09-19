@@ -1,6 +1,6 @@
 from typing import List
 from datetime import datetime
-import requests
+from curl_cffi import requests
 from lxml import html
 from snowflake.connector.cursor import SnowflakeCursor
 import snowflake_ingestion.functions as functions
@@ -70,7 +70,7 @@ def get_parquet_links() -> List[str]:
         list[str]: List of Parquet file URLs.
     """
     logger.info("🌐 Starting NYC Taxi data scraping")
-    response = requests.get(scraping_url)
+    response = requests.get(scraping_url, impersonate="chrome")
     tree = html.fromstring(response.content)
     xpath_query = get_xpath()
     filtered_links = tree.xpath(xpath_query)

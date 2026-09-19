@@ -123,3 +123,4 @@ urllib3==2.6.0
 watchdog==6.0.0
 wrapt==2.0.1
 zipp==3.23.0
+curl_cffi==0.13.0
